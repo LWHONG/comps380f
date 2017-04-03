@@ -1,0 +1,855 @@
+.clear {
+  clear: both; }
+
+a {
+  color: #000000;
+  text-decoration: none; }
+
+body {
+  font-family: 'SourceSansPro', sans-serif;
+  font-weight: 400;
+  position: relative;
+  padding: 0;
+  margin: 0;
+  color: #000000;
+  background: #848383;
+  background-image: radial-gradient(center center, circle cover, #838383, #54585a);
+  background-image: -o-radial-gradient(center center, circle cover, #838383, #54585a);
+  background-image: -ms-radial-gradient(center center, circle cover, #838383, #54585a);
+  background-image: -moz-radial-gradient(center center, circle cover, #838383, #54585a);
+  background-image: -webkit-radial-gradient(center center, circle cover, #838383, #54585a); }
+
+.mainView,
+.sidebarViewContainer,
+.sidebar,
+.contentViewContainer,
+.contentView,
+nav {
+  position: absolute;
+  top: 0; }
+
+.sidebarViewContainer,
+.contentViewContainer {
+  overflow: hidden; }
+
+.sidebar,
+.contentView {
+  overflow-y: scroll;
+  overflow-x: hidden;
+  -ms-overflow-style: none; }
+
+.sidebar::-webkit-scrollbar,
+.contentView::-webkit-scrollbar {
+  display: none; }
+
+.mainView {
+  position: absolute;
+  height: 800px;
+  width: 800px;
+  background-color: #ffffff;
+  border: solid 1px #303e4c;
+  border-radius: 6px;
+  box-shadow: 0 10px 50px -20px rgba(0, 0, 0, 0.8);
+  background-image: url(../images/clean-gray-paper.png); }
+
+.sidebarViewContainer {
+  width: 319px;
+  left: 0;
+  background-color: #303e4c;
+  border-right: solid 1px #ababab;
+  border-radius: 4px 0 0 4px;
+  background-image: -moz-linear-gradient(110deg, #303e4c 0%, #526476 100%);
+  background-image: -webkit-linear-gradient(110deg, #303e4c 0%, #526476 100%);
+  background-image: -ms-linear-gradient(110deg, #303e4c 0%, #526476 100%);
+  position: absolute; }
+
+.sidebar {
+  width: 319px;
+  position: relative; }
+
+.contentViewContainer {
+  left: 320px;
+  padding-left: 0px;
+  z-index: 10;
+  background: linear-gradient(to right, #fcfcfc 0%, rgba(255, 255, 255, 0) 100%); }
+
+.contentView {
+  /*padding-right: 15px;*/ }
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0; }
+
+nav {
+  right: -101px;
+  width: 150px;
+  z-index: 11; }
+  nav ul li {
+    height: 50px;
+    width: 160px;
+    margin: 50px 0;
+    overflow: hidden;
+    border-radius: 3px;
+    box-shadow: 30px 10px 20px -15px rgba(0, 0, 0, 0.5);
+    opacity: .9;
+    transition: .2s; }
+    nav ul li:hover {
+      opacity: 1; }
+    nav ul li.navOptionHome .navItemActiveIdicator, nav ul li.navOptionHome p {
+      background-color: #fd4e4e; }
+    nav ul li.navOptionProfile .navItemActiveIdicator, nav ul li.navOptionProfile p {
+      background-color: #fdbd4e; }
+    nav ul li.navOptionTools .navItemActiveIdicator, nav ul li.navOptionTools p {
+      background-color: #39e29c; }
+    nav ul li.navOptionCourse .navItemActiveIdicator, nav ul li.navOptionCourse p {
+      background-color: #4e6ffd; }
+    nav ul li.navOptionSupport .navItemActiveIdicator, nav ul li.navOptionSupport p {
+      background-color: #b14efd; }
+    nav ul li.navOptionLogout .navItemActiveIdicator, nav ul li.navOptionLogout p {
+      background-color: #fd4e8c; }
+    nav ul li .navItemActiveIdicator {
+      height: 50px;
+      width: 50px;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 50px;
+      opacity: 0; }
+    nav ul li .navItemActive {
+      opacity: 1; }
+    nav ul li a {
+      height: inherit;
+      width: inherit;
+      display: block;
+      color: #ffffff; }
+      nav ul li a p {
+        width: 95px;
+        height: 50px;
+        display: inline-block;
+        margin: 0;
+        padding: 0 0 0 15px;
+        vertical-align: middle;
+        line-height: 50px;
+        font-size: 18px;
+        font-weight: 600; }
+
+.sitelogo {
+  color: #ffffff;
+  height: 60px;
+  line-height: 60px;
+  font-weight: 600;
+  font-size: 24px;
+  background-color: rgba(0, 0, 0, 0.4);
+  vertical-align: middle; }
+  .sitelogo img {
+    display: inline;
+    line-height: 60px;
+    vertical-align: middle;
+    margin: 0 10px 0 20px; }
+
+.profilePicture {
+  width: 170px;
+  height: 220px;
+  box-shadow: 0 5px 20px -10px rgba(0, 0, 0, 0.8);
+  margin: 40px auto 0 auto;
+  background-color: #ffffff;
+  overflow: hidden; }
+  .profilePicture .profilePictureWrapper {
+    width: 150px;
+    height: 200px;
+    margin: 10px;
+    position: relative;
+    overflow: hidden; }
+  .profilePicture img {
+    position: absolute; }
+  .profilePicture .changeProfilePictureTitle {
+    font-size: 28px;
+    font-weight: 200;
+    margin-bottom: 30px;
+    line-height: 40px; }
+  .profilePicture .changeProfilePictureOk {
+    bottom: 20px;
+    left: 10px;
+    height: 30px;
+    width: 130px;
+    position: absolute;
+    background-color: #ECEFF1;
+    color: #263238;
+    border: none;
+    font-size: 18px;
+    transition: .2s;
+    border-radius: 3px; }
+  .profilePicture .changeProfilePictureOk:hover {
+    background-color: #CFD8DC; }
+
+.changeProfilePictureDrop,
+.changeProfilePictureUploading,
+.changeProfilePictureFailed {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  transition: .2s;
+  text-align: center; }
+  .changeProfilePictureDrop p,
+  .changeProfilePictureUploading p,
+  .changeProfilePictureFailed p {
+    color: #ffffff;
+    display: block;
+    width: 130px;
+    margin: 15px 10px 30px 10px;
+    text-align: center; }
+
+.sidebarSectionTitle {
+  font-size: 12px;
+  font-weight: 600;
+  color: white;
+  line-height: 22px;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.2);
+  margin-top: 40px;
+  border-width: 1px 0;
+  border-style: solid;
+  border-color: #ababab; }
+
+.sidebarUsername {
+  font-size: 32px;
+  font-weight: 200;
+  color: #ffffff;
+  line-height: 42px;
+  text-align: center;
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.5);
+  margin: 20px 0; }
+
+.sidebarGeneralContent {
+  font-size: 16px;
+  font-weight: 200;
+  color: #ffffff;
+  line-height: 26px;
+  text-align: center;
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.5);
+  margin: 5px 0; }
+
+.lable {
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 4px;
+  box-shadow: 0 1px 2px -1px rgba(0, 0, 0, 0.8);
+  margin: 10px auto;
+  width: 100px;
+  height: 16px;
+  background-color: red;
+  color: #ffffff;
+  text-align: center;
+  line-height: 16px; }
+
+ul.sidebarCourseList li {
+  padding: 18px 0;
+  text-align: left;
+  transition: .2s; }
+  ul.sidebarCourseList li:hover {
+    background-color: rgba(255, 255, 255, 0.1); }
+  ul.sidebarCourseList li a {
+    display: inline;
+    line-height: 22px;
+    margin: 20px 0;
+    font-size: 16px;
+    font-weight: 200;
+    color: #ffffff;
+    text-decoration: none;
+    padding-left: 30px; }
+ul.sidebarCourseList li:last-child {
+  border-bottom-width: 0px; }
+
+div.pageHeader {
+  font-size: 26px;
+  line-height: 60px;
+  height: 60px;
+  font-weight: 400;
+  color: orange;
+  background-color: pink;
+  border-radius: 0 6px 0 0;
+  display: block;
+  position: relative;
+  text-align: center;
+  background-color: #eeeeee;
+  color: #222222; }
+
+.contentBlock {
+  background-color: white;
+  box-shadow: 0 2px 10px -8px rgba(0, 0, 0, 0.8);
+  margin-bottom: 20px;
+  border-radius: 4px;
+  width: inherit;
+  overflow: hidden; }
+
+.contentBlockHeader {
+  font-size: 42px;
+  line-height: 58px;
+  font-weight: 200;
+  padding: 20px 20px 0 20px;
+  border-bottom: solid 1px #d4d4d4; }
+
+.contentMainBlock {
+  width: 90%;
+  margin: 30px auto 0 auto; }
+
+.listView > li {
+  background-color: white;
+  width: inherit;
+  border-bottom: solid 1px #f0f0f0;
+  padding: 20px 0; }
+
+.listView > li:last-child {
+  border-bottom-width: 0px; }
+
+.listView p.cellTitle, .listView p.cellTitleWithBg {
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 400;
+  padding: 0; }
+
+.listView p.cellContent {
+  font-size: 14px;
+  line-height: 24px;
+  font-weight: 400;
+  padding: 10px 0 0 0; }
+.listView p.cellTitleWithBg {
+  border-bottom: 1px solid #f0f0f0;
+  padding-left: 10px;
+  text-align: center; }
+
+.profileWrapper80,
+.profileWrapper40,
+.iconWrapper80 {
+  z-index: 1; }
+
+.profileWrapper80 {
+  width: 80px;
+  height: 80px;
+  position: relative;
+  margin: 0 auto;
+  border-radius: 60px;
+  box-shadow: 0 5px 20px -10px rgba(0, 0, 0, 0.8); }
+
+.profileWrapper40 {
+  width: 40px;
+  height: 40px;
+  position: relative;
+  border-radius: 40px;
+  box-shadow: 0 5px 20px -10px rgba(0, 0, 0, 0.8); }
+
+.iconWrapper80 {
+  width: 80px;
+  height: 80px;
+  position: relative;
+  margin: 0 auto; }
+
+.profileWrapper80 > img,
+.profileWrapper40 > img,
+.iconWrapper80 > img {
+  position: absolute;
+  display: block;
+  z-index: 0; }
+
+.row {
+  padding: 0 20px;
+  position: relative; }
+
+.col {
+  display: inline-block;
+  vertical-align: middle; }
+
+.col-100 {
+  width: 20%; }
+
+.col-20 {
+  width: 20%; }
+
+.col-50 {
+  width: 49%; }
+
+.colProfile {
+  text-align: center; }
+
+.col-80 {
+  width: 79%; }
+
+.col-30 {
+  width: 30%; }
+
+.col-70 {
+  width: 68%; }
+
+.col-10 {
+  width: 10%; }
+
+.col-90 {
+  width: 88%; }
+
+.inlineMessage {
+  line-height: 25px;
+  padding: 10px 25px;
+  margin-top: 20px; }
+
+.inlineMessage > p {
+  line-height: 25px;
+  background-color: #AED581;
+  border-radius: 3px;
+  padding: 0 20px; }
+
+.btnListRight {
+  float: right;
+  margin-top: 20px;
+  z-index: 9;
+  cursor: pointer; }
+
+.btnListRight > li {
+  text-align: center;
+  float: left;
+  padding: 10px 25px;
+  background-color: whitesmoke;
+  margin: 0 10px;
+  border-radius: 100px; }
+
+.btnListLeft > li > a {
+  line-height: 25px; }
+
+/*== login screen
+==================================================*/
+p.cellTitle, .listView p.cellTitleWithBg {
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 400;
+  padding: 0; }
+
+div.loginHeader {
+  height: 30%;
+  width: 100%;
+  background-color: #455A64;
+  background-image: url("../images/loginHeader@2x.png");
+  background-size: 1024px 196px;
+  background-repeat: no-repeat;
+  background-position: bottom; }
+
+div.loginContent {
+  height: 55%;
+  width: 100%;
+  position: relative; }
+
+div.loginFooter {
+  height: 15%;
+  width: 100%;
+  background-color: #455A64;
+  background-position: center;
+  background-size: 1920px 1440px;
+  background-position: -200px -950px; }
+
+div.loginView {
+  position: absolute;
+  height: 320px;
+  width: 320px;
+  background-color: #ffffff;
+  border: solid 0px #303e4c;
+  border-radius: 6px;
+  box-shadow: 0 10px 50px -20px rgba(0, 0, 0, 0.8);
+  overflow: hidden; }
+  div.loginView .loginForm {
+    width: 320px;
+    height: 100%; }
+    div.loginView .loginForm input, div.loginView .loginForm p, div.loginView .loginForm button {
+      display: block; }
+    div.loginView .loginForm input {
+      margin: 10px 20px;
+      width: 220px; }
+    div.loginView .loginForm p {
+      margin: 15px 20px; }
+
+input[type="text"],
+input[type="password"] {
+  background-color: whitesmoke;
+  display: block;
+  height: 60px;
+  margin: 10px auto;
+  border-radius: 60px;
+  outline: none;
+  padding: 0 30px;
+  border: none;
+  font-size: 18px;
+  width: 80%; }
+
+textarea {
+  background-color: whitesmoke;
+  display: block;
+  height: 200px;
+  margin: 10px auto;
+  border-radius: 3px;
+  outline: none;
+  padding: 30px 30px;
+  border: none;
+  font-size: 18px;
+  width: 80%; }
+
+.fullWidthButton {
+  width: 100%; }
+
+.loginBtn {
+  bottom: 0;
+  height: 60px;
+  position: absolute;
+  background-color: #455A64;
+  color: #ffffff;
+  border: none;
+  font-size: 18px;
+  transition: .2s; }
+
+.loginBtn:hover {
+  background-color: #546E7A; }
+
+.loginProcess {
+  position: absolute;
+  height: 320px;
+  width: 320px;
+  background-color: rgba(0, 0, 0, 0.8);
+  top: 320px;
+  transition: .2s; }
+
+.loginLoading,
+.loginFailed {
+  position: absolute;
+  height: 320px;
+  width: 320px;
+  top: 0; }
+
+.loginLoading > img {
+  position: absolute;
+  display: block;
+  top: 100px;
+  left: 130px; }
+
+.loginLoading > p {
+  position: absolute;
+  display: block;
+  font-size: 18px;
+  color: #ffffff;
+  width: 320px;
+  text-align: center;
+  top: 200px; }
+
+.loginFailed > p {
+  position: absolute;
+  display: block;
+  color: #ffffff;
+  width: 320px;
+  text-align: center; }
+
+.loginFailed > p.loginFailedTitle {
+  font-size: 48px;
+  font-weight: 200;
+  top: 20px; }
+
+.loginFailed > p.loginFailedMessage {
+  font-size: 18px;
+  top: 120px; }
+
+.loginFailed > button {
+  bottom: 20px;
+  left: 10px;
+  height: 60px;
+  width: 300px;
+  position: absolute;
+  background-color: #ECEFF1;
+  color: #263238;
+  border: none;
+  font-size: 18px;
+  transition: .2s; }
+
+.loginFailed > button:hover {
+  background-color: #CFD8DC; }
+
+.noteUploadDropZone {
+  width: 100%;
+  margin: 20px auto;
+  height: 150px;
+  background-color: #ECEFF1;
+  position: relative;
+  overflow: hidden;
+  border-radius: 3px; }
+
+.noteUploadDropZoneBtn {
+  position: absolute;
+  width: 100%;
+  height: 150px;
+  position: block;
+  top: 0;
+  left: 0;
+  opacity: 0; }
+
+.noteUploadDropZoneIndicator,
+.noteUploadDropZoneFileSelected {
+  position: absolute;
+  color: #37474F;
+  height: 150px;
+  width: 100%;
+  text-align: center; }
+
+.noteUploadDropZoneFileSelected {
+  line-height: 40px; }
+
+.noteUploadDropZoneIndicatorTitle {
+  font-size: 42px;
+  line-height: 150px;
+  font-weight: 200; }
+
+.noteUploadDropZoneFileSelected > img {
+  display: inline-block;
+  vertical-align: middle;
+  margin-top: 30px; }
+
+.noteUploadDropZoneFileSelectedTitle {
+  display: inline-block; }
+
+.noteUploadProcess,
+.noteUploadSuccess,
+.noteUploadFailed {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #ffffff;
+  height: 150px;
+  width: 100%;
+  text-align: center; }
+
+.popupTitle {
+  font-size: 36px;
+  line-height: 80px;
+  font-weight: 200; }
+
+.popupMessage {
+  font-size: 18px;
+  line-height: 24px; }
+
+.popupBtn {
+  position: absolute;
+  background-color: #ECEFF1;
+  color: #263238;
+  border: none;
+  font-size: 18px;
+  transition: .2s; }
+
+.popupBtn:hover {
+  background-color: #CFD8DC; }
+
+.popupBtnNoteUploadOk {
+  height: 30px;
+  width: 120px;
+  right: 20px;
+  bottom: 20px; }
+
+.dropDownLarge {
+  height: 60px;
+  width: 90%;
+  display: block;
+  margin: 20px auto;
+  font-size: 18px;
+  line-height: 60px;
+  border-radius: 4px;
+  outline: none; }
+
+.fileCell {
+  position: relative; }
+
+.noteDeleteConfirm,
+.noteDeleteProcess,
+.noteDeleteSuccess,
+.noteDeleteFailed {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #ffffff;
+  height: 150px;
+  width: 100%;
+  text-align: center;
+  z-index: 10; }
+
+.popupBtnNoteDeleteDelete,
+.popupBtnNoteDeleteCancel,
+.popupBtnNoteDeleteOk {
+  bottom: 20px;
+  width: 120px;
+  right: 20px; }
+
+.popupBtnNoteDeleteCancel {
+  right: 20px; }
+
+.popupBtnNoteDeleteDelete {
+  right: 160px; }
+
+.peopleItem {
+  height: 40px;
+  background-color: whitesmoke;
+  display: inline-block;
+  padding: 10px 15px;
+  border-radius: 50px;
+  margin: 10px; }
+  .peopleItem * {
+    display: inline-block;
+    line-height: 40px;
+    vertical-align: middle; }
+  .peopleItem p {
+    margin-left: 10px; }
+
+.timeList li {
+  margin-left: 10px;
+  margin-top: 10px; }
+  .timeList li > div {
+    height: 100%; }
+  .timeList li .timeSectionCode {
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    vertical-align: middle;
+    text-align: center;
+    background-color: whitesmoke;
+    font-size: 24px;
+    font-weight: 200; }
+  .timeList li p {
+    line-height: 20px;
+    margin-left: 10px; }
+
+.weeklyTimetable {
+  width: 100%;
+  margin: 0;
+  padding: 0; }
+  .weeklyTimetable > li {
+    width: 14.2%;
+    margin: 0;
+    padding: 0;
+    float: left; }
+    .weeklyTimetable > li .weekdayCol {
+      width: 100%;
+      position: relative;
+      height: 630px;
+      border-right: 1px solid whitesmoke; }
+      .weeklyTimetable > li .weekdayCol div.weekdayCourseBlock {
+        position: absolute;
+        width: 90%;
+        margin: 0 2%;
+        border-radius: 4px;
+        padding: 0 3%;
+        box-shadow: 0 2px 10px -8px rgba(0, 0, 0, 0.8);
+        word-wrap: break-word;
+        font-size: 14px;
+        cursor: pointer; }
+        .weeklyTimetable > li .weekdayCol div.weekdayCourseBlock span {
+          font-size: 12px;
+          font-weight: 800;
+          color: #505050; }
+      .weeklyTimetable > li .weekdayCol .weekdayCourseBlockNormal {
+        background-color: #feb3ce;
+        border: 1px solid #fe80ad; }
+      .weeklyTimetable > li .weekdayCol .weekdayCourseBlockAvailable {
+        background-color: #b5f0cf;
+        border: 1px solid #8ae8b4; }
+      .weeklyTimetable > li .weekdayCol .weekdayCourseBlockBooked {
+        background-color: #ffc996;
+        border: 1px solid #ffae63; }
+      .weeklyTimetable > li .weekdayCol .weekdayCourseBlockFull {
+        background-color: #d3d0d1;
+        border: 1px solid #bbb5b8; }
+      .weeklyTimetable > li .weekdayCol ul.weekdayBg {
+        margin: 0;
+        padding: 0;
+        position: absolute;
+        height: 750px;
+        width: 100%; }
+        .weeklyTimetable > li .weekdayCol ul.weekdayBg.weekdayColTime {
+          background-color: whitesmoke; }
+        .weeklyTimetable > li .weekdayCol ul.weekdayBg > li {
+          height: 59px;
+          border-bottom: 1px solid #d4d4d4;
+          width: inherit;
+          line-height: 59px;
+          vertical-align: middle;
+          text-align: center; }
+          .weeklyTimetable > li .weekdayCol ul.weekdayBg > li.weekdayColHeader {
+            height: 30px;
+            line-height: 30px;
+            vertical-align: middle;
+            text-align: center;
+            background-color: whitesmoke; }
+
+.onscreenMessage {
+  position: fixed;
+  bottom: 100px;
+  width: 80%;
+  z-index: 20;
+  left: 10%;
+  text-align: center;
+  line-height: 50px;
+  background-color: #fff6c5;
+  border: 1px solid #ffee92;
+  border-radius: 4px;
+  box-shadow: 0 5px 20px -10px rgba(0, 0, 0, 0.8);
+  padding: 20px; }
+  .onscreenMessage p {
+    font-size: 18px;
+    line-height: 25px;
+    vertical-align: middle; }
+
+.appointmentList .headRow p {
+  background-color: whitesmoke;
+  text-align: right;
+  padding-right: 10px; }
+
+.headRow {
+  margin-bottom: 20px; }
+  .headRow p {
+    background-color: whitesmoke;
+    text-align: center;
+    padding-right: 10px;
+    color: #455A64; }
+
+.enrolledStudentList {
+  margin-top: 10px; }
+
+.dataList {
+  margin-bottom: 20px; }
+  .dataList p {
+    font-size: 16px;
+    line-height: 30px;
+    font-weight: 400;
+    padding: 0;
+    margin: 0; }
+  .dataList .dataListHeadRow {
+    background-color: whitesmoke; }
+    .dataList .dataListHeadRow p {
+      color: #455A64;
+      text-align: right;
+      padding-right: 10px; }
+
+.generalUpload form {
+  position: static;
+  width: 100%;
+  height: 100%; }
+
+.gradingList li {
+  padding: 5px 0; }
+  .gradingList li:nth-child(odd) {
+    background-color: whitesmoke; }
+  .gradingList li p {
+    font-size: 16px;
+    line-height: 30px;
+    font-weight: 400;
+    padding: 0;
+    margin: 0;
+    display: inline-block;
+    height: 30px; }
+    .gradingList li p.gradingStudentId {
+      width: 20%; }
+    .gradingList li p.gradingStudentName {
+      width: 60%; }
+  .gradingList li .gradingGrade {
+    display: inline-block;
+    height: 30px;
+    width: 10%; }
+
+/*# sourceMappingURL=layout.css.map */

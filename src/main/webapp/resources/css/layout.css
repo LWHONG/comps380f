@@ -1,0 +1,832 @@
+.clear {
+  clear: both; }
+
+a {
+  color: #000000;
+  text-decoration: none; }
+
+body {
+  font-family: 'SourceSansPro', sans-serif;
+  font-weight: 400;
+  position: relative;
+  padding: 0;
+  margin: 0;
+  color: #000000;
+  background: #848383;
+  background-image: radial-gradient(center center, circle cover, #838383, #54585a);
+  background-image: -o-radial-gradient(center center, circle cover, #838383, #54585a);
+  background-image: -ms-radial-gradient(center center, circle cover, #838383, #54585a);
+  background-image: -moz-radial-gradient(center center, circle cover, #838383, #54585a);
+  background-image: -webkit-radial-gradient(center center, circle cover, #838383, #54585a); }
+
+
+.mainView {
+  position: relative;
+  height: 800px;
+  width: 800px;
+  background-color: #f6f6f6;
+  border: solid 1px #303e4c;
+  border-radius: 6px;
+  box-shadow: 0 10px 50px -20px rgba(0, 0, 0, 0.8);
+
+  /* when resize to small screen 
+  padding-bottom: 300px;*/
+  }
+
+
+/*== login screen
+==================================================*/
+p.cellTitle {
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 400;
+  padding: 0; }
+
+div.loginHeader {
+  height: 12%;
+  background-color: #455A64;
+  background-image: url("../images/loginHeader@2x.png");
+  background-size: 1024px 98px;
+  background-repeat: no-repeat;
+  background-position: top;}
+
+div.content {
+  height: 88%;
+  width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box; }
+
+.content {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  -webkit-justify-content: space-around; /* Safari */
+  justify-content: space-around; }
+
+div.loginView {
+  position: relative;
+  margin-top: 5%;
+  height: 320px;
+  width: 320px;
+  background-color: #ffffff;
+  border: solid 0px #303e4c;
+  border-radius: 6px;
+  box-shadow: 0 10px 50px -20px rgba(0, 0, 0, 0.8);
+  overflow: hidden; }
+  div.loginView .loginForm {
+    width: 320px;
+    height: 100%; }
+    div.loginView .loginForm input, div.loginView .loginForm p, div.loginView .loginForm button {
+      display: block; }
+    div.loginView .loginForm input {
+      margin: 10px 20px;
+      width: 220px; }
+    div.loginView .loginForm p {
+      margin: 15px 20px; }
+
+div.registerView {
+  position: relative;
+  margin-top: 5%;
+  height: 550px;
+  width: 320px;
+  background-color: #ffffff;
+  border: solid 0px #303e4c;
+  border-radius: 6px;
+  box-shadow: 0 10px 50px -20px rgba(0, 0, 0, 0.8);
+  overflow: hidden; }
+  div.registerView .registerForm {
+    width: 320px;
+    height: 100%; }
+    div.registerView .registerForm input, div.registerView .registerForm p, div.registerView .registerForm button {
+      display: block; }
+    div.registerView .registerForm input {
+      margin: 10px 20px;
+      width: 220px; }
+    div.registerView .registerForm p {
+      margin: 15px 20px; }
+
+input[type="text"],
+input[type="password"] {
+  background-color: whitesmoke;
+  display: block;
+  height: 60px;
+  margin: 10px auto;
+  border-radius: 60px;
+  outline: none;
+  padding: 0 30px;
+  border: none;
+  font-size: 18px;
+  width: 80%; }
+
+textarea {
+  background-color: whitesmoke;
+  display: block;
+  height: 200px;
+  margin: 10px auto;
+  border-radius: 3px;
+  outline: none;
+  padding: 30px 30px;
+  border: none;
+  font-size: 18px;
+  width: 80%; }
+
+.fullWidthButton {
+  width: 100%; }
+
+.loginBtn {
+  bottom: 0;
+  height: 60px;
+  position: absolute;
+  background-color: #455A64;
+  color: #ffffff;
+  border: none;
+  font-size: 18px;
+  transition: .2s; }
+
+.loginBtn:hover {
+  background-color: #546E7A; }
+
+.loginLoading,
+.loginFailed {
+  position: absolute;
+  height: 320px;
+  width: 320px;
+  top: 0; }  
+
+.loginProcess {
+  position: absolute;
+  height: 320px;
+  width: 320px;
+  background-color: rgba(0, 0, 0, 0.8);
+  top: 320px;
+  transition: .2s; }
+
+.loginLoading > img {
+  position: absolute;
+  display: block;
+  top: 100px;
+  left: 130px; }
+
+.loginLoading > p {
+  position: absolute;
+  display: block;
+  font-size: 18px;
+  color: #ffffff;
+  width: 320px;
+  text-align: center;
+  top: 200px; }
+
+.loginFailed > p {
+  position: absolute;
+  display: block;
+  color: #ffffff;
+  width: 320px;
+  text-align: center; }
+
+.loginFailed > p.loginFailedTitle {
+  font-size: 48px;
+  font-weight: 200;
+  top: 20px; }
+
+.loginFailed > p.loginFailedMessage {
+  font-size: 18px;
+  top: 120px; }
+
+.loginFailed > button {
+  bottom: 20px;
+  left: 10px;
+  height: 60px;
+  width: 300px;
+  position: absolute;
+  background-color: #ECEFF1;
+  color: #263238;
+  border: none;
+  font-size: 18px;
+  transition: .2s; }
+
+.loginFailed > button:hover {
+  background-color: #CFD8DC; }
+
+.registerBtn {
+  bottom: 0;
+  height: 60px;
+  position: absolute;
+  background-color: #455A64;
+  color: #ffffff;
+  border: none;
+  font-size: 18px;
+  transition: .2s; }
+
+.registerBtn:hover {
+  background-color: #546E7A; }
+
+.registerProcess {
+  position: absolute;
+  height: 550px;
+  width: 320px;
+  background-color: rgba(0, 0, 0, 0.8);
+  top: 0px;
+  transition: .2s; }
+
+.registerLoading,
+.registerFailed {
+  position: absolute;
+  height: 550px;
+  width: 320px;
+  top: 0; }
+
+
+.registerLoading > img {
+  position: absolute;
+  display: block;
+  top: 200px;
+  left: 130px; }
+
+.registerLoading > p {
+  position: absolute;
+  display: block;
+  font-size: 18px;
+  color: #ffffff;
+  width: 320px;
+  text-align: center;
+  top: 300px; }
+
+.registerFailed > p {
+  position: absolute;
+  display: block;
+  color: #ffffff;
+  width: 320px;
+  text-align: center; }
+
+.registerFailed > p.registerFailedTitle {
+  font-size: 48px;
+  font-weight: 200;
+  top: 150px; }
+
+.registerFailed > p.registerFailedMessage {
+  font-size: 18px;
+  top: 250px; }
+
+.registerFailed > button {
+  bottom: 100px;
+  left: 10px;
+  height: 60px;
+  width: 300px;
+  position: absolute;
+  background-color: #ECEFF1;
+  color: #263238;
+  border: none;
+  font-size: 18px;
+  transition: .2s; }
+
+.registerFailed > button:hover {
+  background-color: #CFD8DC; }
+
+
+/*index*/
+.mainView,
+.sidebarViewContainer,
+.sidebar,
+.contentViewContainer,
+.contentView,
+nav {
+  position: absolute;
+  top: 0; }
+
+.sidebarViewContainer,
+.contentViewContainer {
+  overflow: hidden; }
+
+.sidebar,
+.contentView {
+  overflow-y: scroll;
+  overflow-x: hidden;
+  -ms-overflow-style: none; }
+
+.sidebar::-webkit-scrollbar,
+.contentView::-webkit-scrollbar {
+  display: none; }
+
+
+.sidebarViewContainer {
+  width: 319px;
+  left: 0;
+  background-color: #303e4c;
+  border-right: solid 1px #ababab;
+  border-radius: 4px 0 0 4px;
+  background-image: -moz-linear-gradient(110deg, #303e4c 0%, #526476 100%);
+  background-image: -webkit-linear-gradient(110deg, #303e4c 0%, #526476 100%);
+  background-image: -ms-linear-gradient(110deg, #303e4c 0%, #526476 100%);
+  position: absolute; }
+
+.sidebar {
+  width: 319px;
+  position: relative; }
+
+.contentViewContainer {
+  left: 320px;
+  padding-left: 0px;
+  z-index: 10;
+  background: linear-gradient(to right, #fcfcfc 0%, rgba(255, 255, 255, 0) 100%); }
+
+.contentView {
+  /*padding-right: 15px;*/ }
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0; }
+
+nav {
+  right: -101px;
+  width: 150px;
+  z-index: 11; }
+  nav ul li {
+    height: 50px;
+    width: 160px;
+    margin: 50px 0;
+    overflow: hidden;
+    border-radius: 3px;
+    box-shadow: 30px 10px 20px -15px rgba(0, 0, 0, 0.5);
+    opacity: .9;
+    transition: .2s; }
+    nav ul li:hover {
+      opacity: 1; }
+    nav ul li.navOptionHome .navItemActiveIdicator, nav ul li.navOptionHome p {
+      background-color: #fd4e4e; }
+    nav ul li.navOptionProfile .navItemActiveIdicator, nav ul li.navOptionProfile p {
+      background-color: #fdbd4e; }
+    nav ul li.navOptionPoll .navItemActiveIdicator, nav ul li.navOptionPoll p {
+      background-color: #39e29c; }
+    nav ul li.navOptionLoginout .navItemActiveIdicator, nav ul li.navOptionLoginout p {
+      background-color: #4e6ffd; }
+    nav ul li.navOptionBackend .navItemActiveIdicator, nav ul li.navOptionBackend p {
+      background-color: #b14efd; }
+    nav ul li .navItemActiveIdicator {
+      height: 50px;
+      width: 50px;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 50px;
+      opacity: 0; }
+    nav ul li .navItemActive {
+      opacity: 1; }
+    nav ul li a {
+      height: inherit;
+      width: inherit;
+      display: block;
+      color: #ffffff; }
+      nav ul li a p {
+        width: 95px;
+        height: 50px;
+        display: inline-block;
+        margin: 0;
+        padding: 0 0 0 15px;
+        vertical-align: middle;
+        line-height: 50px;
+        font-size: 18px;
+        font-weight: 600; }
+
+.sitelogo {
+  color: #ffffff;
+  height: 60px;
+  line-height: 60px;
+  font-weight: 600;
+  font-size: 24px;
+  background-color: rgba(0, 0, 0, 0.4);
+  vertical-align: middle; }
+  .sitelogo img {
+    display: inline;
+    line-height: 60px;
+    vertical-align: middle;
+    margin: 0 10px 0 20px; }
+
+.profilePicture {
+  width: 170px;
+  height: 220px;
+  box-shadow: 0 5px 20px -10px rgba(0, 0, 0, 0.8);
+  margin: 40px auto 0 auto;
+  background-color: #ffffff;
+  overflow: hidden; }
+  .profilePicture .profilePictureWrapper {
+    width: 150px;
+    height: 200px;
+    margin: 10px;
+    position: relative;
+    overflow: hidden; }
+  .profilePicture img {
+    position: absolute; }
+  .profilePicture .changeProfilePictureTitle {
+    font-size: 28px;
+    font-weight: 200;
+    margin-bottom: 30px;
+    line-height: 40px; }
+  .profilePicture .changeProfilePictureOk {
+    bottom: 20px;
+    left: 10px;
+    height: 30px;
+    width: 130px;
+    position: absolute;
+    background-color: #ECEFF1;
+    color: #263238;
+    border: none;
+    font-size: 18px;
+    transition: .2s;
+    border-radius: 3px; }
+  .profilePicture .changeProfilePictureOk:hover {
+    background-color: #CFD8DC; }
+
+.changeProfilePictureDrop,
+.changeProfilePictureUploading,
+.changeProfilePictureFailed {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  transition: .2s;
+  text-align: center; }
+  .changeProfilePictureDrop p,
+  .changeProfilePictureUploading p,
+  .changeProfilePictureFailed p {
+    color: #ffffff;
+    display: block;
+    width: 130px;
+    margin: 15px 10px 30px 10px;
+    text-align: center; }
+
+.sidebarSectionTitle {
+  font-size: 12px;
+  font-weight: 600;
+  color: white;
+  line-height: 22px;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.2);
+  margin-top: 40px;
+  border-width: 1px 0;
+  border-style: solid;
+  border-color: #ababab; }
+
+.sidebarUsername {
+  font-size: 32px;
+  font-weight: 200;
+  color: #ffffff;
+  line-height: 42px;
+  text-align: center;
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.5);
+  margin: 20px 0; }
+
+.sidebarGeneralContent {
+  font-size: 16px;
+  font-weight: 200;
+  color: #ffffff;
+  line-height: 26px;
+  text-align: center;
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.5);
+  margin: 5px 0; }
+
+.lable {
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 4px;
+  box-shadow: 0 1px 2px -1px rgba(0, 0, 0, 0.8);
+  margin: 10px auto;
+  width: 100px;
+  height: 16px;
+  background-color: red;
+  color: #ffffff;
+  text-align: center;
+  line-height: 16px; }
+
+ul.sidebarCourseList li {
+  padding: 18px 0;
+  text-align: left;
+  transition: .2s; }
+  ul.sidebarCourseList li:hover {
+    background-color: rgba(255, 255, 255, 0.1); }
+  ul.sidebarCourseList li a {
+    display: inline;
+    line-height: 22px;
+    margin: 20px 0;
+    font-size: 16px;
+    font-weight: 200;
+    color: #ffffff;
+    text-decoration: none;
+    padding-left: 30px; }
+ul.sidebarCourseList li:last-child {
+  border-bottom-width: 0px; }
+
+div.pageHeader {
+  font-size: 26px;
+  line-height: 60px;
+  height: 60px;
+  font-weight: 400;
+  color: orange;
+  background-color: pink;
+  border-radius: 0 6px 0 0;
+  display: block;
+  position: relative;
+  text-align: center;
+  background-color: #eeeeee;
+  color: #222222; }
+
+.contentBlock {
+  background-color: white;
+  box-shadow: 0 2px 10px -8px rgba(0, 0, 0, 0.8);
+  margin-bottom: 20px;
+  border-radius: 4px;
+  width: inherit;
+  overflow: hidden; }
+
+.contentBlockHeader {
+  font-size: 42px;
+  line-height: 58px;
+  font-weight: 200;
+  padding: 20px 20px 0 20px;
+  border-bottom: solid 1px #d4d4d4; }
+
+.contentMainBlock {
+  width: 90%;
+  margin: 30px auto 0 auto; }
+
+.listView > li {
+  background-color: white;
+  width: inherit;
+  border-bottom: solid 1px #f0f0f0;
+  padding: 20px 0; }
+
+.listView > li:last-child {
+  border-bottom-width: 0px; }
+
+.listView p.cellTitle, .listView p.cellTitleWithBg {
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 400;
+  padding: 0; }
+
+.listView p.cellContent {
+  margin-top: 10px;
+  text-align: right;
+  font-size: 14px;
+  line-height: 24px;
+  font-weight: 400;
+  padding: 10px 0 0 0; }
+.listView p.cellTitleWithBg {
+  border-bottom: 1px solid #f0f0f0;
+  padding-left: 10px;
+  text-align: center; }
+
+.profileWrapper80,
+.profileWrapper40,
+.iconWrapper80 {
+  z-index: 1; }
+
+.profileWrapper80 {
+  width: 80px;
+  height: 80px;
+  position: relative;
+  margin: 0 auto;
+  border-radius: 60px;
+  box-shadow: 0 5px 20px -10px rgba(0, 0, 0, 0.8); }
+
+.profileWrapper40 {
+  width: 40px;
+  height: 40px;
+  position: relative;
+  border-radius: 40px;
+  box-shadow: 0 5px 20px -10px rgba(0, 0, 0, 0.8); }
+
+.iconWrapper80 {
+  width: 80px;
+  height: 80px;
+  position: relative;
+  margin: 0 auto; }
+
+.profileWrapper80 > img,
+.profileWrapper40 > img,
+.iconWrapper80 > img {
+  position: absolute;
+  display: block;
+  z-index: 0; }
+
+.row {
+  padding: 0 20px;
+  position: relative; }
+
+.col {
+  display: inline-block;
+  vertical-align: middle; }
+
+.col-100 {
+  width: 20%; }
+
+.col-20 {
+  width: 20%; }
+
+.col-50 {
+  width: 49%; }
+
+.colProfile {
+  text-align: center; }
+
+.col-80 {
+  width: 79%; }
+
+.col-30 {
+  width: 30%; }
+
+.col-70 {
+  width: 68%; }
+
+.col-10 {
+  width: 10%; }
+
+.col-90 {
+  width: 88%; }
+
+.inlineMessage {
+  line-height: 25px;
+  padding: 10px 25px;
+  margin-top: 20px; }
+
+.inlineMessage > p {
+  line-height: 25px;
+  background-color: #AED581;
+  border-radius: 3px;
+  padding: 0 20px; }
+
+.btnListRight {
+  display: flex;
+  -webkit-flex-direction: column; /* Safari */ 
+  flex-direction: column; 
+  float: right;
+  margin-top: 20px;
+  z-index: 9;
+  cursor: pointer; }
+
+.btnListRight > li {
+  text-align: left;
+  float: left;
+  padding: 10px 25px;
+  background-color: whitesmoke;
+  margin-top: 20px;
+  margin-right: 100px;
+  border-radius: 100px; }
+
+.btnList {
+  display: flex;
+  -webkit-flex-wrap: wrap; /* Safari */
+  flex-wrap: wrap;
+  z-index: 9;
+  cursor: pointer; }
+
+.btnList > li {
+  text-align: center;
+  margin-top: 20px;
+  margin-right: 50px;
+  padding: 10px 25px;
+  background-color: lightpink;
+  border-radius: 100px; }
+
+p.cellIndexTitle {
+  font-size: 28px;
+  line-height: 24px;
+  font-weight: 400;
+  padding: 0; }
+
+.newPostBtn {
+  margin-top: 20px;
+  margin-left: 5%;
+  margin-bottom: 20px;
+  float: left;
+  cursor: pointer;}
+
+.newPostBtn > a {
+  text-align: center;
+  font-size: 15px;
+  padding: 10px 25px;
+  background-color: orange;}
+
+.newPostBtn > a:hover {
+  background-color: #ffd35b; }
+
+
+
+
+.noteUploadDropZone {
+  width: 100%;
+  margin: 20px auto;
+  height: 150px;
+  background-color: #ECEFF1;
+  position: relative;
+  overflow: hidden;
+  border-radius: 3px; }
+
+.noteUploadDropZoneBtn {
+  position: absolute;
+  width: 100%;
+  height: 150px;
+  position: block;
+  top: 0;
+  left: 0;
+  opacity: 0; }
+
+.noteUploadDropZoneIndicator,
+.noteUploadDropZoneFileSelected {
+  position: absolute;
+  color: #37474F;
+  height: 150px;
+  width: 100%;
+  text-align: center; }
+
+.noteUploadDropZoneFileSelected {
+  line-height: 40px; }
+
+.noteUploadDropZoneIndicatorTitle {
+  font-size: 42px;
+  line-height: 150px;
+  font-weight: 200; }
+
+.noteUploadDropZoneFileSelected > img {
+  display: inline-block;
+  vertical-align: middle;
+  margin-top: 30px; }
+
+.noteUploadDropZoneFileSelectedTitle {
+  display: inline-block; }
+
+.noteUploadProcess,
+.noteUploadSuccess,
+.noteUploadFailed {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #ffffff;
+  height: 150px;
+  width: 100%;
+  text-align: center; }
+
+
+.popupTitle {
+  font-size: 36px;
+  line-height: 80px;
+  font-weight: 200; }
+
+.popupMessage {
+  font-size: 18px;
+  line-height: 24px; }
+
+.popupBtn {
+  position: absolute;
+  background-color: #ECEFF1;
+  color: #263238;
+  border: none;
+  font-size: 18px;
+  transition: .2s; }
+
+.popupBtn:hover {
+  background-color: #CFD8DC; }
+
+.popupBtnNoteUploadOk {
+  height: 30px;
+  width: 120px;
+  right: 20px;
+  bottom: 20px; }
+
+.dropDownLarge {
+  height: 60px;
+  width: 90%;
+  display: block;
+  margin: 20px auto;
+  font-size: 18px;
+  line-height: 60px;
+  border-radius: 4px;
+  outline: none; }
+
+.fileCell {
+  position: relative; }
+
+.noteDeleteConfirm,
+.noteDeleteProcess,
+.noteDeleteSuccess,
+.noteDeleteFailed {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #ffffff;
+  height: 150px;
+  width: 100%;
+  text-align: center;
+  z-index: 10; }
+
+.popupBtnNoteDeleteDelete,
+.popupBtnNoteDeleteCancel,
+.popupBtnNoteDeleteOk {
+  bottom: 20px;
+  width: 120px;
+  right: 20px; }
+
+.popupBtnNoteDeleteCancel {
+  right: 20px; }
+
+.popupBtnNoteDeleteDelete {
+  right: 160px; }
+

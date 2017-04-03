@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>COURSERV</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- Global CSS -->
+	<link rel="stylesheet" href="css/fonts.css" type="text/css" charset="utf-8">
+	<link rel="stylesheet" href="css/reset.css" type="text/css" charset="utf-8">
+	<link rel="stylesheet" href="css/layout.css" type="text/css" charset="utf-8">
+</head>
+
+<body>
+	<div class="mainView">
+		<div class="loginHeader">
+			
+		</div>
+		<div class="content">
+			<div class="loginView">
+				<form class="loginForm" id="loginForm" action="">
+					<p class="cellTitle">Username</p>
+					<input type="text">
+					<p class="cellTitle">Password</p>
+					<input type="password">
+				</form>
+				<button class="fullWidthButton loginBtn" onclick="loginUi()">Login</button>
+				<div class="loginProcess">
+					<div class="loginLoading">
+						<img src="images/loadingIcon.GIF" width="60" height="80" alt="">
+						<p>Logining in</p>
+					</div>
+					<div class="loginFailed">
+						<p class="loginFailedTitle">Cannot Login</p>
+						<p class="loginFailedMessage">Check username & password.</p>
+						<button>Back</button>
+					</div>
+				</div>
+			</div>
+			<div class="registerView">
+				<form class="registerForm" id="registerForm" action="">
+					<p class="cellTitle">Username</p>
+					<input type="text">
+					<p class="cellTitle">Password</p>
+					<input type="password">
+					<p class="cellTitle">Password Again</p>
+					<input type="password">
+					<p class="cellTitle">Email</p>
+					<input type="text">
+				</form>
+				<button class="fullWidthButton registerBtn" onclick="registerUi()">Register</button>
+				<!--
+				<div class="registerProcess">
+					<div class="registerLoading">
+						<img src="images/loadingIcon.GIF" width="60" height="80" alt="">
+						<p>Loading</p>
+					</div>
+					<div class="registerFailed">
+						<p class="registerFailedTitle">Cannot Register</p>
+						<p class="registerFailedMessage">The user name already exit.</p>
+						<button>Back</button>
+					</div>
+				</div>
+				-->
+			</div>
+		</div>
+		<div class="loginFooter">
+		
+		</div>
+	</div>
+	
+	<!------------ End of body ------------>
+	<!-- Global JS -->
+	<script src="js/jquery.min.js"></script>
+	<script src="js/layout.js"></script>
+</body>
+</html>
