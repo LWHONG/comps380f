@@ -5,7 +5,10 @@
  */
 package edu.ouhk.comps380f.controller;
 
+import edu.ouhk.comps380f.dao.CDFUserRepository;
+import edu.ouhk.comps380f.model.CDFUser;
 import java.security.Principal;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,9 +21,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 @RequestMapping("/index")
 public class HomeController {
+    @Autowired
+    CDFUserRepository userRepo;
+
     @RequestMapping(value = {""}, method = RequestMethod.GET)
     public String index(ModelMap model, Principal principal) {
-        model.addAttribute("username", principal.getName());
+        if (principal != null) {
+            CDFUser user = userRepo.findByUsername(principal.getName());
+            if (user != null) {
+                model.addAttribute("user", user);
+            }
+        }
         return "index";
     }
 }

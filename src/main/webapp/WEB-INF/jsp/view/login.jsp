@@ -23,6 +23,12 @@
         <c:if test="${param.logout != null}">
             <p>You have logged out.</p>
         </c:if>
+        <c:if test="${register != null and register == 'success'}">
+            <p>You have registered.</p>
+        </c:if>
+        <c:if test="${register != null and register == 'exist'}">
+            <p>The username have existed.</p>
+        </c:if>
         <div class="mainView">
             <div class="loginHeader">
 
@@ -31,10 +37,10 @@
                 <div class="loginView">
                     <form class="loginForm" id="loginForm" action="login" method="POST">
                         <p class="cellTitle">Username</p>
-                        <input type="text" id="username" name="username">
+                        <input type="text" id="login_username" name="username">
                         <p class="cellTitle">Password</p>
-                        <input type="password" id="password" name="password">
-                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                        <input type="password" id="login_password" name="password">
+                        <input type="hidden" id="csrf" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                         <input class="fullWidthButton loginBtn" type="submit" value="Login" onclick="loginUi()" />
                     </form>
                     <!-- <button class="fullWidthButton loginBtn" onclick="loginUi()">Register</button> -->   
@@ -51,13 +57,14 @@
                     </div>-->
                 </div>
                 <div class="registerView">
-                    <form class="registerForm" id="registerForm" action="register" method='POST' onclick="return validate();">
+                    <form class="registerForm" id="registerForm" action="register" method='POST' onSubmit="return validate();">
                         <p class="cellTitle">Username</p>
-                        <input type="text" id="username" name="username" />
+                        <input type="text" id="register_username" name="username" />
                         <p class="cellTitle">Password</p>
-                        <input type="password" id="password" name="password" />
+                        <input type="password" id="register_password" name="password" />
                         <p class="cellTitle">Password Again</p>
-                        <input type="password" id="password_again" name="password" />
+                        <input type="password" id="register_password_again" />
+                        <input type="hidden" id="csrf" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                         <input class="fullWidthButton registerBtn" type="submit" value="Register" onclick="registerUi()" />                        
                     </form>
                     <!-- <button class="fullWidthButton registerBtn" onclick="registerUi()">Register</button> -->
@@ -85,5 +92,6 @@
         <!-- Global JS -->
         <script src="<c:url value="/resources/js/jquery.min.js" />"></script>
         <script src="<c:url value="/resources/js/layout.js" />"></script>
+        <script src="<c:url value="/resources/js/js.js" />"></script>
     </body>
 </html>

@@ -1,6 +1,6 @@
 <%-- 
-    Document   : index
-    Created on : 2017年4月3日, 下午06:56:57
+    Document   : post
+    Created on : 2017年4月4日, 下午09:42:18
     Author     : LAM
 --%>
 
@@ -21,7 +21,7 @@
         <div class="view mainView">
             <div class="view sidebarViewContainer">
                 <div class="view sidebar">
-                    <div class="sitelogo"><img src="<c:url value="/resources/images/sideLogo.png" />" height="36" width="36" alt="">COURSERV</div>
+                    <div class="sitelogo"><img src="images/sideLogo.png" height="36" width="36" alt="">COURSERV</div>
                     <div class="profilePicture">
                         <div class="profilePictureWrapper">
                             <img src="<c:url value="/resources/usersImages/e.jpg" />" height="200" width="150" alt="">
@@ -40,7 +40,9 @@
                                                                                     <button class="changeProfilePictureOk">OK</button>
                                                                             </div> -->
                         </div>
+
                     </div>
+
                     <!--
                     <p class="sidebarSectionTitle">You are</p>
                     <p class="sidebarUsername">Visitors</p>
@@ -55,83 +57,63 @@
                 <div class="view contentView">
 
                     <div class="pageHeader">
-                        <p>HOME</p>
+                        <p>${category.name} Discussion</p>
                     </div>
 
                     <div class="contentBlock contentMainBlock">
                         <div class="contentBlockHeader">
-                            <p>Welcome to COURSERV</p>
+                            <p>Post ${category.name}</p>
                         </div>
                         <ul class="listView">
                             <li>
-                                <div class="row">
-                                    <div class="col colContent">
-                                        <p class="cellIndexTitle">Select the Categories:</p>
-                                        <ul class="btnList">
-                                            <li><a href="<c:url value="/lecture" />">Lecture</a></li>
-                                            <li><a href="<c:url value="/lab" />">Lab</a></li>
-                                            <li><a href="<c:url value="/other" />">Other</a></li>
+                                <form id="postForm" action="<c:url value="post" />" method="POST" enctype="multipart/form-data">
+                                    <div class="row">
+                                        <p class="cellTitle">Title</p>
+                                        <input type="text" name="title">
+                                    </div>
+                                    <div class="row">
+                                        <p class="cellTitle">Content</p>
+                                        <textarea name="content" id="" cols="30" rows="10"></textarea>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="noteUploadDropZone">
+
+                                            <div class="noteUploadDropZoneIndicator">
+                                                <p class="noteUploadDropZoneIndicatorTitle">Click or Drop file here.</p>
+                                            </div>
+                                            <div class="noteUploadDropZoneFileSelected">
+                                                <img src="<c:url value="/resources/images/icon-upload-fileselected.png" />" height="60" width="60" alt=""><br>
+                                                <p class="noteUploadDropZoneFileSelectedTitle">Selected file path.</p>
+                                            </div>
+                                            <input class="noteUploadDropZoneBtn" type="file">
+                                            <!-- 									<div class="noteUploadProcess">
+                                                                                                                            <p class="popupTitle">Processing</p>
+                                                                                                                            <img src="images/loadingIcon.GIF" width="45" height="60" alt="">
+                                                                                                                    </div>
+                                                                                                                    <div class="noteUploadSuccess">
+                                                                                                                            <p class="popupTitle">Upload Success!</p>
+                                                                                                                            <p class="popupMessage">Note successfully uploaded.</p>
+                                                                                                                            <button class="popupBtn popupBtnNoteUploadOk">OK</button>
+                                                                                                                    </div>
+                                                                                                                    <div class="noteUploadFailed">
+                                                                                                                            <p class="popupTitle">Opps!</p>
+                                                                                                                            <p class="popupMessage">Problems occurs.</p>
+                                                                                                                            <button class="popupBtn popupBtnNoteUploadOk">OK</button>
+                                                                                                                    </div> -->
+                                        </div>
+                                    </div>
+                                    <input type="hidden" id="csrf" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                    <div class="row">
+                                        <ul class="btnListRight">
+                                            <li><input type="submit" value="Post" /><!--<a href="" id="post">Post</a>!--></li>
                                         </ul>
                                         <br class="clear">
                                     </div>
-                                </div>
+                                </form>
                             </li>
                         </ul>
                     </div>
-
-
-
-                    <div class="contentBlock contentMainBlock">
-                        <div class="contentBlockHeader">
-                            <p>Poll</p>
-                        </div>
-                        <ul class="listView">
-                            <li>
-                                <div class="row">
-                                    <div class="col colContent">
-                                        <p class="cellTitle">What kind of IT jobs do you like to do?</p>
-                                        <ul class="btnListRight">
-                                            <li><input type="radio" name="ans" value="1">Programer</li>
-                                            <li><input type="radio" name="ans" value="2">Web Designer</li> 
-                                            <li><input type="radio" name="ans" value="3">Database Administrator</li>
-                                            <li><input type="radio" name="ans" value="4">IT Security Officer</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <ul class="btnListRight">
-                                        <li><a href="">Submit</a></li>
-                                    </ul>
-                                    <br class="clear">
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div class="contentBlock contentMainBlock">
-                        <div class="contentBlockHeader">
-                            <p>Poll Result</p>
-                        </div>
-                        <ul class="listView">
-                            <li>
-                                <div class="row">
-                                    <div class="col colContent">
-                                        <p class="cellTitle">What kind of IT jobs do you like to do?</p>
-                                        <ul class="btnListRight">
-                                            <li>Programer: 20</li>
-                                            <li>Web Designer: 15</li> 
-                                            <li>Database Administrator: 8</li>
-                                            <li>IT Security Officer: 5</li>
-                                        </ul>
-                                        <br class="clear">
-                                        <p class="cellContent">The number of users voted: 48</p>
-
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-
                 </div>
             </div>
             <nav>
@@ -148,7 +130,7 @@
                         <c:otherwise>
                             <li class="navOptionLoginout"><a href="<c:url value="/login" />"><div class="navItemActiveIdicator"></div><p>LOGIN</p></a></li>
                         </c:otherwise>
-                    </c:choose>     
+                    </c:choose>
                     <li class="navOptionBackend"><a href="#"><div class="navItemActiveIdicator"></div><p>BACKEND</p></a></li>
                 </ul>
             </nav>

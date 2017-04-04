@@ -1,6 +1,6 @@
 <%-- 
-    Document   : index
-    Created on : 2017年4月3日, 下午06:56:57
+    Document   : threads
+    Created on : 2017年4月4日, 下午09:26:15
     Author     : LAM
 --%>
 
@@ -40,7 +40,9 @@
                                                                                     <button class="changeProfilePictureOk">OK</button>
                                                                             </div> -->
                         </div>
+
                     </div>
+
                     <!--
                     <p class="sidebarSectionTitle">You are</p>
                     <p class="sidebarUsername">Visitors</p>
@@ -55,83 +57,34 @@
                 <div class="view contentView">
 
                     <div class="pageHeader">
-                        <p>HOME</p>
+                        <p>${category.name} Discussion</p>
+                    </div>                  
+                <security:authorize access="hasAnyRole('ADMIN', 'USER')">     
+                    <div class="newPostBtn">
+                        <a href="<c:url value="/${category.id}/post" />">New Post</a>
                     </div>
-
+                </security:authorize>
+                <c:forEach items="${threads}" var="thread">
                     <div class="contentBlock contentMainBlock">
                         <div class="contentBlockHeader">
-                            <p>Welcome to COURSERV</p>
+                            <a href="<c:url value="/${category.id}/thread/${thread.id}" />"><p>${thread.title}</p></a>
                         </div>
                         <ul class="listView">
                             <li>
                                 <div class="row">
+                                    <div class="col colProfile">
+                                        <div class="profileWrapper80">
+                                            <img src="<c:url value="/resources/usersImages/cat.jpg" />" height="200" width="150" alt="">
+                                        </div>
+                                    </div>
                                     <div class="col colContent">
-                                        <p class="cellIndexTitle">Select the Categories:</p>
-                                        <ul class="btnList">
-                                            <li><a href="<c:url value="/lecture" />">Lecture</a></li>
-                                            <li><a href="<c:url value="/lab" />">Lab</a></li>
-                                            <li><a href="<c:url value="/other" />">Other</a></li>
-                                        </ul>
-                                        <br class="clear">
+                                        <p class="cellTitle">${thread.username}</p>
                                     </div>
                                 </div>
                             </li>
                         </ul>
                     </div>
-
-
-
-                    <div class="contentBlock contentMainBlock">
-                        <div class="contentBlockHeader">
-                            <p>Poll</p>
-                        </div>
-                        <ul class="listView">
-                            <li>
-                                <div class="row">
-                                    <div class="col colContent">
-                                        <p class="cellTitle">What kind of IT jobs do you like to do?</p>
-                                        <ul class="btnListRight">
-                                            <li><input type="radio" name="ans" value="1">Programer</li>
-                                            <li><input type="radio" name="ans" value="2">Web Designer</li> 
-                                            <li><input type="radio" name="ans" value="3">Database Administrator</li>
-                                            <li><input type="radio" name="ans" value="4">IT Security Officer</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <ul class="btnListRight">
-                                        <li><a href="">Submit</a></li>
-                                    </ul>
-                                    <br class="clear">
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div class="contentBlock contentMainBlock">
-                        <div class="contentBlockHeader">
-                            <p>Poll Result</p>
-                        </div>
-                        <ul class="listView">
-                            <li>
-                                <div class="row">
-                                    <div class="col colContent">
-                                        <p class="cellTitle">What kind of IT jobs do you like to do?</p>
-                                        <ul class="btnListRight">
-                                            <li>Programer: 20</li>
-                                            <li>Web Designer: 15</li> 
-                                            <li>Database Administrator: 8</li>
-                                            <li>IT Security Officer: 5</li>
-                                        </ul>
-                                        <br class="clear">
-                                        <p class="cellContent">The number of users voted: 48</p>
-
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-
+                </c:forEach>
                 </div>
             </div>
             <nav>
@@ -148,7 +101,7 @@
                         <c:otherwise>
                             <li class="navOptionLoginout"><a href="<c:url value="/login" />"><div class="navItemActiveIdicator"></div><p>LOGIN</p></a></li>
                         </c:otherwise>
-                    </c:choose>     
+                    </c:choose>
                     <li class="navOptionBackend"><a href="#"><div class="navItemActiveIdicator"></div><p>BACKEND</p></a></li>
                 </ul>
             </nav>
