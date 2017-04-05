@@ -13,8 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.View;
-import org.springframework.web.servlet.view.RedirectView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  *
@@ -24,7 +23,7 @@ import org.springframework.web.servlet.view.RedirectView;
 @RequestMapping("/register")
 public class RegisterController {
     @Autowired
-    CDFUserRepository userRepo;
+    private CDFUserRepository userRepo;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -51,14 +50,14 @@ public class RegisterController {
     }
     
     @RequestMapping(value = {""}, method = RequestMethod.GET)
-    public View registerGET(Form form, ModelMap model) {
-        return new RedirectView("/login", true);
+    public String registerGET(Form form, ModelMap model) {
+        return "redirect:/login";
     }
     
     @RequestMapping(value = {""}, method = RequestMethod.POST)
-    public String registerPOST(Form form, ModelMap model) {
+    public String registerPOST(Form form, RedirectAttributes attributes) {
         if (userRepo.findByUsername(form.getUsername()) != null) {
-            model.addAttribute("register", "exist");
+            attributes.addFlashAttribute("register", "exist");
         } else {
             CDFUser user = new CDFUser();
             user.setUsername(form.getUsername());
@@ -66,8 +65,8 @@ public class RegisterController {
             user.addRole("ROLE_USER");
             userRepo.create(user);
             //logger.info("User " + form.getUsername() + " created.");
-            model.addAttribute("register", "success");
+            attributes.addFlashAttribute("register", "success");
         }
-        return "login";
+        return "redirect:/login";
     }
 }

@@ -18,6 +18,7 @@ public class CDFThread {
     private String title;
     private String content;
     private String category;
+    private List<CDFAttachment> attachments = new ArrayList<>();
     private List<CDFReply> replies = new ArrayList<>();
 
     public int getId() {
@@ -60,10 +61,33 @@ public class CDFThread {
         this.category = category;
     }
 
+    public List<CDFAttachment> getAttachments() {
+        return attachments;
+    }
+
+    public void setAttachments(List<CDFAttachment> attachments) {
+        this.attachments = attachments;
+    }
+
+    public CDFAttachment getAttachment(int attachmentId) {
+        CDFAttachment attachment = null;
+        for (CDFAttachment item : this.attachments) {
+            if (item.getId() == attachmentId) {
+                attachment = item;
+                break;
+            }
+        }
+        return attachment;
+    }
+    
+    public void addAttachment(CDFAttachment attachment) {
+        this.attachments.add(attachment);
+    }
+        
     public List<CDFReply> getReplies() {
         return replies;
     }
-
+    
     public void setReplies(List<CDFReply> replies) {
         this.replies = replies;
     }

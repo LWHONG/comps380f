@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping("/index")
 public class HomeController {
     @Autowired
-    CDFUserRepository userRepo;
+    private CDFUserRepository userRepo;
 
     @RequestMapping(value = {""}, method = RequestMethod.GET)
     public String index(ModelMap model, Principal principal) {

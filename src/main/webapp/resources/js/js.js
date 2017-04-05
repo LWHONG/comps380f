@@ -1,9 +1,5 @@
 function validate() {
-    if ($('#register_password').val() != $('#register_password_again').val()) {
-        alert('The password must be same');
-        return false;
-    }
-    return true;
+    return ($('#password').val() == $('#password_again').val());
 }
 
 function logout(path, csfs) {
@@ -11,18 +7,18 @@ function logout(path, csfs) {
 }
 
 function post(path, params, method) {
-    method = method || 'post'; 
+    method = method || "post"; 
     
-    var form = document.createElement('form');
-    form.setAttribute('method', method);
-    form.setAttribute('action', path);
+    var form = document.createElement("form");
+    form.setAttribute("method", method);
+    form.setAttribute("action", path);
 
     for (var key in params) {
         if(params.hasOwnProperty(key)) {
-            var hiddenField = document.createElement('input');
-            hiddenField.setAttribute('type', 'hidden');
-            hiddenField.setAttribute('name', key);
-            hiddenField.setAttribute('value', params[key]);
+            var hiddenField = document.createElement("input");
+            hiddenField.setAttribute("type", "hidden");
+            hiddenField.setAttribute("name", key);
+            hiddenField.setAttribute("value", params[key]);
 
             form.appendChild(hiddenField);
          }

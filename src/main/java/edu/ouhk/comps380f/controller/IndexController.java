@@ -18,8 +18,8 @@ import org.springframework.web.servlet.view.RedirectView;
 @Controller
 public class IndexController {
     @RequestMapping(value = {"/"}, method = RequestMethod.GET)
-    public View index() {
-        return new RedirectView("/index", true);
+    public String index() {
+        return "redirect:/index";
     }
 
     @RequestMapping(value = {"/login"}, method = RequestMethod.GET)

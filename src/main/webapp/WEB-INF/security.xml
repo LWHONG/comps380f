@@ -34,7 +34,10 @@
     </authentication-manager>
 
     <http auto-config="true">
-        <intercept-url pattern="/**/post" access="hasAnyRole('USER','ADMIN')" />
+        <!--<intercept-url pattern="/admin/**" access="hasRole('ADMIN')" />-->
+        <intercept-url pattern="/**/post" access="hasAnyRole('ADMIN', 'USER')" />
+        <intercept-url pattern="/**/**/attachment/**/**" access="hasAnyRole('ADMIN', 'USER')" />
+        <intercept-url pattern="/**/**/delete/**" access="hasAnyRole('ADMIN')" />
         <form-login login-page="/login"
                     authentication-failure-url="/login?error" />
         <logout logout-success-url="/login?logout"

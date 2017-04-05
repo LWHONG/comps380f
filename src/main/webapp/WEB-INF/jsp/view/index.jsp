@@ -78,9 +78,7 @@
                             </li>
                         </ul>
                     </div>
-
-
-
+                <security:authorize access="hasAnyRole('ADMIN', 'USER')"> 
                     <div class="contentBlock contentMainBlock">
                         <div class="contentBlockHeader">
                             <p>Poll</p>
@@ -107,7 +105,7 @@
                             </li>
                         </ul>
                     </div>
-
+                </security:authorize>                                       
                     <div class="contentBlock contentMainBlock">
                         <div class="contentBlockHeader">
                             <p>Poll Result</p>

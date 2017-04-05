@@ -77,13 +77,25 @@
                                         <p class="cellContent">${thread.content}</p>
                                     </div>
                                 </div>
+                        <security:authorize access="hasAnyRole('ADMIN', 'USER')">
+                            <c:forEach items="${thread.attachments}" var="attachment">
+                                <span style="margin-left: 60%; background: #ddd;">${attachment.name}</span>
                                 <div class="row">
                                     <ul class="btnListRight">
-                                        <li><a href="">Delete</a></li>
-                                        <li><a href="">Download</a></li>
+                                        <li><a href="<c:url value="/${category.id}/${thread.id}/attachment/thread/${attachment.id}" />">Download</a></li>
                                     </ul>
                                     <br class="clear">
                                 </div>
+                            </c:forEach>
+                        </security:authorize>
+                            <security:authorize access="hasAnyRole('ADMIN')">  
+                                <div class="row">
+                                    <ul class="btnListRight">
+                                        <li><a href="<c:url value="/${category.id}/${thread.id}/delete" />">Delete</a></li>
+                                    </ul>
+                                    <br class="clear">
+                                </div>
+                            </security:authorize>
                                 <!-- 							<div class="noteDeleteConfirm">
                                                                                                 <p class="popupTitle">Delete Note</p>
                                                                                                 <p class="popupMessage">[Filename] will delete permanently.</p>
@@ -108,7 +120,7 @@
                             </li>
                         <security:authorize access="hasAnyRole('ADMIN', 'USER')">  
                             <li>
-                                <form id="messageForm" class="messageForm" action="${thread.id}/reply"  method="POST">
+                                <form id="messageForm" class="messageForm" action="${thread.id}/reply"  method="POST" enctype="multipart/form-data">
                                     <div class="row">
                                         <div class="col colProfile">
                                             <div class="iconWrapper80">
@@ -118,6 +130,7 @@
                                         <div class="col colContent">
                                             <p class="cellTitle">Reply Message</p>
                                             <input type="text" name="content" />
+                                            <input class="" type="file" name="attachments" multiple="multiple" />
                                         </div>
                                     </div>
                                     <input type="hidden" id="csrf" name="${_csrf.parameterName}" value="${_csrf.token}"/>
@@ -131,7 +144,7 @@
                             </li>
                         </security:authorize>        
                             <div class="contentBlockHeader">
-                                <p>Comments</p>
+                                <p>Comments (Total : ${replies_size})</p>
                             </div>
                         <c:forEach items="${thread.replies}" var="reply">
                             <li>
@@ -146,12 +159,25 @@
                                         <p class="cellContent">${reply.content}</p>
                                     </div>
                                 </div>
+                        <security:authorize access="hasAnyRole('ADMIN', 'USER')">        
+                            <c:forEach items="${reply.attachments}" var="attachment">
+                                <span style="margin-left: 60%; background: #ddd;">${attachment.name}</span>
                                 <div class="row">
                                     <ul class="btnListRight">
-                                        <li><a href="">Delete</a></li>
+                                        <li><a href="<c:url value="/${category.id}/${thread.id}/attachment/reply/${attachment.id}" />">Download</a></li>
                                     </ul>
                                     <br class="clear">
                                 </div>
+                            </c:forEach>
+                        </security:authorize>
+                            <security:authorize access="hasAnyRole('ADMIN')"> 
+                                <div class="row">
+                                    <ul class="btnListRight">
+                                        <li><a href="<c:url value="/${category.id}/${thread.id}/delete/${reply.id}" />">Delete</a></li>
+                                    </ul>
+                                    <br class="clear">
+                                </div>
+                            </security:authorize>
                             </li>   
                         </c:forEach> 
                         </ul>

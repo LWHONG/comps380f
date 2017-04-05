@@ -64,10 +64,11 @@
                         <a href="<c:url value="/${category.id}/post" />">New Post</a>
                     </div>
                 </security:authorize>
+                <div style="margin: 40px; font-size: 24pt;">Total : ${threads_size}</div>
                 <c:forEach items="${threads}" var="thread">
                     <div class="contentBlock contentMainBlock">
                         <div class="contentBlockHeader">
-                            <a href="<c:url value="/${category.id}/thread/${thread.id}" />"><p>${thread.title}</p></a>
+                            <a href="<c:url value="/${category.id}/${thread.id}" />"><p>${thread.title}</p></a>
                         </div>
                         <ul class="listView">
                             <li>

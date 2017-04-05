@@ -24,7 +24,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class CDFUserService implements UserDetailsService  {
     @Autowired
-    CDFUserRepository userRepo;
+    private CDFUserRepository userRepo;
     
     @Override
     public UserDetails loadUserByUsername(String username)

@@ -78,15 +78,15 @@
 
                                     <div class="row">
                                         <div class="noteUploadDropZone">
-
-                                            <div class="noteUploadDropZoneIndicator">
+                                            <input class="" type="file" name="attachments" multiple="multiple" />
+                                            <!--<div class="noteUploadDropZoneIndicator">
                                                 <p class="noteUploadDropZoneIndicatorTitle">Click or Drop file here.</p>
                                             </div>
                                             <div class="noteUploadDropZoneFileSelected">
                                                 <img src="<c:url value="/resources/images/icon-upload-fileselected.png" />" height="60" width="60" alt=""><br>
                                                 <p class="noteUploadDropZoneFileSelectedTitle">Selected file path.</p>
-                                            </div>
-                                            <input class="noteUploadDropZoneBtn" type="file">
+                                            </div>-->
+                                            <!--<input class="noteUploadDropZoneBtn" type="file" name="attachments" multiple="multiple" />-->
                                             <!-- 									<div class="noteUploadProcess">
                                                                                                                             <p class="popupTitle">Processing</p>
                                                                                                                             <img src="images/loadingIcon.GIF" width="45" height="60" alt="">
