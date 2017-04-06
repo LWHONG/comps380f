@@ -1,6 +1,6 @@
 <%-- 
-    Document   : threads
-    Created on : 2017年4月4日, 下午09:26:15
+    Document   : profile
+    Created on : 2017年4月7日, 上午01:41:20
     Author     : LAM
 --%>
 
@@ -43,10 +43,6 @@
 
                     </div>
 
-                    <!--
-                    <p class="sidebarSectionTitle">You are</p>
-                    <p class="sidebarUsername">Visitors</p>
-                    -->				
                     <p class="sidebarSectionTitle">Login as:</p>
                     <p class="sidebarUsername">${user.username}</p>
                 </div>
@@ -55,35 +51,93 @@
                 <div class="view contentView">
 
                     <div class="pageHeader">
-                        <p>${category.name} Discussion</p>
-                    </div>                  
-                <security:authorize access="hasAnyRole('ADMIN', 'USER')">
-                    <div class="newPostBtn">
-                        <a href="<c:url value="/${category.id}/post" />">New Post</a>
+                        <p>Profile</p>
                     </div>
-                </security:authorize>
-                <div style="margin: 40px; font-size: 24pt;">Total : ${threads_size}</div>
-                <c:forEach items="${threads}" var="thread">
+
                     <div class="contentBlock contentMainBlock">
                         <div class="contentBlockHeader">
-                            <a href="<c:url value="/${category.id}/${thread.id}" />"><p>${thread.title}</p></a>
+                            <p>Personal Information</p>
                         </div>
                         <ul class="listView">
                             <li>
                                 <div class="row">
                                     <div class="col colProfile">
-                                        <div class="profileWrapper80">
-                                            <img src="<c:url value="/resources/usersImages/cat.jpg" />" height="200" width="150" alt="">
+                                        <div class="iconWrapper80">
+                                            <img src="<c:url value="/resources/images/icon-info-username.png" />" height="512" width="512" alt="">
                                         </div>
                                     </div>
                                     <div class="col colContent">
-                                        <p class="cellTitle">${thread.username}</p>
+                                        <form action="" class="usernameForm" id="usernameForm">
+                                            <p class="cellTitle">Name</p>
+                                            <input type="text" value="${user.username}" readonly>
+                                        </form>
                                     </div>
+                                </div>
+                            </li>
+                            <!--<li>
+                                <div class="row">
+                                    <div class="col colProfile">
+                                        <div class="iconWrapper80">
+                                            <img src="<c:url value="/resources/images/icon-info-email.png" />" height="512" width="512" alt="">
+                                        </div>
+                                    </div>
+                                    <div class="col colContent">
+                                        <form action="" class="emailForm" id="emailForm">
+                                            <p class="cellTitle">Email Address</p>
+                                            <input type="text" value="maxBlack@xx.xxx">
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col col-70">
+                                        <div class="inlineMessage">
+                                            <p>Email address updated.</p>
+                                        </div>
+                                    </div>
+                                    <div class="col col-30">
+                                        <ul class="btnListRight">
+                                            <li><a href="">Update</a></li>
+                                        </ul>
+                                        <br class="clear">
+                                    </div>
+
+                                </div>
+                            </li>-->
+                        </ul>
+                    </div>
+
+                    <div class="contentBlock contentMainBlock">
+                        <div class="contentBlockHeader">
+                            <p>Password</p>
+                        </div>
+                        <ul class="listView">
+                            <li>
+                                <div class="row">
+                                    <div class="col colProfile">
+                                        <div class="iconWrapper80">
+                                            <img src="<c:url value="/resources/images/icon-info-password.png" />" height="512" width="512" alt="">
+                                        </div>
+                                    </div>
+                                    <div class="col colContent">
+                                        <form action="" class="changePassword" id="changePassword">
+                                            <p class="cellTitle">Current Password</p>
+                                            <input type="password">
+                                            <p class="cellTitle">New Password</p>
+                                            <input type="password" placeholder="New Password">
+                                            <input type="password" placeholder="Again">
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <ul class="btnListRight">
+                                        <li><a href="">Update</a></li>
+                                    </ul>
+                                    <br class="clear">
                                 </div>
                             </li>
                         </ul>
                     </div>
-                </c:forEach>
+
                 </div>
             </div>
             <nav>

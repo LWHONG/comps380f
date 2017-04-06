@@ -1,5 +1,9 @@
 function validate() {
-    return ($('#password').val() == $('#password_again').val());
+    if ($('#password').val() != $('#password_confirm').val()) {
+        alert("The password must be same.");
+        return false;
+    }
+    return true;
 }
 
 function logout(path, csfs) {

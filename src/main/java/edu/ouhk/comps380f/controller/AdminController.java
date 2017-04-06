@@ -7,15 +7,16 @@ package edu.ouhk.comps380f.controller;
 
 import edu.ouhk.comps380f.dao.CDFUserRepository;
 import edu.ouhk.comps380f.model.CDFUser;
+import java.security.Principal;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.servlet.view.RedirectView;
 
 /**
  *
@@ -30,14 +31,35 @@ public class AdminController {
     @Autowired
     private PasswordEncoder passwordEncoder;
     
+    @RequestMapping(value = {""}, method = RequestMethod.GET)
+    public String backend(ModelMap model, Principal principal) {
+        if (principal != null) {
+            CDFUser user = userRepo.findByUsername(principal.getName());
+            if (user != null) {
+                model.addAttribute("user", user);
+            }
+        }
+        List<CDFUser> users = userRepo.findAll();
+        model.addAttribute("users", users);
+        return "backend";
+    }
+
+    @RequestMapping(value = {"/"}, method = RequestMethod.GET)
+    public String backendSlash(ModelMap model) {
+        List<CDFUser> users = userRepo.findAll();
+        model.addAttribute("users", users);
+        return "redirect:/admin";
+    }
+    /*
     @RequestMapping(value = {"register"}, method = RequestMethod.GET)
     public String admin() {
         return "admin";
     }
-    
+    */
     public static class Form {
         private String username;
         private String password;
+        private String role;
 
         public String getUsername() {
             return username;
@@ -54,21 +76,35 @@ public class AdminController {
         public void setPassword(String password) {
             this.password = password;
         }
+
+        public String getRole() {
+            return role;
+        }
+
+        public void setRole(String role) {
+            this.role = role;
+        }
     }
     
     @RequestMapping(value = {"register"}, method = RequestMethod.POST)
-    public String register(RegisterController.Form form, RedirectAttributes attributes) {
+    public String register(Form form, RedirectAttributes attributes) {
         if (userRepo.findByUsername(form.getUsername()) != null) {
             attributes.addFlashAttribute("register", "exist");
         } else {
             CDFUser user = new CDFUser();
             user.setUsername(form.getUsername());
             user.setPassword(passwordEncoder.encode(form.getPassword()));
-            user.addRole("ROLE_ADMIN");
+            user.addRole(form.getRole());
             userRepo.create(user);
             //logger.info("Admin " + form.getUsername() + " created.");
             attributes.addFlashAttribute("register", "success");
         }
-        return "redirect:/admin/register";
+        return "redirect:/admin";
+    }
+    
+    @RequestMapping(value = "/delete/{username}", method = RequestMethod.GET)
+    public String delete(@PathVariable String username) {
+        userRepo.deleteByUsername(username);
+        return "redirect:/admin";
     }
 }

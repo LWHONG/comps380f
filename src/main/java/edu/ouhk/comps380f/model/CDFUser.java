@@ -37,6 +37,10 @@ public class CDFUser {
         return roles;
     }
     
+    public void setRoles(List<String> roles) {
+        this.roles = roles;
+    }
+    
     public void addRole(String role) {
         this.roles.add(role);
     }

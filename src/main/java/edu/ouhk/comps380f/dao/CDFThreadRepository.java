@@ -5,7 +5,6 @@
  */
 package edu.ouhk.comps380f.dao;
 
-import edu.ouhk.comps380f.model.CDFAttachment;
 import edu.ouhk.comps380f.model.CDFReply;
 import edu.ouhk.comps380f.model.CDFThread;
 import java.io.IOException;

@@ -59,11 +59,11 @@
                 <div class="registerView">
                     <form class="registerForm" id="registerForm" action="register" method='POST' onSubmit="return validate();">
                         <p class="cellTitle">Username</p>
-                        <input type="text" id="register_username" name="username" />
+                        <input type="text" id="username" name="username" />
                         <p class="cellTitle">Password</p>
-                        <input type="password" id="register_password" name="password" />
+                        <input type="password" id="password" name="password" />
                         <p class="cellTitle">Password Again</p>
-                        <input type="password" id="register_password_again" />
+                        <input type="password" id="password_confirm" />
                         <input type="hidden" id="csrf" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                         <input class="fullWidthButton registerBtn" type="submit" value="Register" onclick="registerUi()" />                        
                     </form>

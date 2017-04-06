@@ -1,6 +1,6 @@
 <%-- 
-    Document   : threads
-    Created on : 2017年4月4日, 下午09:26:15
+    Document   : backend
+    Created on : 2017年4月5日, 上午12:25:30
     Author     : LAM
 --%>
 
@@ -17,7 +17,12 @@
     </head>
 
     <body>
-
+        <c:if test="${register != null and register == 'success'}">
+            <p>You have registered.</p>
+        </c:if>
+        <c:if test="${register != null and register == 'exist'}">
+            <p>The username have existed.</p>
+        </c:if>
         <div class="view mainView">
             <div class="view sidebarViewContainer">
                 <div class="view sidebar">
@@ -43,47 +48,85 @@
 
                     </div>
 
-                    <!--
-                    <p class="sidebarSectionTitle">You are</p>
-                    <p class="sidebarUsername">Visitors</p>
-                    -->				
                     <p class="sidebarSectionTitle">Login as:</p>
                     <p class="sidebarUsername">${user.username}</p>
                 </div>
             </div>
             <div class="view contentViewContainer">
                 <div class="view contentView">
-
                     <div class="pageHeader">
-                        <p>${category.name} Discussion</p>
-                    </div>                  
-                <security:authorize access="hasAnyRole('ADMIN', 'USER')">
-                    <div class="newPostBtn">
-                        <a href="<c:url value="/${category.id}/post" />">New Post</a>
-                    </div>
-                </security:authorize>
-                <div style="margin: 40px; font-size: 24pt;">Total : ${threads_size}</div>
-                <c:forEach items="${threads}" var="thread">
+                        <p>Edit Users</p>
+                    </div>                 
                     <div class="contentBlock contentMainBlock">
                         <div class="contentBlockHeader">
-                            <a href="<c:url value="/${category.id}/${thread.id}" />"><p>${thread.title}</p></a>
+                            <p>User Registration</p>
                         </div>
                         <ul class="listView">
                             <li>
-                                <div class="row">
-                                    <div class="col colProfile">
-                                        <div class="profileWrapper80">
-                                            <img src="<c:url value="/resources/usersImages/cat.jpg" />" height="200" width="150" alt="">
-                                        </div>
+                                <form class="registerForm" id="registerForm" action="admin/register" method='POST' onSubmit="return validate();">
+                                    <div class="row">
+                                        <p class="cellTitle">Username</p>
+                                        <input type="text" id="username" name="username" />
                                     </div>
-                                    <div class="col colContent">
-                                        <p class="cellTitle">${thread.username}</p>
+                                    <div class="row">
+                                        <p class="cellTitle">Password</p>
+                                        <input type="password" id="password" name="password" />
                                     </div>
-                                </div>
+                                    <div class="row">
+                                        <p class="cellTitle">Password Confirm</p>
+                                        <input type="password" id="password_confirm" />
+                                    </div>
+                                    <div class="row">
+                                        <p class="cellTitle">Role</p>
+                                        <center>
+                                            <span style="margin: 100px;">Admin<input type="radio" name="role" value="ROLE_ADMIN" /></span>
+                                            <span style="margin: 100px;">User<input type="radio" name="role" value="ROLE_USER" checked /></span>
+                                        </center>
+                                    </div>
+                                    <input type="hidden" id="csrf" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                    <div class="row">
+                                        <ul class="btnListRight">
+                                            <li><input type="submit" value="Add" /><!--<a href="">Add</a>--></li>
+                                        </ul>
+                                        <br class="clear">
+                                    </div>
+                                </form>
                             </li>
                         </ul>
                     </div>
-                </c:forEach>
+                    <div class="contentBlock contentMainBlock">
+                        <div class="contentBlockHeader">
+                            <p>Users List</p>
+                        </div>
+                        <ul class="listView">
+                            <c:forEach items="${users}" var="user">
+                                <li>
+                                    <div class="row">
+                                        <div class="col colProfile">
+                                            <div class="profileWrapper80">
+                                                <img src="<c:url value="/resources/usersImages/cat.jpg" />" height="200" width="150" alt="">
+                                            </div>
+                                        </div>
+                                        <div class="col colContent">
+                                            <p class="cellTitle"><span style="margin: 40px;">${user.username}</span><span style="margin:40px;">( <c:forEach items="${user.roles}" var="role">${role}</c:forEach> )</span></p>
+                                        </div>
+                                    </div>
+                                    <security:authorize access="hasRole('ADMIN')">
+                                        <div class="row">
+                                            <ul class="btnListRight">
+                                                <li><a href="<c:url value="/profile/${user.username}" />">Edit</a></li>
+                                                <li><a href="<c:url value="/admin/delete/${user.username}" />">Remove</a></li> 
+                                                <!-- In order to edit user information, click to go to the profile page  -->
+                                            </ul>
+                                            <br class="clear">
+                                        </div>
+                                    </security:authorize>
+                                </li>         
+                            </c:forEach>
+                        </ul>
+                    </div>
+
+
                 </div>
             </div>
             <nav>

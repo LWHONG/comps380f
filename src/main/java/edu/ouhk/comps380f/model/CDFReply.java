@@ -7,7 +7,6 @@ package edu.ouhk.comps380f.model;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.springframework.web.multipart.MultipartFile;
 
 /**
  *

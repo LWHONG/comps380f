@@ -42,7 +42,7 @@ public class ThreadController {
     private CDFThreadRepository threadRepo;
     
     @RequestMapping(value = {""}, method = RequestMethod.GET)
-    public String list(@PathVariable String category, ModelMap model, Principal principal) {
+    public String threads(@PathVariable String category, ModelMap model, Principal principal) {
         if (principal != null) {
             CDFUser user = userRepo.findByUsername(principal.getName());
             if (user != null) {
@@ -57,6 +57,11 @@ public class ThreadController {
         model.addAttribute("threads", threads);
         model.addAttribute("threads_size", threads.size());
         return "threads";
+    }
+    
+    @RequestMapping(value = {"/"}, method = RequestMethod.GET)
+    public String threadsSlash(@PathVariable String category) {
+        return "redirect:/"+category;
     }
     
     @RequestMapping(value = {"/post"}, method = RequestMethod.GET)
@@ -74,6 +79,12 @@ public class ThreadController {
         model.addAttribute("category", cate);
         return "post";
     }
+    
+    @RequestMapping(value = {"/post/"}, method = RequestMethod.GET)
+    public String postGETSlash(@PathVariable String category) {
+        return "redirect:/"+category+"/post";
+    }
+    
     public static class PostForm {
         private String title;
         private String content;
@@ -145,6 +156,11 @@ public class ThreadController {
         model.addAttribute("thread", thread);
         model.addAttribute("replies_size", thread.getReplies().size());
         return "thread";
+    }
+    
+    @RequestMapping(value = {"/{id:\\d+}/"}, method = RequestMethod.GET)
+    public String threadSlash(@PathVariable String category, @PathVariable int id) {
+        return "redirect:/"+category+"/"+id;
     }
     
     public static class ReplyForm {
@@ -220,17 +236,13 @@ public class ThreadController {
     
     @RequestMapping(value = "/{id:\\d+}/delete", method = RequestMethod.GET)
     public String deleteThread(@PathVariable String category, @PathVariable int id) throws IOException {
-        System.out.println("deleteThread enter");
         threadRepo.deleteByThreadId(id);
-        System.out.println("deleteThread exit");
         return "redirect:/"+category;
     }
     
     @RequestMapping(value = "/{id:\\d+}/delete/{replyId:\\d+}", method = RequestMethod.GET)
     public String deleteReply(@PathVariable String category, @PathVariable int id, @PathVariable int replyId) throws IOException {
-        System.out.println("deleteReply enter");
         threadRepo.deleteByReplyId(replyId);
-        System.out.println("deleteReply exit");
         return "redirect:/"+category+"/"+id;
     }
 }

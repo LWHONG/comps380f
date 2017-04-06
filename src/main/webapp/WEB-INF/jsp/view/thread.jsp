@@ -48,9 +48,7 @@
                     <p class="sidebarUsername">Visitors</p>
                     -->				
                     <p class="sidebarSectionTitle">Login as:</p>
-                    <c:if test="${user != null}">
-                        <p class="sidebarUsername">${user.username}</p>
-                    </c:if>
+                    <p class="sidebarUsername">${user.username}</p>
                 </div>
             </div>
             <div class="view contentViewContainer">
@@ -88,7 +86,7 @@
                                 </div>
                             </c:forEach>
                         </security:authorize>
-                            <security:authorize access="hasAnyRole('ADMIN')">  
+                            <security:authorize access="hasRole('ADMIN')">  
                                 <div class="row">
                                     <ul class="btnListRight">
                                         <li><a href="<c:url value="/${category.id}/${thread.id}/delete" />">Delete</a></li>
@@ -170,7 +168,7 @@
                                 </div>
                             </c:forEach>
                         </security:authorize>
-                            <security:authorize access="hasAnyRole('ADMIN')"> 
+                            <security:authorize access="hasRole('ADMIN')"> 
                                 <div class="row">
                                     <ul class="btnListRight">
                                         <li><a href="<c:url value="/${category.id}/${thread.id}/delete/${reply.id}" />">Delete</a></li>
@@ -187,20 +185,25 @@
             </div>
             <nav>
                 <ul>
-                    <li class="navOptionHome"><a href="<c:url value="/index" />"><div class="navItemActiveIdicator navItemActive"></div><p>HOME</p></a></li>
-                    <li class="navOptionProfile"><a href="#"><div class="navItemActiveIdicator"></div><p>PROFILE</p></a></li>
+                    <li class="navOptionHome"><a href="<c:url value="/index" />"><div class="navItemActiveIdicator navItemActive"></div><p>HOME</p></a></li>                    
+                <security:authorize access="hasAnyRole('ADMIN', 'USER')">
+                    <li class="navOptionProfile"><a href="<c:url value="/profile" />"><div class="navItemActiveIdicator"></div><p>PROFILE</p></a></li> 
+                </security:authorize>
+                <security:authorize access="hasRole('ADMIN')">
                     <li class="navOptionPoll"><a href="#"><div class="navItemActiveIdicator"></div><p>POLL</p></a></li>
-                    <!--
-                    <li class="navOptionLoginout"><a href="#"><div class="navItemActiveIdicator"></div><p>LOGIN</p></a></li> -->
-                    <c:choose>
-                        <c:when test="${user != null}">
-                            <li class="navOptionLoginout"><a href="javascript:logout('<c:url value="/logout" />', {'${_csrf.parameterName}': '${_csrf.token}'});"><div class="navItemActiveIdicator"></div><p>LOGOUT</p></a></li>
-                        </c:when>
-                        <c:otherwise>
-                            <li class="navOptionLoginout"><a href="<c:url value="/login" />"><div class="navItemActiveIdicator"></div><p>LOGIN</p></a></li>
-                        </c:otherwise>
-                    </c:choose>
-                    <li class="navOptionBackend"><a href="#"><div class="navItemActiveIdicator"></div><p>BACKEND</p></a></li>
+                </security:authorize>                      
+                    <!--<li class="navOptionLoginout"><a href="#"><div class="navItemActiveIdicator"></div><p>LOGIN</p></a></li> -->
+            <c:choose>
+                <c:when test="${user != null}">
+                    <li class="navOptionLoginout"><a href="javascript:logout('<c:url value="/logout" />', {'${_csrf.parameterName}': '${_csrf.token}'});"><div class="navItemActiveIdicator"></div><p>LOGOUT</p></a></li>
+                </c:when>
+                <c:otherwise>
+                    <li class="navOptionLoginout"><a href="<c:url value="/login" />"><div class="navItemActiveIdicator"></div><p>LOGIN</p></a></li>
+                </c:otherwise>
+            </c:choose>
+                <security:authorize access="hasRole('ADMIN')">    
+                    <li class="navOptionBackend"><a href="<c:url value="/admin" />"><div class="navItemActiveIdicator"></div><p>BACKEND</p></a></li>
+                </security:authorize>
                 </ul>
             </nav>
         </div>
