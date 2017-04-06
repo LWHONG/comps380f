@@ -219,7 +219,7 @@ public class ThreadController {
     }
     
     @RequestMapping(value = "/{id:\\d+}/delete", method = RequestMethod.GET)
-    public String deleteThread(@PathVariable String category, @PathVariable int id) {
+    public String deleteThread(@PathVariable String category, @PathVariable int id) throws IOException {
         System.out.println("deleteThread enter");
         threadRepo.deleteByThreadId(id);
         System.out.println("deleteThread exit");
@@ -227,7 +227,7 @@ public class ThreadController {
     }
     
     @RequestMapping(value = "/{id:\\d+}/delete/{replyId:\\d+}", method = RequestMethod.GET)
-    public String deleteReply(@PathVariable String category, @PathVariable int id, @PathVariable int replyId) {
+    public String deleteReply(@PathVariable String category, @PathVariable int id, @PathVariable int replyId) throws IOException {
         System.out.println("deleteReply enter");
         threadRepo.deleteByReplyId(replyId);
         System.out.println("deleteReply exit");

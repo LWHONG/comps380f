@@ -30,7 +30,7 @@
             <max-file-size>20971520</max-file-size> 
             <max-request-size>41943040</max-request-size> 
             <file-size-threshold>5242880</file-size-threshold> 
-        </multipart-config> 
+        </multipart-config>
     </servlet>     
     <servlet-mapping> 
         <servlet-name>dispatcher</servlet-name> 

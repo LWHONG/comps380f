@@ -93,14 +93,15 @@ public class CDFThreadRepositoryImpl implements CDFThreadRepository {
 
     private static final String SQL_INSERT_THREAD = "insert into threads (username, title, content, category) values (?, ?, ?, ?)";
     private static final String SQL_INSERT_THREAD_ATTACHMENT = "insert into thread_attachments (filename, filetype, filepath, thread_id) values (?, ?, ?, ?)";
-
+    private static final String SQL_UPDATE_THREAD_ATTACHMENT = "update thread_attachments set filepath = ? where attachment_id = ?";
+    
     @Override
     public void create(final CDFThread thread) throws IOException {
-        int attachmentId = 1;
+        /*int attachmentId = 1;
         CDFAttachment lastThreadAttachment = findLastThreadAttachment();
         if (lastThreadAttachment != null) {
             attachmentId = lastThreadAttachment.getId() + 1;
-        }
+        }*/
         
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcOp.update(
@@ -118,24 +119,37 @@ public class CDFThreadRepositoryImpl implements CDFThreadRepository {
         thread.setId(keyHolder.getKey().intValue());
         
         for (int i = 0; i < thread.getAttachments().size(); i++) {
-            CDFAttachment attachment = thread.getAttachments().get(i);
+            final CDFAttachment attachment = thread.getAttachments().get(i);
 
-            String directoryPath = servletContext.getRealPath("/attachments/" + thread.getCategory() + "/" + thread.getId() + "/thread/" + (attachmentId + i));
+            keyHolder = new GeneratedKeyHolder();
+            jdbcOp.update(
+                new PreparedStatementCreator() {
+                    @Override
+                    public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+                        PreparedStatement ps = connection.prepareStatement(SQL_INSERT_THREAD_ATTACHMENT, Statement.RETURN_GENERATED_KEYS);
+                        ps.setString(1, attachment.getName());
+                        ps.setString(2, attachment.getMimeContentType());
+                        ps.setString(3, "");
+                        ps.setInt(4, thread.getId());
+                        return ps;
+                    }
+                }, keyHolder);
+            attachment.setId(keyHolder.getKey().intValue());
+        
+            String directoryPath = servletContext.getRealPath("/attachments/" + thread.getCategory() + "/" + thread.getId());
 
             File directory = new File(directoryPath);
             if (!directory.exists() && !directory.isDirectory()) {
                 directory.mkdirs();
             }
-            String path = directoryPath + "/" + attachment.getName();
+            String path = directoryPath + "/thread_" + attachment.getId() + "_" + attachment.getName();
 
             attachment.setPath(path);
             attachment.getFile().transferTo(new File(path));
-
-            jdbcOp.update(SQL_INSERT_THREAD_ATTACHMENT,
-                    attachment.getName(),
-                    attachment.getMimeContentType(),
+            
+            jdbcOp.update(SQL_UPDATE_THREAD_ATTACHMENT,
                     attachment.getPath(),
-                    thread.getId());
+                    attachment.getId());
         }
         /*
         int threadId = 1;
@@ -183,14 +197,17 @@ public class CDFThreadRepositoryImpl implements CDFThreadRepository {
 
     private static final String SQL_INSERT_REPLY = "insert into replies (username, content, thread_id) values (?, ?, ?)";
     private static final String SQL_INSERT_REPLY_ATTACHMENT = "insert into reply_attachments (filename, filetype, filepath, reply_id) values (?, ?, ?, ?)";
-
+    private static final String SQL_UPDATE_REPLY_ATTACHMENT = "update reply_attachments set filepath = ? where attachment_id = ?";
+    
     @Override
     public void reply(final CDFReply reply) throws IOException {
+        /*
         int attachmentId = 1;
-        CDFAttachment lastThreadAttachment = findLastThreadAttachment();
-        if (lastThreadAttachment != null) {
-            attachmentId = lastThreadAttachment.getId() + 1;
+        CDFAttachment lastReplyAttachment = findLastReplyAttachment();
+        if (lastReplyAttachment != null) {
+            attachmentId = lastReplyAttachment.getId() + 1;
         }
+        */
         
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcOp.update(
@@ -209,24 +226,37 @@ public class CDFThreadRepositoryImpl implements CDFThreadRepository {
         CDFThread thread = findByThreadId(reply.getThreadId(), false);
         
         for (int i = 0; i < reply.getAttachments().size(); i++) {
-            CDFAttachment attachment = reply.getAttachments().get(i);
+            final CDFAttachment attachment = reply.getAttachments().get(i);
 
-            String directoryPath = servletContext.getRealPath("/attachments/" + thread.getCategory() + "/" + reply.getThreadId() + "/reply/" + (attachmentId + i));
+            keyHolder = new GeneratedKeyHolder();
+            jdbcOp.update(
+                new PreparedStatementCreator() {
+                    @Override
+                    public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+                        PreparedStatement ps = connection.prepareStatement(SQL_INSERT_REPLY_ATTACHMENT, Statement.RETURN_GENERATED_KEYS);
+                        ps.setString(1, attachment.getName());
+                        ps.setString(2, attachment.getMimeContentType());
+                        ps.setString(3, "");
+                        ps.setInt(4, reply.getId());
+                        return ps;
+                    }
+                }, keyHolder);
+            attachment.setId(keyHolder.getKey().intValue());
+        
+            String directoryPath = servletContext.getRealPath("/attachments/" + thread.getCategory() + "/" + thread.getId());
 
             File directory = new File(directoryPath);
             if (!directory.exists() && !directory.isDirectory()) {
                 directory.mkdirs();
             }
-            String path = directoryPath + "/" + attachment.getName();
-
+            String path = directoryPath + "/reply_" + attachment.getId() + "_" + attachment.getName();
+            
             attachment.setPath(path);
             attachment.getFile().transferTo(new File(path));
-
-            jdbcOp.update(SQL_INSERT_REPLY_ATTACHMENT,
-                    attachment.getName(),
-                    attachment.getMimeContentType(),
+            
+            jdbcOp.update(SQL_UPDATE_REPLY_ATTACHMENT,
                     attachment.getPath(),
-                    reply.getId());
+                    attachment.getId());
         }
         /*
         int replyId = 1;
@@ -471,7 +501,7 @@ public class CDFThreadRepositoryImpl implements CDFThreadRepository {
             return null;
         }
     }
-*/
+
     private static final String SQL_SELECT_LAST_THREAD_ATTACHMENT = "select * from thread_attachments order by attachment_id desc fetch first row only";
 
     public CDFAttachment findLastThreadAttachment() {
@@ -508,7 +538,7 @@ public class CDFThreadRepositoryImpl implements CDFThreadRepository {
         } catch (EmptyResultDataAccessException e) {
             return null;
         }
-    }
+    }*
 
     private static final String SQL_SELECT_LAST_REPLY_ATTACHMENT = "select * from reply_attachments order by attachment_id desc fetch first row only";
 
@@ -519,7 +549,7 @@ public class CDFThreadRepositoryImpl implements CDFThreadRepository {
         } catch (EmptyResultDataAccessException e) {
             return null;
         }
-    }
+    }*/
 
     private static final String SQL_DELETE_THREAD = "delete from threads where thread_id = ?";
     private static final String SQL_DELETE_THREAD_ATTACHMENT = "delete from thread_attachments where thread_id = ?";

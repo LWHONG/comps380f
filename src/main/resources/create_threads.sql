@@ -23,8 +23,8 @@ CREATE TABLE replies (
 
 CREATE TABLE thread_attachments (
     attachment_id INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
-    filename VARCHAR(100) NOT NULL,
-    filetype VARCHAR(50) NOT NULL,
+    filename VARCHAR(150) NOT NULL,
+    filetype VARCHAR(100) NOT NULL,
     filepath VARCHAR(300) NOT NULL,
     thread_id INTEGER NOT NULL,
     PRIMARY KEY (attachment_id),
@@ -33,8 +33,8 @@ CREATE TABLE thread_attachments (
 
 CREATE TABLE reply_attachments (
     attachment_id INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
-    filename VARCHAR(100) NOT NULL,
-    filetype VARCHAR(50) NOT NULL,
+    filename VARCHAR(150) NOT NULL,
+    filetype VARCHAR(100) NOT NULL,
     filepath VARCHAR(300) NOT NULL,
     reply_id INTEGER NOT NULL,
     PRIMARY KEY (attachment_id),
