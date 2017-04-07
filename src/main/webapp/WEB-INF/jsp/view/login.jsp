@@ -23,10 +23,10 @@
         <c:if test="${param.logout != null}">
             <p>You have logged out.</p>
         </c:if>
-        <c:if test="${register != null and register == 'success'}">
+        <c:if test="${register == 'success'}">
             <p>You have registered.</p>
         </c:if>
-        <c:if test="${register != null and register == 'exist'}">
+        <c:if test="${register == 'exist'}">
             <p>The username have existed.</p>
         </c:if>
         <div class="mainView">
@@ -64,6 +64,8 @@
                         <input type="password" id="password" name="password" />
                         <p class="cellTitle">Password Again</p>
                         <input type="password" id="password_confirm" />
+                        <p class="cellTitle">Ermail</p>
+                        <input type="text" id="email" name="email" />
                         <input type="hidden" id="csrf" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                         <input class="fullWidthButton registerBtn" type="submit" value="Register" onclick="registerUi()" />                        
                     </form>

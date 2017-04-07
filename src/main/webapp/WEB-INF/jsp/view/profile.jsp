@@ -67,42 +67,45 @@
                                         </div>
                                     </div>
                                     <div class="col colContent">
-                                        <form action="" class="usernameForm" id="usernameForm">
                                             <p class="cellTitle">Name</p>
                                             <input type="text" value="${user.username}" readonly>
-                                        </form>
                                     </div>
                                 </div>
                             </li>
-                            <!--<li>
-                                <div class="row">
-                                    <div class="col colProfile">
-                                        <div class="iconWrapper80">
-                                            <img src="<c:url value="/resources/images/icon-info-email.png" />" height="512" width="512" alt="">
+                            <li>
+                                <form class="emailForm" id="emailForm" action="profile/edit/info" method="POST">
+                                    <div class="row">
+                                        <div class="col colProfile">
+                                            <div class="iconWrapper80">
+                                                <img src="<c:url value="/resources/images/icon-info-email.png" />" height="512" width="512" alt="">
+                                            </div>
+                                        </div>
+                                        <div class="col colContent">
+                                                <p class="cellTitle">Email Address</p>
+                                                <input type="text" name="email" value="${user.email}" />
                                         </div>
                                     </div>
-                                    <div class="col colContent">
-                                        <form action="" class="emailForm" id="emailForm">
-                                            <p class="cellTitle">Email Address</p>
-                                            <input type="text" value="maxBlack@xx.xxx">
-                                        </form>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col col-70">
-                                        <div class="inlineMessage">
-                                            <p>Email address updated.</p>
+                                    <div class="row">
+                                        <div class="col col-70">
+                                            <div class="inlineMessage">
+                                            <c:if test="${edit_info == 'success'}">
+                                                <p>Personal information updated.</p>
+                                            </c:if>
+                                            <c:if test="${edit_info == 'fail'}">
+                                                <p>Personal information update failed.</p>
+                                            </c:if>
+                                            </div>
+                                        </div>
+                                        <input type="hidden" id="csrf" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                        <div class="col col-30">
+                                            <ul class="btnListRight">
+                                                <li><input type="submit" value="Update" /><!--<a href="">Update</a>--></li>
+                                            </ul>
+                                            <br class="clear">
                                         </div>
                                     </div>
-                                    <div class="col col-30">
-                                        <ul class="btnListRight">
-                                            <li><a href="">Update</a></li>
-                                        </ul>
-                                        <br class="clear">
-                                    </div>
-
-                                </div>
-                            </li>-->
+                                </form>
+                            </li>
                         </ul>
                     </div>
 
@@ -112,28 +115,39 @@
                         </div>
                         <ul class="listView">
                             <li>
-                                <div class="row">
-                                    <div class="col colProfile">
-                                        <div class="iconWrapper80">
-                                            <img src="<c:url value="/resources/images/icon-info-password.png" />" height="512" width="512" alt="">
+                                <form class="changePassword" id="changePassword" action="profile/edit/password" method="POST" onSubmit="return validate();">
+                                    <div class="row">
+                                        <div class="col colProfile">
+                                            <div class="iconWrapper80">
+                                                <img src="<c:url value="/resources/images/icon-info-password.png" />" height="512" width="512" alt="">
+                                            </div>
+                                        </div>
+                                        <div class="col colContent">
+                                                <p class="cellTitle">Current Password</p>
+                                                <input type="password" id="current_password" name="currentPassword" />
+                                                <p class="cellTitle">New Password</p>
+                                                <input type="password" id="password" name="password" placeholder="New Password" />
+                                                <input type="password" id="password_confirm" placeholder="Again" />
                                         </div>
                                     </div>
-                                    <div class="col colContent">
-                                        <form action="" class="changePassword" id="changePassword">
-                                            <p class="cellTitle">Current Password</p>
-                                            <input type="password">
-                                            <p class="cellTitle">New Password</p>
-                                            <input type="password" placeholder="New Password">
-                                            <input type="password" placeholder="Again">
-                                        </form>
+                                    <div class="col col-70">
+                                        <div class="inlineMessage">
+                                        <c:if test="${edit_password == 'success'}">
+                                            <p>Password updated.</p>
+                                        </c:if>
+                                        <c:if test="${edit_password == 'fail'}">
+                                            <p>Password update failed.</p>
+                                        </c:if>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <ul class="btnListRight">
-                                        <li><a href="">Update</a></li>
-                                    </ul>
-                                    <br class="clear">
-                                </div>
+                                    <input type="hidden" id="csrf" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                    <div class="col col-30">
+                                        <ul class="btnListRight">
+                                            <li><input type="submit" value="Update" /><!--<a href="">Update</a>--></li>
+                                        </ul>
+                                        <br class="clear">
+                                    </div>
+                                </form>
                             </li>
                         </ul>
                     </div>

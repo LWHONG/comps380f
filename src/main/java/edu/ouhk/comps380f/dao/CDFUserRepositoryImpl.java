@@ -25,6 +25,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public class CDFUserRepositoryImpl implements CDFUserRepository {
+
     private DataSource dataSource;
     private JdbcOperations jdbcOp;
 
@@ -35,23 +36,26 @@ public class CDFUserRepositoryImpl implements CDFUserRepository {
     }
 
     private static final class CDFUserRowMapper implements RowMapper<CDFUser> {
+
         @Override
         public CDFUser mapRow(ResultSet rs, int i) throws SQLException {
             CDFUser user = new CDFUser();
             user.setUsername(rs.getString("username"));
             user.setPassword(rs.getString("password"));
+            user.setEmail(rs.getString("email"));
             return user;
         }
     }
 
-    private static final String SQL_INSERT_USER = "insert into users (username, password) values (?, ?)";
+    private static final String SQL_INSERT_USER = "insert into users (username, password, email) values (?, ?, ?)";
     private static final String SQL_INSERT_ROLE = "insert into user_roles (username, role) values (?, ?)";
 
     @Override
     public void create(CDFUser user) {
         jdbcOp.update(SQL_INSERT_USER,
                 user.getUsername(),
-                user.getPassword());
+                user.getPassword(),
+                user.getEmail());
         for (String role : user.getRoles()) {
             jdbcOp.update(SQL_INSERT_ROLE,
                     user.getUsername(),
@@ -59,7 +63,7 @@ public class CDFUserRepositoryImpl implements CDFUserRepository {
         }
     }
 
-    private static final String SQL_SELECT_ALL_USER = "select username, password from users";
+    private static final String SQL_SELECT_ALL_USER = "select username, password, email from users";
     private static final String SQL_SELECT_ROLES = "select username, role from user_roles where username = ?";
 
     @Override
@@ -72,6 +76,7 @@ public class CDFUserRepositoryImpl implements CDFUserRepository {
             String username = (String) row.get("username");
             user.setUsername(username);
             user.setPassword((String) row.get("password"));
+            user.setEmail((String) row.get("email"));
             List<Map<String, Object>> roleRows = jdbcOp.queryForList(SQL_SELECT_ROLES, username);
             for (Map<String, Object> roleRow : roleRows) {
                 user.addRole((String) roleRow.get("role"));
@@ -80,19 +85,18 @@ public class CDFUserRepositoryImpl implements CDFUserRepository {
         }
         return users;
     }
-    private static final String SQL_SELECT_USER
-            = "select username, password from users where username = ?";
+    private static final String SQL_SELECT_USER = "select username, password, email from users where username = ?";
 
     @Override
     public CDFUser findByUsername(String username) {
         try {
-        CDFUser user = jdbcOp.queryForObject(SQL_SELECT_USER, new CDFUserRowMapper(), username);
-        List<Map<String, Object>> rows = jdbcOp.queryForList(SQL_SELECT_ROLES, username);
-        for (Map<String, Object> row : rows) {
-            user.addRole((String) row.get("role"));
-        }
-        return user;
-        }catch (EmptyResultDataAccessException e) {
+            CDFUser user = jdbcOp.queryForObject(SQL_SELECT_USER, new CDFUserRowMapper(), username);
+            List<Map<String, Object>> rows = jdbcOp.queryForList(SQL_SELECT_ROLES, username);
+            for (Map<String, Object> row : rows) {
+                user.addRole((String) row.get("role"));
+            }
+            return user;
+        } catch (EmptyResultDataAccessException e) {
             return null;
         }
     }
@@ -104,5 +108,21 @@ public class CDFUserRepositoryImpl implements CDFUserRepository {
     public void deleteByUsername(String username) {
         jdbcOp.update(SQL_DELETE_ROLES, username);
         jdbcOp.update(SQL_DELETE_USER, username);
+    }
+
+    private static final String SQL_UPDATE_USER = "update users set password = ?, email = ? where username = ?";
+    private static final String SQL_UPDATE_ROLES = "update user_roles set role = ? where username = ?";
+
+    @Override
+    public void update(CDFUser user) {
+        jdbcOp.update(SQL_UPDATE_USER,
+                user.getPassword(),
+                user.getEmail(),
+                user.getUsername());
+        for (String role : user.getRoles()) {
+            jdbcOp.update(SQL_UPDATE_ROLES,
+                    role,
+                    user.getUsername());
+        }
     }
 }

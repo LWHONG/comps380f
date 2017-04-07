@@ -59,6 +59,7 @@ public class AdminController {
     public static class Form {
         private String username;
         private String password;
+        private String email;
         private String role;
 
         public String getUsername() {
@@ -75,6 +76,14 @@ public class AdminController {
 
         public void setPassword(String password) {
             this.password = password;
+        }
+
+        public String getEmail() {
+            return email;
+        }
+
+        public void setEmail(String email) {
+            this.email = email;
         }
 
         public String getRole() {
@@ -94,6 +103,7 @@ public class AdminController {
             CDFUser user = new CDFUser();
             user.setUsername(form.getUsername());
             user.setPassword(passwordEncoder.encode(form.getPassword()));
+            user.setEmail(form.getEmail());
             user.addRole(form.getRole());
             userRepo.create(user);
             //logger.info("Admin " + form.getUsername() + " created.");

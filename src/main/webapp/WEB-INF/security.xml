@@ -37,9 +37,11 @@
         <!--<intercept-url pattern="/admin/**" access="hasRole('ADMIN')" />-->
         <intercept-url pattern="/**/post" access="hasAnyRole('ADMIN', 'USER')" />
         <intercept-url pattern="/profile" access="hasAnyRole('ADMIN', 'USER')" />
+        <intercept-url pattern="/profile/edit/info" access="hasAnyRole('ADMIN', 'USER')" />
+        <intercept-url pattern="/profile/edit/password" access="hasAnyRole('ADMIN', 'USER')" />
         <intercept-url pattern="/profile/**" access="hasRole('ADMIN')" />
-        <intercept-url pattern="/poll/**" access="hasAnyRole('ADMIN', 'USER')" />
         <intercept-url pattern="/poll/create" access="hasRole('ADMIN')" />
+        <intercept-url pattern="/poll/**" access="hasAnyRole('ADMIN', 'USER')" />        
         <intercept-url pattern="/**/**/reply/**" access="hasAnyRole('ADMIN', 'USER')" />
         <intercept-url pattern="/**/**/attachment/**" access="hasAnyRole('ADMIN', 'USER')" />
         <intercept-url pattern="/**/**/delete/**" access="hasRole('ADMIN')" />

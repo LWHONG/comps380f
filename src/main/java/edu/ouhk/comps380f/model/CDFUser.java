@@ -15,6 +15,7 @@ import java.util.List;
 public class CDFUser {
     private String username;
     private String password;
+    private String email;
     private List<String> roles = new ArrayList<>();
 
     public String getUsername() {
@@ -31,6 +32,14 @@ public class CDFUser {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public List<String> getRoles() {

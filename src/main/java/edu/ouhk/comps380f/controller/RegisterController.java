@@ -30,7 +30,7 @@ public class RegisterController {
     public static class Form {
         private String username;
         private String password;
-
+        private String email;
         public String getUsername() {
             return username;
         }
@@ -46,6 +46,14 @@ public class RegisterController {
         public void setPassword(String password) {
             this.password = password;
         }
+
+        public String getEmail() {
+            return email;
+        }
+
+        public void setEmail(String email) {
+            this.email = email;
+        }
     }
     
     @RequestMapping(value = {""}, method = RequestMethod.POST)
@@ -56,6 +64,7 @@ public class RegisterController {
             CDFUser user = new CDFUser();
             user.setUsername(form.getUsername());
             user.setPassword(passwordEncoder.encode(form.getPassword()));
+            user.setEmail(form.getEmail());
             user.addRole("ROLE_USER");
             userRepo.create(user);
             //logger.info("User " + form.getUsername() + " created.");

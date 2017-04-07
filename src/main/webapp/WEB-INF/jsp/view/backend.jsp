@@ -17,10 +17,10 @@
     </head>
 
     <body>
-        <c:if test="${register != null and register == 'success'}">
+        <c:if test="${register == 'success'}">
             <p>You have registered.</p>
         </c:if>
-        <c:if test="${register != null and register == 'exist'}">
+        <c:if test="${register == 'exist'}">
             <p>The username have existed.</p>
         </c:if>
         <div class="view mainView">
@@ -75,6 +75,10 @@
                                     <div class="row">
                                         <p class="cellTitle">Password Confirm</p>
                                         <input type="password" id="password_confirm" />
+                                    </div>
+                                    <div class="row">
+                                        <p class="cellTitle">Email</p>
+                                        <input type="text" id="email" name="email" />
                                     </div>
                                     <div class="row">
                                         <p class="cellTitle">Role</p>
