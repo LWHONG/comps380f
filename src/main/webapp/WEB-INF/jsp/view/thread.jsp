@@ -118,7 +118,7 @@
                             </li>
                         <security:authorize access="hasAnyRole('ADMIN', 'USER')">  
                             <li>
-                                <form id="messageForm" class="messageForm" action="${thread.id}/reply"  method="POST" enctype="multipart/form-data">
+                                <form id="messageForm" class="messageForm" action="<c:url value="/${category.id}/${thread.id}/reply" />"  method="POST" enctype="multipart/form-data">
                                     <div class="row">
                                         <div class="col colProfile">
                                             <div class="iconWrapper80">

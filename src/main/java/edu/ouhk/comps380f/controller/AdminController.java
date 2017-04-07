@@ -8,6 +8,7 @@ package edu.ouhk.comps380f.controller;
 import edu.ouhk.comps380f.dao.CDFUserRepository;
 import edu.ouhk.comps380f.model.CDFUser;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -44,12 +45,12 @@ public class AdminController {
         return "backend";
     }
 
-    @RequestMapping(value = {"/"}, method = RequestMethod.GET)
+    /*@RequestMapping(value = {"/"}, method = RequestMethod.GET)
     public String backendSlash(ModelMap model) {
         List<CDFUser> users = userRepo.findAll();
         model.addAttribute("users", users);
         return "redirect:/admin";
-    }
+    }*/
     /*
     @RequestMapping(value = {"register"}, method = RequestMethod.GET)
     public String admin() {
@@ -60,7 +61,7 @@ public class AdminController {
         private String username;
         private String password;
         private String email;
-        private String role;
+        private String[] roles;
 
         public String getUsername() {
             return username;
@@ -86,12 +87,12 @@ public class AdminController {
             this.email = email;
         }
 
-        public String getRole() {
-            return role;
+        public String[] getRoles() {
+            return roles;
         }
 
-        public void setRole(String role) {
-            this.role = role;
+        public void setRoles(String[] roles) {
+            this.roles = roles;
         }
     }
     
@@ -104,7 +105,9 @@ public class AdminController {
             user.setUsername(form.getUsername());
             user.setPassword(passwordEncoder.encode(form.getPassword()));
             user.setEmail(form.getEmail());
-            user.addRole(form.getRole());
+            for (String role : form.getRoles()) {
+                user.addRole(role);
+            }
             userRepo.create(user);
             //logger.info("Admin " + form.getUsername() + " created.");
             attributes.addFlashAttribute("register", "success");

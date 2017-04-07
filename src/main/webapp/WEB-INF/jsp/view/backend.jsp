@@ -63,7 +63,7 @@
                         </div>
                         <ul class="listView">
                             <li>
-                                <form class="registerForm" id="registerForm" action="admin/register" method='POST' onSubmit="return validate();">
+                                <form class="registerForm" id="registerForm" action="<c:url value="/admin/register" />" method='POST' onSubmit="return validate();">
                                     <div class="row">
                                         <p class="cellTitle">Username</p>
                                         <input type="text" id="username" name="username" />
@@ -83,8 +83,8 @@
                                     <div class="row">
                                         <p class="cellTitle">Role</p>
                                         <center>
-                                            <span style="margin: 100px;">Admin<input type="radio" name="role" value="ROLE_ADMIN" /></span>
-                                            <span style="margin: 100px;">User<input type="radio" name="role" value="ROLE_USER" checked /></span>
+                                            <span style="margin: 100px;">Admin<input type="checkbox" name="roles" value="ROLE_ADMIN" /></span>
+                                            <span style="margin: 100px;">User<input type="checkbox" name="roles" value="ROLE_USER" checked /></span>
                                         </center>
                                     </div>
                                     <input type="hidden" id="csrf" name="${_csrf.parameterName}" value="${_csrf.token}"/>
@@ -135,7 +135,7 @@
             </div>
             <nav>
                 <ul>
-                    <li class="navOptionHome"><a href="<c:url value="/index" />"><div class="navItemActiveIdicator navItemActive"></div><p>HOME</p></a></li>                    
+                    <li class="navOptionHome"><a href="<c:url value="/index" />"><div class="navItemActiveIdicator"></div><p>HOME</p></a></li>                    
                 <security:authorize access="hasAnyRole('ADMIN', 'USER')">
                     <li class="navOptionProfile"><a href="<c:url value="/profile" />"><div class="navItemActiveIdicator"></div><p>PROFILE</p></a></li> 
                 </security:authorize>
@@ -152,7 +152,7 @@
                 </c:otherwise>
             </c:choose>
                 <security:authorize access="hasRole('ADMIN')">    
-                    <li class="navOptionBackend"><a href="<c:url value="/admin" />"><div class="navItemActiveIdicator"></div><p>BACKEND</p></a></li>
+                    <li class="navOptionBackend"><a href="<c:url value="/admin" />"><div class="navItemActiveIdicator navItemActive"></div><p>BACKEND</p></a></li>
                 </security:authorize>
                 </ul>
             </nav>

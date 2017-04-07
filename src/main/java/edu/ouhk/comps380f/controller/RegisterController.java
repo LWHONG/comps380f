@@ -31,6 +31,7 @@ public class RegisterController {
         private String username;
         private String password;
         private String email;
+        
         public String getUsername() {
             return username;
         }

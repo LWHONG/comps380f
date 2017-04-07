@@ -35,7 +35,7 @@
             </div>
             <div class="content">
                 <div class="loginView">
-                    <form class="loginForm" id="loginForm" action="login" method="POST">
+                    <form class="loginForm" id="loginForm" action="<c:url value="/login" />" method="POST">
                         <p class="cellTitle">Username</p>
                         <input type="text" id="login_username" name="username">
                         <p class="cellTitle">Password</p>
@@ -57,7 +57,7 @@
                     </div>-->
                 </div>
                 <div class="registerView">
-                    <form class="registerForm" id="registerForm" action="register" method='POST' onSubmit="return validate();">
+                    <form class="registerForm" id="registerForm" action="<c:url value="/register" />" method='POST' onSubmit="return validate();">
                         <p class="cellTitle">Username</p>
                         <input type="text" id="username" name="username" />
                         <p class="cellTitle">Password</p>

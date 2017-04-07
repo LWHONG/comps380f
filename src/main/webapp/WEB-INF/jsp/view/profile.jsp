@@ -67,13 +67,13 @@
                                         </div>
                                     </div>
                                     <div class="col colContent">
-                                            <p class="cellTitle">Name</p>
-                                            <input type="text" value="${user.username}" readonly>
+                                        <p class="cellTitle">Name</p>
+                                        <input type="text" value="${user.username}" readonly>
                                     </div>
                                 </div>
                             </li>
                             <li>
-                                <form class="emailForm" id="emailForm" action="profile/edit/info" method="POST">
+                                <form class="emailForm" id="emailForm" action="<c:url value="profile/edit/info" />" method="POST">
                                     <div class="row">
                                         <div class="col colProfile">
                                             <div class="iconWrapper80">
@@ -81,19 +81,19 @@
                                             </div>
                                         </div>
                                         <div class="col colContent">
-                                                <p class="cellTitle">Email Address</p>
-                                                <input type="text" name="email" value="${user.email}" />
+                                            <p class="cellTitle">Email Address</p>
+                                            <input type="text" name="email" value="${user.email}" />
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col col-70">
                                             <div class="inlineMessage">
-                                            <c:if test="${edit_info == 'success'}">
-                                                <p>Personal information updated.</p>
-                                            </c:if>
-                                            <c:if test="${edit_info == 'fail'}">
-                                                <p>Personal information update failed.</p>
-                                            </c:if>
+                                                <c:if test="${edit_info == 'success'}">
+                                                    <p>Personal information updated.</p>
+                                                </c:if>
+                                                <c:if test="${edit_info == 'fail'}">
+                                                    <p>Personal information update failed.</p>
+                                                </c:if>
                                             </div>
                                         </div>
                                         <input type="hidden" id="csrf" name="${_csrf.parameterName}" value="${_csrf.token}"/>
@@ -108,36 +108,43 @@
                             </li>
                         </ul>
                     </div>
-
+                <security:authorize access="hasRole('ADMIN')">
                     <div class="contentBlock contentMainBlock">
                         <div class="contentBlockHeader">
-                            <p>Password</p>
+                            <p>Authority</p>
                         </div>
                         <ul class="listView">
                             <li>
-                                <form class="changePassword" id="changePassword" action="profile/edit/password" method="POST" onSubmit="return validate();">
+                                <form class="changePassword" id="changePassword" action="<c:url value="/profile/${user.username}/edit/authority" />" method="POST">
                                     <div class="row">
-                                        <div class="col colProfile">
-                                            <div class="iconWrapper80">
-                                                <img src="<c:url value="/resources/images/icon-info-password.png" />" height="512" width="512" alt="">
-                                            </div>
-                                        </div>
-                                        <div class="col colContent">
-                                                <p class="cellTitle">Current Password</p>
-                                                <input type="password" id="current_password" name="currentPassword" />
-                                                <p class="cellTitle">New Password</p>
-                                                <input type="password" id="password" name="password" placeholder="New Password" />
-                                                <input type="password" id="password_confirm" placeholder="Again" />
-                                        </div>
+                                        <p class="cellTitle">Role</p>
+                                        <center>
+                                            <c:choose>
+                                                <c:when test="${user.hasRole('ROLE_ADMIN')}">
+                                                    <span style="margin: 100px;">Admin<input type="checkbox" name="roles" value="ROLE_ADMIN" checked /></span>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                    <span style="margin: 100px;">Admin<input type="checkbox" name="roles" value="ROLE_ADMIN" /></span>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                                <c:choose>
+                                                    <c:when test="${user.hasRole('ROLE_USER')}">
+                                                    <span style="margin: 100px;">User<input type="checkbox" name="roles" value="ROLE_USER" checked /></span> 
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                    <span style="margin: 100px;">User<input type="checkbox" name="roles" value="ROLE_USER" /></span> 
+                                                    </c:otherwise>
+                                                </c:choose>
+                                        </center>
                                     </div>
                                     <div class="col col-70">
                                         <div class="inlineMessage">
-                                        <c:if test="${edit_password == 'success'}">
-                                            <p>Password updated.</p>
-                                        </c:if>
-                                        <c:if test="${edit_password == 'fail'}">
-                                            <p>Password update failed.</p>
-                                        </c:if>
+                                            <c:if test="${edit_authority == 'success'}">
+                                                <p>Authority updated.</p>
+                                            </c:if>
+                                            <c:if test="${edit_authority == 'fail'}">
+                                                <p>Authority update failed.</p>
+                                            </c:if>
                                         </div>
                                     </div>
                                     <input type="hidden" id="csrf" name="${_csrf.parameterName}" value="${_csrf.token}"/>
@@ -151,14 +158,57 @@
                             </li>
                         </ul>
                     </div>
+                </security:authorize>
+                        <div class="contentBlock contentMainBlock">
+                            <div class="contentBlockHeader">
+                                <p>Password</p>
+                            </div>
+                            <ul class="listView">
+                                <li>
+                                    <form class="changePassword" id="changePassword" action="<c:url value="/profile/edit/password" />" method="POST" onSubmit="return validate();">
+                                        <div class="row">
+                                            <div class="col colProfile">
+                                                <div class="iconWrapper80">
+                                                    <img src="<c:url value="/resources/images/icon-info-password.png" />" height="512" width="512" alt="">
+                                                </div>
+                                            </div>
+                                            <div class="col colContent">
+                                                <p class="cellTitle">Current Password</p>
+                                                <input type="password" id="current_password" name="currentPassword" />
+                                                <p class="cellTitle">New Password</p>
+                                                <input type="password" id="password" name="password" placeholder="New Password" />
+                                                <input type="password" id="password_confirm" placeholder="Again" />
+                                            </div>
+                                        </div>
+                                        <div class="col col-70">
+                                            <div class="inlineMessage">
+                                                <c:if test="${edit_password == 'success'}">
+                                                    <p>Password updated.</p>
+                                                </c:if>
+                                                <c:if test="${edit_password == 'fail'}">
+                                                    <p>Password update failed.</p>
+                                                </c:if>
+                                            </div>
+                                        </div>
+                                        <input type="hidden" id="csrf" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                        <div class="col col-30">
+                                            <ul class="btnListRight">
+                                                <li><input type="submit" value="Update" /><!--<a href="">Update</a>--></li>
+                                            </ul>
+                                            <br class="clear">
+                                        </div>
+                                    </form>
+                                </li>
+                            </ul>
+                        </div>
 
+                    </div>
                 </div>
-            </div>
-            <nav>
-                <ul>
-                    <li class="navOptionHome"><a href="<c:url value="/index" />"><div class="navItemActiveIdicator navItemActive"></div><p>HOME</p></a></li>                    
+                <nav>
+                    <ul>
+                    <li class="navOptionHome"><a href="<c:url value="/index" />"><div class="navItemActiveIdicator"></div><p>HOME</p></a></li>                    
                 <security:authorize access="hasAnyRole('ADMIN', 'USER')">
-                    <li class="navOptionProfile"><a href="<c:url value="/profile" />"><div class="navItemActiveIdicator"></div><p>PROFILE</p></a></li> 
+                    <li class="navOptionProfile"><a href="<c:url value="/profile" />"><div class="navItemActiveIdicator navItemActive"></div><p>PROFILE</p></a></li> 
                 </security:authorize>
                 <security:authorize access="hasRole('ADMIN')">
                     <li class="navOptionPoll"><a href="#"><div class="navItemActiveIdicator"></div><p>POLL</p></a></li>
@@ -175,14 +225,14 @@
                 <security:authorize access="hasRole('ADMIN')">    
                     <li class="navOptionBackend"><a href="<c:url value="/admin" />"><div class="navItemActiveIdicator"></div><p>BACKEND</p></a></li>
                 </security:authorize>
-                </ul>
-            </nav>
-        </div>
+                    </ul>
+                </nav>
+            </div>
 
-        <!------------ End of body ------------>
-        <!-- Global JS -->
-        <script src="<c:url value="/resources/js/jquery.min.js" />"></script>
-        <script src="<c:url value="/resources/js/layout.js" />"></script>
-        <script src="<c:url value="/resources/js/js.js" />"></script>
-    </body>
-</html>
+            <!------------ End of body ------------>
+            <!-- Global JS -->
+            <script src="<c:url value="/resources/js/jquery.min.js" />"></script>
+            <script src="<c:url value="/resources/js/layout.js" />"></script>
+            <script src="<c:url value="/resources/js/js.js" />"></script>
+        </body>
+    </html>

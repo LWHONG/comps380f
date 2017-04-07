@@ -25,8 +25,8 @@ public class IndexController {
         return "login";
     }
     
-    @RequestMapping(value = {"/login/"}, method = RequestMethod.GET)
+    /*@RequestMapping(value = {"/login/"}, method = RequestMethod.GET)
     public String loginSlash() {
         return "redirect:/login";
-    }
+    }*/
 }

@@ -59,10 +59,10 @@ public class ThreadController {
         return "threads";
     }
     
-    @RequestMapping(value = {"/"}, method = RequestMethod.GET)
+    /*@RequestMapping(value = {"/"}, method = RequestMethod.GET)
     public String threadsSlash(@PathVariable String category) {
         return "redirect:/"+category;
-    }
+    }*/
     
     @RequestMapping(value = {"/post"}, method = RequestMethod.GET)
     public String postGET(@PathVariable String category, ModelMap model, Principal principal) {
@@ -80,10 +80,10 @@ public class ThreadController {
         return "post";
     }
     
-    @RequestMapping(value = {"/post/"}, method = RequestMethod.GET)
+    /*@RequestMapping(value = {"/post/"}, method = RequestMethod.GET)
     public String postGETSlash(@PathVariable String category) {
         return "redirect:/"+category+"/post";
-    }
+    }*/
     
     public static class PostForm {
         private String title;
@@ -158,10 +158,10 @@ public class ThreadController {
         return "thread";
     }
     
-    @RequestMapping(value = {"/{id:\\d+}/"}, method = RequestMethod.GET)
+    /*@RequestMapping(value = {"/{id:\\d+}/"}, method = RequestMethod.GET)
     public String threadSlash(@PathVariable String category, @PathVariable int id) {
         return "redirect:/"+category+"/"+id;
-    }
+    }*/
     
     public static class ReplyForm {
         private String content;

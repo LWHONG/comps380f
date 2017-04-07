@@ -35,8 +35,8 @@ public class HomeController {
         return "index";
     }
     
-    @RequestMapping(value = {"/"}, method = RequestMethod.GET)
+    /*@RequestMapping(value = {"/"}, method = RequestMethod.GET)
     public String indexSlash() {
         return "redirect:/index";
-    }
+    }*/
 }

@@ -8,6 +8,8 @@ package edu.ouhk.comps380f.controller;
 import edu.ouhk.comps380f.dao.CDFUserRepository;
 import edu.ouhk.comps380f.model.CDFUser;
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -41,10 +43,10 @@ public class ProfileController {
         return "profile";
     }
     
-    @RequestMapping(value = {"/"}, method = RequestMethod.GET)
+    /*@RequestMapping(value = {"/"}, method = RequestMethod.GET)
     public String userProfileSlash() {
         return "redirect:/profile";
-    }
+    }*/
     
     /*@RequestMapping(value = {"/{username}"}, method = RequestMethod.GET)
     public String editGET(@PathVariable String username, ModelMap model) {
@@ -132,11 +134,10 @@ public class ProfileController {
         return "profile";
     }
     
-    @RequestMapping(value = {"/{username}/"}, method = RequestMethod.GET)
+    /*@RequestMapping(value = {"/{username}/"}, method = RequestMethod.GET)
     public String adminProfileSlash(@PathVariable String username) {
         return "redirect:/profile/"+username;
-    }
-    
+    }*/    
     
     @RequestMapping(value = {"/{username}/edit/info"}, method = RequestMethod.POST)
     public String adminEditInfo(@PathVariable String username, EditInfoForm form, RedirectAttributes attributes) {
@@ -164,6 +165,52 @@ public class ProfileController {
             }
         }else {
             attributes.addFlashAttribute("edit_password", "fail");
+        }
+        return "redirect:/profile/"+username;
+    }
+    
+    public static class EditAuthorityForm {
+        private String[] roles;
+
+        public String[] getRoles() {
+            return roles;
+        }
+
+        public void setRoles(String[] roles) {
+            this.roles = roles;
+        }
+    } 
+    
+    /*@RequestMapping(value = {"/edit/authority"}, method = RequestMethod.POST)
+    public String adminEditSelfAuthority(EditAuthorityForm form, RedirectAttributes attributes, Principal principal) {
+        CDFUser user = userRepo.findByUsername(principal.getName());
+        if (user != null) {
+            List<String> roles = new ArrayList<>();
+            for (String role : form.getRoles()) {
+                roles.add(role);
+            }
+            user.setRoles(roles);
+            userRepo.update(user);
+            attributes.addFlashAttribute("edit_authority", "success");
+        }else {
+            attributes.addFlashAttribute("edit_authority", "fail");
+        }
+        return "redirect:/profile";
+    }*/
+    
+    @RequestMapping(value = {"/{username}/edit/authority"}, method = RequestMethod.POST)
+    public String adminEditAuthority(@PathVariable String username, EditAuthorityForm form, RedirectAttributes attributes) {
+        CDFUser user = userRepo.findByUsername(username);
+        if (user != null) {
+            List<String> roles = new ArrayList<>();
+            for (String role : form.getRoles()) {
+                roles.add(role);
+            }
+            user.setRoles(roles);
+            userRepo.update(user);
+            attributes.addFlashAttribute("edit_authority", "success");
+        }else {
+            attributes.addFlashAttribute("edit_authority", "fail");
         }
         return "redirect:/profile/"+username;
     }

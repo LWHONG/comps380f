@@ -111,7 +111,6 @@ public class CDFUserRepositoryImpl implements CDFUserRepository {
     }
 
     private static final String SQL_UPDATE_USER = "update users set password = ?, email = ? where username = ?";
-    private static final String SQL_UPDATE_ROLES = "update user_roles set role = ? where username = ?";
 
     @Override
     public void update(CDFUser user) {
@@ -119,10 +118,11 @@ public class CDFUserRepositoryImpl implements CDFUserRepository {
                 user.getPassword(),
                 user.getEmail(),
                 user.getUsername());
+        jdbcOp.update(SQL_DELETE_ROLES, user.getUsername());
         for (String role : user.getRoles()) {
-            jdbcOp.update(SQL_UPDATE_ROLES,
-                    role,
-                    user.getUsername());
+            jdbcOp.update(SQL_INSERT_ROLE,
+                    user.getUsername(),
+                    role);
         }
     }
 }

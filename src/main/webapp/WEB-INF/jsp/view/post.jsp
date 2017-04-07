@@ -21,7 +21,7 @@
         <div class="view mainView">
             <div class="view sidebarViewContainer">
                 <div class="view sidebar">
-                    <div class="sitelogo"><img src="images/sideLogo.png" height="36" width="36" alt="">COURSERV</div>
+                    <div class="sitelogo"><img src="<c:url value="/resources/images/sideLogo.png" />" height="36" width="36" alt="">COURSERV</div>
                     <div class="profilePicture">
                         <div class="profilePictureWrapper">
                             <img src="<c:url value="/resources/usersImages/e.jpg" />" height="200" width="150" alt="">
@@ -64,7 +64,7 @@
                         </div>
                         <ul class="listView">
                             <li>
-                                <form id="postForm" action="<c:url value="post" />" method="POST" enctype="multipart/form-data">
+                                <form id="postForm" action="<c:url value="/${category.id}/post" />" method="POST" enctype="multipart/form-data">
                                     <div class="row">
                                         <p class="cellTitle">Title</p>
                                         <input type="text" name="title">
