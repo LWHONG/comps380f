@@ -13,6 +13,7 @@ import java.util.List;
  * @author LAM
  */
 public class CDFUser {
+
     private String username;
     private String password;
     private String email;
@@ -45,16 +46,20 @@ public class CDFUser {
     public List<String> getRoles() {
         return roles;
     }
-    
+
     public void setRoles(List<String> roles) {
         this.roles = roles;
     }
-    
+
     public void addRole(String role) {
-        this.roles.add(role);
+        roles.add(role);
     }
-    
+
+    public void removeRole(String role) {
+        roles.remove(role);
+    }
+
     public boolean hasRole(String role) {
-        return this.roles.contains(role);
+        return roles.contains(role);
     }
 }

@@ -30,24 +30,8 @@
                     <div class="profilePicture">
                         <div class="profilePictureWrapper">
                             <img src="<c:url value="/resources/usersImages/e.jpg" />" height="200" width="150" alt="">
-                            <!-- 						<div class="changeProfilePictureDrop">
-                                                                                    <p class="changeProfilePictureTitle">Change Profile</p>
-                                                                                    <p class="changeProfilePictureMessage">Drop file here</p>
-                                                                            </div> -->
-                            <!-- 						<div class="changeProfilePictureUploading">
-                                                                                    <p class="changeProfilePictureTitle">Processing</p>
-                                                                                    <img src="images/loadingIcon.GIF" width="45" height="60" alt="">
-                                                                                    <p class="changeProfilePictureMessage">Uploading</p>
-                                                                            </div> -->
-                            <!-- 						<div class="changeProfilePictureFailed">
-                                                                                    <p class="changeProfilePictureTitle">Opps!</p>
-                                                                                    <p class="changeProfilePictureMessage">Problems occurs.</p>
-                                                                                    <button class="changeProfilePictureOk">OK</button>
-                                                                            </div> -->
                         </div>
-
                     </div>
-
                     <p class="sidebarSectionTitle">Login as:</p>
                     <p class="sidebarUsername">${user.username}</p>
                 </div>
@@ -90,7 +74,7 @@
                                     <input type="hidden" id="csrf" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                                     <div class="row">
                                         <ul class="btnListRight">
-                                            <li><input type="submit" value="Add" /><!--<a href="">Add</a>--></li>
+                                            <li><input type="submit" value="Add" /></li>
                                         </ul>
                                         <br class="clear">
                                     </div>
@@ -112,15 +96,21 @@
                                             </div>
                                         </div>
                                         <div class="col colContent">
-                                            <p class="cellTitle"><span style="margin: 40px;">${user.username}</span><span style="margin:40px;">( <c:forEach items="${user.roles}" var="role">${role}</c:forEach> )</span></p>
+                                            <p class="cellTitle"><span style="margin: 40px;">${user.username}</span><span style="margin:40px;">( <c:forEach items="${user.roles}" var="role" varStatus="loop">${role}<c:if test="${!loop.last}"> | </c:if></c:forEach> )</span></p>
                                         </div>
                                     </div>
                                     <security:authorize access="hasRole('ADMIN')">
                                         <div class="row">
                                             <ul class="btnListRight">
                                                 <li><a href="<c:url value="/profile/${user.username}" />">Edit</a></li>
+                                        <c:choose>
+                                            <c:when test="${user.hasRole('ROLE_BAN')}">
+                                                     <li><a href="<c:url value="/admin/unban/${user.username}" />">Unban</a></li>                   
+                                            </c:when><c:otherwise>
+                                                <li><a href="<c:url value="/admin/ban/${user.username}" />">Ban</a></li>       
+                                            </c:otherwise>
+                                        </c:choose>
                                                 <li><a href="<c:url value="/admin/delete/${user.username}" />">Remove</a></li> 
-                                                <!-- In order to edit user information, click to go to the profile page  -->
                                             </ul>
                                             <br class="clear">
                                         </div>
@@ -129,8 +119,6 @@
                             </c:forEach>
                         </ul>
                     </div>
-
-
                 </div>
             </div>
             <nav>
@@ -139,10 +127,7 @@
                 <security:authorize access="hasAnyRole('ADMIN', 'USER')">
                     <li class="navOptionProfile"><a href="<c:url value="/profile" />"><div class="navItemActiveIdicator"></div><p>PROFILE</p></a></li> 
                 </security:authorize>
-                <security:authorize access="hasRole('ADMIN')">
-                    <li class="navOptionPoll"><a href="#"><div class="navItemActiveIdicator"></div><p>POLL</p></a></li>
-                </security:authorize>                      
-                    <!--<li class="navOptionLoginout"><a href="#"><div class="navItemActiveIdicator"></div><p>LOGIN</p></a></li> -->
+                    <li class="navOptionPoll"><a href="<c:url value="/poll" />"><div class="navItemActiveIdicator"></div><p>POLL</p></a></li>
             <c:choose>
                 <c:when test="${user != null}">
                     <li class="navOptionLoginout"><a href="javascript:logout('<c:url value="/logout" />', {'${_csrf.parameterName}': '${_csrf.token}'});"><div class="navItemActiveIdicator"></div><p>LOGOUT</p></a></li>
@@ -157,7 +142,6 @@
                 </ul>
             </nav>
         </div>
-
         <!------------ End of body ------------>
         <!-- Global JS -->
         <script src="<c:url value="/resources/js/jquery.min.js" />"></script>

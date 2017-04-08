@@ -22,10 +22,11 @@ import org.springframework.stereotype.Service;
  * @author LAM
  */
 @Service
-public class CDFUserService implements UserDetailsService  {
+public class CDFUserService implements UserDetailsService {
+
     @Autowired
     private CDFUserRepository userRepo;
-    
+
     @Override
     public UserDetails loadUserByUsername(String username)
             throws UsernameNotFoundException {

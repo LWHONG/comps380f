@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
  * @author LAM
  */
 public class CDFAttachment {
+
     private int id;
     private String name;
     private String mimeContentType;

@@ -1,6 +1,6 @@
 <%-- 
     Document   : login
-    Created on : 2017å¹´4æ3æ¥, ä¸å06:41:16
+    Created on : 2017年4月3日, 下午06:41:16
     Author     : LAM
 --%>
 
@@ -31,7 +31,6 @@
         </c:if>
         <div class="mainView">
             <div class="loginHeader">
-
             </div>
             <div class="content">
                 <div class="loginView">
@@ -43,18 +42,6 @@
                         <input type="hidden" id="csrf" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                         <input class="fullWidthButton loginBtn" type="submit" value="Login" onclick="loginUi()" />
                     </form>
-                    <!-- <button class="fullWidthButton loginBtn" onclick="loginUi()">Register</button> -->   
-                    <!--<div class="loginProcess">
-                            <div class="loginLoading">
-                                <img src="<c:url value="/resources/images/loadingIcon.GIF" />" width="60" height="80" alt="">
-                                    <p>Logining in</p>
-                            </div>
-                            <div class="loginFailed">
-                                    <p class="loginFailedTitle">Cannot Login</p>
-                                    <p class="loginFailedMessage">Check username & password.</p>
-                                    <button>Back</button>
-                            </div>
-                    </div>-->
                 </div>
                 <div class="registerView">
                     <form class="registerForm" id="registerForm" action="<c:url value="/register" />" method='POST' onSubmit="return validate();">
@@ -69,27 +56,12 @@
                         <input type="hidden" id="csrf" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                         <input class="fullWidthButton registerBtn" type="submit" value="Register" onclick="registerUi()" />                        
                     </form>
-                    <!-- <button class="fullWidthButton registerBtn" onclick="registerUi()">Register</button> -->
-                    <!--
-                    <div class="registerProcess">
-                            <div class="registerLoading">
-                                    <img src="images/loadingIcon.GIF" width="60" height="80" alt="">
-                                    <p>Loading</p>
-                            </div>
-                            <div class="registerFailed">
-                                    <p class="registerFailedTitle">Cannot Register</p>
-                                    <p class="registerFailedMessage">The user name already exit.</p>
-                                    <button>Back</button>
-                            </div>
-                    </div>
-                    -->
                 </div>
             </div>
             <div class="loginFooter">
 
             </div>
         </div>
-
         <!------------ End of body ------------>
         <!-- Global JS -->
         <script src="<c:url value="/resources/js/jquery.min.js" />"></script>

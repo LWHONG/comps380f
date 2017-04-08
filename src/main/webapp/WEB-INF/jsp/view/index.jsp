@@ -24,37 +24,17 @@
                     <div class="profilePicture">
                         <div class="profilePictureWrapper">
                             <img src="<c:url value="/resources/usersImages/e.jpg" />" height="200" width="150" alt="">
-                            <!-- 						<div class="changeProfilePictureDrop">
-                                                                                    <p class="changeProfilePictureTitle">Change Profile</p>
-                                                                                    <p class="changeProfilePictureMessage">Drop file here</p>
-                                                                            </div> -->
-                            <!-- 						<div class="changeProfilePictureUploading">
-                                                                                    <p class="changeProfilePictureTitle">Processing</p>
-                                                                                    <img src="images/loadingIcon.GIF" width="45" height="60" alt="">
-                                                                                    <p class="changeProfilePictureMessage">Uploading</p>
-                                                                            </div> -->
-                            <!-- 						<div class="changeProfilePictureFailed">
-                                                                                    <p class="changeProfilePictureTitle">Opps!</p>
-                                                                                    <p class="changeProfilePictureMessage">Problems occurs.</p>
-                                                                                    <button class="changeProfilePictureOk">OK</button>
-                                                                            </div> -->
                         </div>
-                    </div>
-                    <!--
-                    <p class="sidebarSectionTitle">You are</p>
-                    <p class="sidebarUsername">Visitors</p>
-                    -->				
+                    </div>			
                     <p class="sidebarSectionTitle">Login as:</p>
                     <p class="sidebarUsername">${user.username}</p>
                 </div>
             </div>
             <div class="view contentViewContainer">
                 <div class="view contentView">
-
                     <div class="pageHeader">
                         <p>HOME</p>
                     </div>
-
                     <div class="contentBlock contentMainBlock">
                         <div class="contentBlockHeader">
                             <p>Welcome to COURSERV</p>
@@ -75,34 +55,86 @@
                             </li>
                         </ul>
                     </div>
-                <security:authorize access="hasAnyRole('ADMIN', 'USER')"> 
+            <security:authorize access="hasAnyRole('ADMIN', 'USER')">
+                <c:if test="${poll != null}">
                     <div class="contentBlock contentMainBlock">
                         <div class="contentBlockHeader">
                             <p>Poll</p>
                         </div>
                         <ul class="listView">
                             <li>
-                                <div class="row">
-                                    <div class="col colContent">
-                                        <p class="cellTitle">What kind of IT jobs do you like to do?</p>
-                                        <ul class="btnListRight">
-                                            <li><input type="radio" name="ans" value="1">Programer</li>
-                                            <li><input type="radio" name="ans" value="2">Web Designer</li> 
-                                            <li><input type="radio" name="ans" value="3">Database Administrator</li>
-                                            <li><input type="radio" name="ans" value="4">IT Security Officer</li>
-                                        </ul>
+                                <form id="pollForm" action="<c:url value="/poll" />" method="POST">
+                                    <input type="hidden" name="pollId" value="${poll.id}" />
+                                    <div class="row">
+                                        <div class="col colContent">
+                                            <p class="cellTitle">${poll.question}</p>
+                                            <ul class="btnListRight" style="cursor:default">
+                                        <c:choose>
+                                            <c:when test="${pollAnswer != null}">
+                                                <c:choose>
+                                                    <c:when test="${pollAnswer.answer == "option_a"}">
+                                                <li><input type="radio" name="answer" value="option_a" checked disabled />${poll.optionA}</li>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                <li><input type="radio" name="answer" value="option_a" disabled />${poll.optionA}</li>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                                <c:choose>
+                                                    <c:when test="${pollAnswer.answer == "option_b"}">
+                                                <li><input type="radio" name="answer" value="option_b" checked disabled />${poll.optionB}</li>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                <li><input type="radio" name="answer" value="option_b" disabled />${poll.optionB}</li>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                                <c:choose>
+                                                      <c:when test="${pollAnswer.answer == "option_c"}">
+                                                <li><input type="radio" name="answer" value="option_c" checked disabled />${poll.optionC}</li>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                <li><input type="radio" name="answer" value="option_c" disabled />${poll.optionC}</li>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                                <c:choose>
+                                                    <c:when test="${pollAnswer.answer == "option_d"}">
+                                                <li><input type="radio" name="answer" value="option_d" checked disabled />${poll.optionD}</li>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                <li><input type="radio" name="answer" value="option_d" disabled />${poll.optionD}</li>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <li><input type="radio" name="answer" value="option_a" />${poll.optionA}</li>
+                                                <li><input type="radio" name="answer" value="option_b" />${poll.optionB}</li> 
+                                                <li><input type="radio" name="answer" value="option_c" />${poll.optionC}</li>
+                                                <li><input type="radio" name="answer" value="option_d" />${poll.optionD}</li>
+                                            </c:otherwise>
+                                        </c:choose>
+                                            </ul>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <ul class="btnListRight">
-                                        <li><a href="">Submit</a></li>
-                                    </ul>
-                                    <br class="clear">
-                                </div>
+                                    <input type="hidden" id="csrf" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                    <div class="row">
+                                        <ul class="btnListRight">
+                                    <c:choose>
+                                        <c:when test="${pollAnswer != null}">
+                                            <li><input type="submit" value="Submit" disabled /></li>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <li><input type="submit" value="Submit" /></li>
+                                        </c:otherwise>
+                                    </c:choose>
+                                        </ul>
+                                        <br class="clear">
+                                    </div>
+                                </form>
                             </li>
                         </ul>
                     </div>
-                </security:authorize>                                       
+                </c:if>
+            </security:authorize>
+                <c:if test="${poll != null and (user == null or (user != null and pollAnswer != null))}">
                     <div class="contentBlock contentMainBlock">
                         <div class="contentBlockHeader">
                             <p>Poll Result</p>
@@ -111,22 +143,21 @@
                             <li>
                                 <div class="row">
                                     <div class="col colContent">
-                                        <p class="cellTitle">What kind of IT jobs do you like to do?</p>
-                                        <ul class="btnListRight">
-                                            <li>Programer: 20</li>
-                                            <li>Web Designer: 15</li> 
-                                            <li>Database Administrator: 8</li>
-                                            <li>IT Security Officer: 5</li>
+                                        <p class="cellTitle">${poll.question}</p>
+                                        <ul class="btnListRight" style="cursor:default">
+                                            <li>${poll.optionA}: ${poll.numberOfOptionA}</li>
+                                            <li>${poll.optionB}: ${poll.numberOfOptionB}</li> 
+                                            <li>${poll.optionC}: ${poll.numberOfOptionC}</li>
+                                            <li>${poll.optionD}: ${poll.numberOfOptionD}</li>
                                         </ul>
                                         <br class="clear">
-                                        <p class="cellContent">The number of users voted: 48</p>
-
+                                        <p class="cellContent">The number of users voted: ${poll.numberOfPollAnswer}</p>
                                     </div>
                                 </div>
                             </li>
                         </ul>
                     </div>
-
+                </c:if>
                 </div>
             </div>
             <nav>
@@ -135,10 +166,7 @@
                 <security:authorize access="hasAnyRole('ADMIN', 'USER')">
                     <li class="navOptionProfile"><a href="<c:url value="/profile" />"><div class="navItemActiveIdicator"></div><p>PROFILE</p></a></li> 
                 </security:authorize>
-                <security:authorize access="hasRole('ADMIN')">
-                    <li class="navOptionPoll"><a href="#"><div class="navItemActiveIdicator"></div><p>POLL</p></a></li>
-                </security:authorize>                      
-                    <!--<li class="navOptionLoginout"><a href="#"><div class="navItemActiveIdicator"></div><p>LOGIN</p></a></li> -->
+                    <li class="navOptionPoll"><a href="<c:url value="/poll" />"><div class="navItemActiveIdicator"></div><p>POLL</p></a></li>
             <c:choose>
                 <c:when test="${user != null}">
                     <li class="navOptionLoginout"><a href="javascript:logout('<c:url value="/logout" />', {'${_csrf.parameterName}': '${_csrf.token}'});"><div class="navItemActiveIdicator"></div><p>LOGOUT</p></a></li>
@@ -153,7 +181,6 @@
                 </ul>
             </nav>
         </div>
-
         <!------------ End of body ------------>
         <!-- Global JS -->
         <script src="<c:url value="/resources/js/jquery.min.js" />"></script>

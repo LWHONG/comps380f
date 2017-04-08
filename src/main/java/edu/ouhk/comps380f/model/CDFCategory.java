@@ -13,6 +13,7 @@ import java.util.List;
  * @author LAM
  */
 public class CDFCategory {
+
     private String id;
     private String name;
     private List<CDFThread> threads = new ArrayList<>();

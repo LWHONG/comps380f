@@ -63,7 +63,7 @@ public class CDFUserRepositoryImpl implements CDFUserRepository {
         }
     }
 
-    private static final String SQL_SELECT_ALL_USER = "select username, password, email from users";
+    private static final String SQL_SELECT_ALL_USER = "select * from users";
     private static final String SQL_SELECT_ROLES = "select username, role from user_roles where username = ?";
 
     @Override
@@ -85,7 +85,8 @@ public class CDFUserRepositoryImpl implements CDFUserRepository {
         }
         return users;
     }
-    private static final String SQL_SELECT_USER = "select username, password, email from users where username = ?";
+
+    private static final String SQL_SELECT_USER = "select * from users where username = ?";
 
     @Override
     public CDFUser findByUsername(String username) {
@@ -99,15 +100,6 @@ public class CDFUserRepositoryImpl implements CDFUserRepository {
         } catch (EmptyResultDataAccessException e) {
             return null;
         }
-    }
-
-    private static final String SQL_DELETE_USER = "delete from users where username = ?";
-    private static final String SQL_DELETE_ROLES = "delete from user_roles where username = ?";
-
-    @Override
-    public void deleteByUsername(String username) {
-        jdbcOp.update(SQL_DELETE_ROLES, username);
-        jdbcOp.update(SQL_DELETE_USER, username);
     }
 
     private static final String SQL_UPDATE_USER = "update users set password = ?, email = ? where username = ?";
@@ -124,5 +116,14 @@ public class CDFUserRepositoryImpl implements CDFUserRepository {
                     user.getUsername(),
                     role);
         }
+    }
+
+    private static final String SQL_DELETE_USER = "delete from users where username = ?";
+    private static final String SQL_DELETE_ROLES = "delete from user_roles where username = ?";
+
+    @Override
+    public void deleteByUsername(String username) {
+        jdbcOp.update(SQL_DELETE_ROLES, username);
+        jdbcOp.update(SQL_DELETE_USER, username);
     }
 }

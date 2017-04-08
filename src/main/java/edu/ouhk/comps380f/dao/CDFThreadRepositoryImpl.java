@@ -8,6 +8,7 @@ package edu.ouhk.comps380f.dao;
 import edu.ouhk.comps380f.model.CDFAttachment;
 import edu.ouhk.comps380f.model.CDFReply;
 import edu.ouhk.comps380f.model.CDFThread;
+import edu.ouhk.comps380f.model.CDFUser;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -40,6 +41,9 @@ public class CDFThreadRepositoryImpl implements CDFThreadRepository {
 
     @Autowired
     private ServletContext servletContext;
+
+    @Autowired
+    private CDFUserRepository userRepo;
 
     private DataSource dataSource;
     private JdbcOperations jdbcOp;
@@ -94,48 +98,42 @@ public class CDFThreadRepositoryImpl implements CDFThreadRepository {
     private static final String SQL_INSERT_THREAD = "insert into threads (username, title, content, category) values (?, ?, ?, ?)";
     private static final String SQL_INSERT_THREAD_ATTACHMENT = "insert into thread_attachments (filename, filetype, filepath, thread_id) values (?, ?, ?, ?)";
     private static final String SQL_UPDATE_THREAD_ATTACHMENT = "update thread_attachments set filepath = ? where attachment_id = ?";
-    
+
     @Override
     public void create(final CDFThread thread) throws IOException {
-        /*int attachmentId = 1;
-        CDFAttachment lastThreadAttachment = findLastThreadAttachment();
-        if (lastThreadAttachment != null) {
-            attachmentId = lastThreadAttachment.getId() + 1;
-        }*/
-        
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcOp.update(
-            new PreparedStatementCreator() {
-                @Override
-                public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-                    PreparedStatement ps = connection.prepareStatement(SQL_INSERT_THREAD, Statement.RETURN_GENERATED_KEYS);
-                    ps.setString(1, thread.getUsername());
-                    ps.setString(2, thread.getTitle());
-                    ps.setString(3, thread.getContent());
-                    ps.setString(4, thread.getCategory());
-                    return ps;
-                }
-            }, keyHolder);
+                new PreparedStatementCreator() {
+            @Override
+            public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+                PreparedStatement ps = connection.prepareStatement(SQL_INSERT_THREAD, Statement.RETURN_GENERATED_KEYS);
+                ps.setString(1, thread.getUsername());
+                ps.setString(2, thread.getTitle());
+                ps.setString(3, thread.getContent());
+                ps.setString(4, thread.getCategory());
+                return ps;
+            }
+        }, keyHolder);
         thread.setId(keyHolder.getKey().intValue());
-        
+
         for (int i = 0; i < thread.getAttachments().size(); i++) {
             final CDFAttachment attachment = thread.getAttachments().get(i);
 
             keyHolder = new GeneratedKeyHolder();
             jdbcOp.update(
-                new PreparedStatementCreator() {
-                    @Override
-                    public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-                        PreparedStatement ps = connection.prepareStatement(SQL_INSERT_THREAD_ATTACHMENT, Statement.RETURN_GENERATED_KEYS);
-                        ps.setString(1, attachment.getName());
-                        ps.setString(2, attachment.getMimeContentType());
-                        ps.setString(3, "");
-                        ps.setInt(4, thread.getId());
-                        return ps;
-                    }
-                }, keyHolder);
+                    new PreparedStatementCreator() {
+                @Override
+                public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+                    PreparedStatement ps = connection.prepareStatement(SQL_INSERT_THREAD_ATTACHMENT, Statement.RETURN_GENERATED_KEYS);
+                    ps.setString(1, attachment.getName());
+                    ps.setString(2, attachment.getMimeContentType());
+                    ps.setString(3, "");
+                    ps.setInt(4, thread.getId());
+                    return ps;
+                }
+            }, keyHolder);
             attachment.setId(keyHolder.getKey().intValue());
-        
+
             String directoryPath = servletContext.getRealPath("/attachments/" + thread.getCategory() + "/" + thread.getId());
 
             File directory = new File(directoryPath);
@@ -146,103 +144,53 @@ public class CDFThreadRepositoryImpl implements CDFThreadRepository {
 
             attachment.setPath(path);
             attachment.getFile().transferTo(new File(path));
-            
+
             jdbcOp.update(SQL_UPDATE_THREAD_ATTACHMENT,
                     attachment.getPath(),
                     attachment.getId());
         }
-        /*
-        int threadId = 1;
-        CDFThread lastThread = findLastThread(false);
-        if (lastThread != null) {
-            threadId = lastThread.getId() + 1;
-        }
-
-        int attachmentId = 1;
-        CDFAttachment lastThreadAttachment = findLastThreadAttachment();
-        if (lastThreadAttachment != null) {
-            attachmentId = lastThreadAttachment.getId() + 1;
-        }
-
-        thread.setId(threadId);
-
-        jdbcOp.update(SQL_INSERT_THREAD,
-                thread.getUsername(),
-                thread.getTitle(),
-                thread.getContent(),
-                thread.getCategory());
-
-        for (int i = 0; i < thread.getAttachments().size(); i++) {
-            CDFAttachment attachment = thread.getAttachments().get(i);
-
-            String directoryPath = servletContext.getRealPath("/attachments/" + thread.getCategory() + "/" + threadId + "/thread/" + (attachmentId + i));
-
-            File directory = new File(directoryPath);
-            if (!directory.exists() && !directory.isDirectory()) {
-                directory.mkdirs();
-            }
-            String path = directoryPath + "/" + attachment.getName();
-
-            attachment.setPath(path);
-            attachment.getFile().transferTo(new File(path));
-
-            jdbcOp.update(SQL_INSERT_THREAD_ATTACHMENT,
-                    attachment.getName(),
-                    attachment.getMimeContentType(),
-                    attachment.getPath(),
-                    thread.getId());
-        }
-         */
     }
 
     private static final String SQL_INSERT_REPLY = "insert into replies (username, content, thread_id) values (?, ?, ?)";
     private static final String SQL_INSERT_REPLY_ATTACHMENT = "insert into reply_attachments (filename, filetype, filepath, reply_id) values (?, ?, ?, ?)";
     private static final String SQL_UPDATE_REPLY_ATTACHMENT = "update reply_attachments set filepath = ? where attachment_id = ?";
-    
+
     @Override
     public void reply(final CDFReply reply) throws IOException {
-        /*
-        int attachmentId = 1;
-        CDFAttachment lastReplyAttachment = findLastReplyAttachment();
-        if (lastReplyAttachment != null) {
-            attachmentId = lastReplyAttachment.getId() + 1;
-        }
-        */
-        
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcOp.update(
-            new PreparedStatementCreator() {
-                @Override
-                public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-                    PreparedStatement ps = connection.prepareStatement(SQL_INSERT_REPLY, Statement.RETURN_GENERATED_KEYS);
-                    ps.setString(1, reply.getUsername());
-                    ps.setString(2, reply.getContent());
-                    ps.setInt(3, reply.getThreadId());
-                    return ps;
-                }
-            }, keyHolder);
+                new PreparedStatementCreator() {
+            @Override
+            public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+                PreparedStatement ps = connection.prepareStatement(SQL_INSERT_REPLY, Statement.RETURN_GENERATED_KEYS);
+                ps.setString(1, reply.getUsername());
+                ps.setString(2, reply.getContent());
+                ps.setInt(3, reply.getThreadId());
+                return ps;
+            }
+        }, keyHolder);
         reply.setId(keyHolder.getKey().intValue());
-        
+
         CDFThread thread = findByThreadId(reply.getThreadId(), false);
-        
+
         for (int i = 0; i < reply.getAttachments().size(); i++) {
             final CDFAttachment attachment = reply.getAttachments().get(i);
 
             keyHolder = new GeneratedKeyHolder();
             jdbcOp.update(
-                new PreparedStatementCreator() {
-                    @Override
-                    public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-                        PreparedStatement ps = connection.prepareStatement(SQL_INSERT_REPLY_ATTACHMENT, Statement.RETURN_GENERATED_KEYS);
-                        ps.setString(1, attachment.getName());
-                        ps.setString(2, attachment.getMimeContentType());
-                        ps.setString(3, "");
-                        ps.setInt(4, reply.getId());
-                        return ps;
-                    }
-                }, keyHolder);
+                    new PreparedStatementCreator() {
+                @Override
+                public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+                    PreparedStatement ps = connection.prepareStatement(SQL_INSERT_REPLY_ATTACHMENT, Statement.RETURN_GENERATED_KEYS);
+                    ps.setString(1, attachment.getName());
+                    ps.setString(2, attachment.getMimeContentType());
+                    ps.setString(3, "");
+                    ps.setInt(4, reply.getId());
+                    return ps;
+                }
+            }, keyHolder);
             attachment.setId(keyHolder.getKey().intValue());
-        
+
             String directoryPath = servletContext.getRealPath("/attachments/" + thread.getCategory() + "/" + thread.getId());
 
             File directory = new File(directoryPath);
@@ -250,63 +198,20 @@ public class CDFThreadRepositoryImpl implements CDFThreadRepository {
                 directory.mkdirs();
             }
             String path = directoryPath + "/reply_" + attachment.getId() + "_" + attachment.getName();
-            
+
             attachment.setPath(path);
             attachment.getFile().transferTo(new File(path));
-            
+
             jdbcOp.update(SQL_UPDATE_REPLY_ATTACHMENT,
                     attachment.getPath(),
                     attachment.getId());
         }
-        /*
-        int replyId = 1;
-        CDFReply lastReply = findLastReply(false);
-        if (lastReply != null) {
-            replyId = lastReply.getId() + 1;
-        }
-
-        int attachmentId = 1;
-        CDFAttachment lastThreadAttachment = findLastThreadAttachment();
-        if (lastThreadAttachment != null) {
-            attachmentId = lastThreadAttachment.getId() + 1;
-        }
-
-        reply.setId(replyId);
-
-        CDFThread thread = findByThreadId(reply.getThreadId(), false);
-
-        jdbcOp.update(SQL_INSERT_REPLY,
-                reply.getUsername(),
-                reply.getContent(),
-                reply.getThreadId());
-
-        for (int i = 0; i < reply.getAttachments().size(); i++) {
-            CDFAttachment attachment = reply.getAttachments().get(i);
-
-            String directoryPath = servletContext.getRealPath("/attachments/" + thread.getCategory() + "/" + reply.getThreadId() + "/reply/" + (attachmentId + i));
-
-            File directory = new File(directoryPath);
-            if (!directory.exists() && !directory.isDirectory()) {
-                directory.mkdirs();
-            }
-            String path = directoryPath + "/" + attachment.getName();
-
-            attachment.setPath(path);
-            attachment.getFile().transferTo(new File(path));
-
-            jdbcOp.update(SQL_INSERT_REPLY_ATTACHMENT,
-                    attachment.getName(),
-                    attachment.getMimeContentType(),
-                    attachment.getPath(),
-                    reply.getId());
-        }
-        */
     }
 
     private static final String SQL_SELECT_ALL_THREAD = "select * from threads where category = ? order by thread_id desc";
     private static final String SQL_SELECT_ALL_REPLY = "select * from replies where thread_id = ? order by reply_id desc";
-    private static final String SQL_SELECT_THREAD_ATTACHMENT = "select * from thread_attachments where thread_id = ?";
-    private static final String SQL_SELECT_REPLY_ATTACHMENT = "select * from reply_attachments where reply_id = ?";
+    private static final String SQL_SELECT_ALL_THREAD_ATTACHMENT = "select * from thread_attachments where thread_id = ?";
+    private static final String SQL_SELECT_ALL_REPLY_ATTACHMENT = "select * from reply_attachments where reply_id = ?";
 
     @Override
     public List<CDFThread> findAllByCategory(String category, boolean hasAttachments) {
@@ -320,10 +225,13 @@ public class CDFThreadRepositoryImpl implements CDFThreadRepository {
             thread.setTitle((String) threadRow.get("title"));
             thread.setContent((String) threadRow.get("content"));
             thread.setCategory((String) threadRow.get("category"));
-
+            CDFUser threadAuthor = userRepo.findByUsername(thread.getUsername());
+            if (threadAuthor != null) {
+                thread.setAuthor(threadAuthor);
+            }
             if (hasAttachments) {
                 List<CDFAttachment> threadAttachments = new ArrayList<>();
-                List<Map<String, Object>> threadAttachmentRows = jdbcOp.queryForList(SQL_SELECT_THREAD_ATTACHMENT, (int) threadRow.get("thread_id"));
+                List<Map<String, Object>> threadAttachmentRows = jdbcOp.queryForList(SQL_SELECT_ALL_THREAD_ATTACHMENT, (int) threadRow.get("thread_id"));
                 for (Map<String, Object> threadAttachmentRow : threadAttachmentRows) {
                     CDFAttachment threadAttachment = new CDFAttachment();
                     threadAttachment.setId((int) threadAttachmentRow.get("attachment_id"));
@@ -344,10 +252,13 @@ public class CDFThreadRepositoryImpl implements CDFThreadRepository {
                 reply.setUsername((String) replyRow.get("username"));
                 reply.setContent((String) replyRow.get("content"));
                 reply.setThreadId((int) replyRow.get("thread_id"));
-
+                CDFUser replyAuthor = userRepo.findByUsername(reply.getUsername());
+                if (replyAuthor != null) {
+                    reply.setAuthor(replyAuthor);
+                }
                 if (hasAttachments) {
                     List<CDFAttachment> replyAttachments = new ArrayList<>();
-                    List<Map<String, Object>> replyAttachmentRows = jdbcOp.queryForList(SQL_SELECT_REPLY_ATTACHMENT, (int) replyRow.get("reply_id"));
+                    List<Map<String, Object>> replyAttachmentRows = jdbcOp.queryForList(SQL_SELECT_ALL_REPLY_ATTACHMENT, (int) replyRow.get("reply_id"));
                     for (Map<String, Object> replyAttachmentRow : replyAttachmentRows) {
                         CDFAttachment replyAttachment = new CDFAttachment();
                         replyAttachment.setId((int) replyAttachmentRow.get("attachment_id"));
@@ -374,9 +285,13 @@ public class CDFThreadRepositoryImpl implements CDFThreadRepository {
     public CDFThread findByThreadId(int threadId, boolean hasAttachments) {
         try {
             CDFThread thread = jdbcOp.queryForObject(SQL_SELECT_THREAD, new ThreadRowMapper(), threadId);
+            CDFUser threadAuthor = userRepo.findByUsername(thread.getUsername());
+            if (threadAuthor != null) {
+                thread.setAuthor(threadAuthor);
+            }
             if (hasAttachments) {
                 List<CDFAttachment> threadAttachments = new ArrayList<>();
-                List<Map<String, Object>> threadAttachmentRows = jdbcOp.queryForList(SQL_SELECT_THREAD_ATTACHMENT, (int) thread.getId());
+                List<Map<String, Object>> threadAttachmentRows = jdbcOp.queryForList(SQL_SELECT_ALL_THREAD_ATTACHMENT, (int) thread.getId());
                 for (Map<String, Object> threadAttachmentRow : threadAttachmentRows) {
                     CDFAttachment threadAttachment = new CDFAttachment();
                     threadAttachment.setId((int) threadAttachmentRow.get("attachment_id"));
@@ -397,10 +312,13 @@ public class CDFThreadRepositoryImpl implements CDFThreadRepository {
                 reply.setUsername((String) replyRow.get("username"));
                 reply.setContent((String) replyRow.get("content"));
                 reply.setThreadId((int) replyRow.get("thread_id"));
-
+                CDFUser replyAuthor = userRepo.findByUsername(reply.getUsername());
+                if (replyAuthor != null) {
+                    reply.setAuthor(replyAuthor);
+                }
                 if (hasAttachments) {
                     List<CDFAttachment> replyAttachments = new ArrayList<>();
-                    List<Map<String, Object>> replyAttachmentRows = jdbcOp.queryForList(SQL_SELECT_REPLY_ATTACHMENT, (int) replyRow.get("reply_id"));
+                    List<Map<String, Object>> replyAttachmentRows = jdbcOp.queryForList(SQL_SELECT_ALL_REPLY_ATTACHMENT, (int) replyRow.get("reply_id"));
                     for (Map<String, Object> replyAttachmentRow : replyAttachmentRows) {
                         CDFAttachment replyAttachment = new CDFAttachment();
                         replyAttachment.setId((int) replyAttachmentRow.get("attachment_id"));
@@ -428,10 +346,13 @@ public class CDFThreadRepositoryImpl implements CDFThreadRepository {
     public CDFReply findByReplyId(int replyId, boolean hasAttachments) {
         try {
             CDFReply reply = jdbcOp.queryForObject(SQL_SELECT_REPLY, new ReplyRowMapper(), replyId);
-
+            CDFUser author = userRepo.findByUsername(reply.getUsername());
+            if (author != null) {
+                reply.setAuthor(author);
+            }
             if (hasAttachments) {
                 List<CDFAttachment> replyAttachments = new ArrayList<>();
-                List<Map<String, Object>> replyAttachmentRows = jdbcOp.queryForList(SQL_SELECT_REPLY_ATTACHMENT, (int) reply.getId());
+                List<Map<String, Object>> replyAttachmentRows = jdbcOp.queryForList(SQL_SELECT_ALL_REPLY_ATTACHMENT, (int) reply.getId());
                 for (Map<String, Object> replyAttachmentRow : replyAttachmentRows) {
                     CDFAttachment replyAttachment = new CDFAttachment();
                     replyAttachment.setId((int) replyAttachmentRow.get("attachment_id"));
@@ -449,107 +370,6 @@ public class CDFThreadRepositoryImpl implements CDFThreadRepository {
             return null;
         }
     }
-/*
-    private static final String SQL_SELECT_LAST_THREAD = "select * from threads order by thread_id desc fetch first row only";
-
-    public CDFThread findLastThread(boolean hasAttachments) {
-        try {
-            CDFThread thread = jdbcOp.queryForObject(SQL_SELECT_LAST_THREAD, new ThreadRowMapper());
-            if (hasAttachments) {
-                List<CDFAttachment> threadAttachments = new ArrayList<>();
-                List<Map<String, Object>> threadAttachmentRows = jdbcOp.queryForList(SQL_SELECT_THREAD_ATTACHMENT, (int) thread.getId());
-                for (Map<String, Object> threadAttachmentRow : threadAttachmentRows) {
-                    CDFAttachment threadAttachment = new CDFAttachment();
-                    threadAttachment.setId((int) threadAttachmentRow.get("attachment_id"));
-                    threadAttachment.setName((String) threadAttachmentRow.get("filename"));
-                    threadAttachment.setMimeContentType((String) threadAttachmentRow.get("filetype"));
-                    threadAttachment.setPath((String) threadAttachmentRow.get("filepath"));
-                    threadAttachment.setReferenceId((int) threadAttachmentRow.get("thread_id"));
-                    threadAttachments.add(threadAttachment);
-                }
-                thread.setAttachments(threadAttachments);
-            }
-            List<CDFReply> replies = new ArrayList<>();
-            List<Map<String, Object>> replyRows = jdbcOp.queryForList(SQL_SELECT_ALL_REPLY, (int) thread.getId());
-            for (Map<String, Object> replyRow : replyRows) {
-                CDFReply reply = new CDFReply();
-                reply.setId((int) replyRow.get("reply_id"));
-                reply.setUsername((String) replyRow.get("username"));
-                reply.setContent((String) replyRow.get("content"));
-                reply.setThreadId((int) replyRow.get("thread_id"));
-
-                if (hasAttachments) {
-                    List<CDFAttachment> replyAttachments = new ArrayList<>();
-                    List<Map<String, Object>> replyAttachmentRows = jdbcOp.queryForList(SQL_SELECT_REPLY_ATTACHMENT, (int) replyRow.get("reply_id"));
-                    for (Map<String, Object> replyAttachmentRow : replyAttachmentRows) {
-                        CDFAttachment replyAttachment = new CDFAttachment();
-                        replyAttachment.setId((int) replyAttachmentRow.get("attachment_id"));
-                        replyAttachment.setName((String) replyAttachmentRow.get("filename"));
-                        replyAttachment.setMimeContentType((String) replyAttachmentRow.get("filetype"));
-                        replyAttachment.setPath((String) replyAttachmentRow.get("filepath"));
-                        replyAttachment.setReferenceId((int) replyAttachmentRow.get("reply_id"));
-                        replyAttachments.add(replyAttachment);
-                    }
-                    reply.setAttachments(replyAttachments);
-                }
-
-                replies.add(reply);
-            }
-            thread.setReplies(replies);
-            return thread;
-        } catch (EmptyResultDataAccessException e) {
-            return null;
-        }
-    }
-
-    private static final String SQL_SELECT_LAST_THREAD_ATTACHMENT = "select * from thread_attachments order by attachment_id desc fetch first row only";
-
-    public CDFAttachment findLastThreadAttachment() {
-        try {
-            CDFAttachment attachment = jdbcOp.queryForObject(SQL_SELECT_LAST_THREAD_ATTACHMENT, new AttachmentRowMapper());
-            return attachment;
-        } catch (EmptyResultDataAccessException e) {
-            return null;
-        }
-    }
-
-    private static final String SQL_SELECT_LAST_REPLY = "select * from replies order by reply_id desc fetch first row only";
-
-    public CDFReply findLastReply(boolean hasAttachments) {
-        try {
-            CDFReply reply = jdbcOp.queryForObject(SQL_SELECT_LAST_REPLY, new ReplyRowMapper());
-
-            if (hasAttachments) {
-                List<CDFAttachment> replyAttachments = new ArrayList<>();
-                List<Map<String, Object>> replyAttachmentRows = jdbcOp.queryForList(SQL_SELECT_REPLY_ATTACHMENT, (int) reply.getId());
-                for (Map<String, Object> replyAttachmentRow : replyAttachmentRows) {
-                    CDFAttachment replyAttachment = new CDFAttachment();
-                    replyAttachment.setId((int) replyAttachmentRow.get("attachment_id"));
-                    replyAttachment.setName((String) replyAttachmentRow.get("filename"));
-                    replyAttachment.setMimeContentType((String) replyAttachmentRow.get("filetype"));
-                    replyAttachment.setPath((String) replyAttachmentRow.get("filepath"));
-                    replyAttachment.setReferenceId((int) replyAttachmentRow.get("reply_id"));
-                    replyAttachments.add(replyAttachment);
-                }
-                reply.setAttachments(replyAttachments);
-            }
-
-            return reply;
-        } catch (EmptyResultDataAccessException e) {
-            return null;
-        }
-    }*
-
-    private static final String SQL_SELECT_LAST_REPLY_ATTACHMENT = "select * from reply_attachments order by attachment_id desc fetch first row only";
-
-    public CDFAttachment findLastReplyAttachment() {
-        try {
-            CDFAttachment attachment = jdbcOp.queryForObject(SQL_SELECT_LAST_REPLY_ATTACHMENT, new AttachmentRowMapper());
-            return attachment;
-        } catch (EmptyResultDataAccessException e) {
-            return null;
-        }
-    }*/
 
     private static final String SQL_DELETE_THREAD = "delete from threads where thread_id = ?";
     private static final String SQL_DELETE_THREAD_ATTACHMENT = "delete from thread_attachments where thread_id = ?";

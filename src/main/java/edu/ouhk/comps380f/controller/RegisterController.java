@@ -21,6 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 @RequestMapping("/register")
 public class RegisterController {
+
     @Autowired
     private CDFUserRepository userRepo;
 
@@ -28,10 +29,11 @@ public class RegisterController {
     private PasswordEncoder passwordEncoder;
 
     public static class Form {
+
         private String username;
         private String password;
         private String email;
-        
+
         public String getUsername() {
             return username;
         }
@@ -56,7 +58,7 @@ public class RegisterController {
             this.email = email;
         }
     }
-    
+
     @RequestMapping(value = {""}, method = RequestMethod.POST)
     public String register(Form form, RedirectAttributes attributes) {
         if (userRepo.findByUsername(form.getUsername()) != null) {
@@ -68,7 +70,6 @@ public class RegisterController {
             user.setEmail(form.getEmail());
             user.addRole("ROLE_USER");
             userRepo.create(user);
-            //logger.info("User " + form.getUsername() + " created.");
             attributes.addFlashAttribute("register", "success");
         }
         return "redirect:/login";

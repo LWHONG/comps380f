@@ -13,11 +13,13 @@ import java.util.List;
  * @author LAM
  */
 public class CDFThread {
+
     private int id;
     private String username;
     private String title;
     private String content;
     private String category;
+    private CDFUser author;
     private List<CDFAttachment> attachments = new ArrayList<>();
     private List<CDFReply> replies = new ArrayList<>();
 
@@ -61,6 +63,14 @@ public class CDFThread {
         this.category = category;
     }
 
+    public CDFUser getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(CDFUser author) {
+        this.author = author;
+    }
+
     public List<CDFAttachment> getAttachments() {
         return attachments;
     }
@@ -71,7 +81,7 @@ public class CDFThread {
 
     public CDFAttachment getAttachment(int attachmentId) {
         CDFAttachment attachment = null;
-        for (CDFAttachment item : this.attachments) {
+        for (CDFAttachment item : attachments) {
             if (item.getId() == attachmentId) {
                 attachment = item;
                 break;
@@ -79,16 +89,20 @@ public class CDFThread {
         }
         return attachment;
     }
-    
+
     public void addAttachment(CDFAttachment attachment) {
-        this.attachments.add(attachment);
+        attachments.add(attachment);
     }
-        
+
     public List<CDFReply> getReplies() {
         return replies;
     }
-    
+
     public void setReplies(List<CDFReply> replies) {
         this.replies = replies;
+    }
+
+    public int getNumberOfReply() {
+        return replies.size();
     }
 }

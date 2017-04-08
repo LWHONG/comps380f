@@ -13,10 +13,12 @@ import java.util.List;
  * @author LAM
  */
 public class CDFReply {
+
     private int id;
     private String username;
     private String content;
     private int threadId;
+    private CDFUser author;
     private List<CDFAttachment> attachments = new ArrayList<>();
 
     public int getId() {
@@ -51,6 +53,14 @@ public class CDFReply {
         this.threadId = threadId;
     }
 
+    public CDFUser getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(CDFUser author) {
+        this.author = author;
+    }
+
     public List<CDFAttachment> getAttachments() {
         return attachments;
     }
@@ -58,10 +68,10 @@ public class CDFReply {
     public void setAttachments(List<CDFAttachment> attachments) {
         this.attachments = attachments;
     }
-    
+
     public CDFAttachment getAttachment(int attachmentId) {
         CDFAttachment attachment = null;
-        for (CDFAttachment item : this.attachments) {
+        for (CDFAttachment item : attachments) {
             if (item.getId() == attachmentId) {
                 attachment = item;
                 break;
@@ -69,8 +79,8 @@ public class CDFReply {
         }
         return attachment;
     }
-    
+
     public void addAttachment(CDFAttachment attachment) {
-        this.attachments.add(attachment);
+        attachments.add(attachment);
     }
 }

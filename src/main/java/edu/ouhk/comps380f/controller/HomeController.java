@@ -5,7 +5,10 @@
  */
 package edu.ouhk.comps380f.controller;
 
+import edu.ouhk.comps380f.dao.CDFPollRepository;
 import edu.ouhk.comps380f.dao.CDFUserRepository;
+import edu.ouhk.comps380f.model.CDFPoll;
+import edu.ouhk.comps380f.model.CDFPollAnswer;
 import edu.ouhk.comps380f.model.CDFUser;
 import java.security.Principal;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +24,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 @RequestMapping("/index")
 public class HomeController {
+
     @Autowired
     private CDFUserRepository userRepo;
+
+    @Autowired
+    private CDFPollRepository pollRepo;
 
     @RequestMapping(value = {""}, method = RequestMethod.GET)
     public String index(ModelMap model, Principal principal) {
@@ -32,11 +39,17 @@ public class HomeController {
                 model.addAttribute("user", user);
             }
         }
+        CDFPoll poll = pollRepo.findLast(true);
+        if (poll != null) {
+            model.addAttribute("poll", poll);
+            if (principal != null) {
+                CDFPollAnswer pollAnswer = pollRepo.findByUsername(principal.getName(), poll.getId());
+                if (pollAnswer != null) {
+                    model.addAttribute("pollAnswer", pollAnswer);
+                    System.out.println("answered...");
+                }
+            }
+        }
         return "index";
     }
-    
-    /*@RequestMapping(value = {"/"}, method = RequestMethod.GET)
-    public String indexSlash() {
-        return "redirect:/index";
-    }*/
 }

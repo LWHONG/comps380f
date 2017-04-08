@@ -35,12 +35,13 @@ import org.springframework.web.servlet.view.RedirectView;
 @Controller
 @RequestMapping("/{category:lecture|lab|other}")
 public class ThreadController {
+
     @Autowired
     private CDFUserRepository userRepo;
-    
+
     @Autowired
     private CDFThreadRepository threadRepo;
-    
+
     @RequestMapping(value = {""}, method = RequestMethod.GET)
     public String threads(@PathVariable String category, ModelMap model, Principal principal) {
         if (principal != null) {
@@ -58,12 +59,7 @@ public class ThreadController {
         model.addAttribute("threads_size", threads.size());
         return "threads";
     }
-    
-    /*@RequestMapping(value = {"/"}, method = RequestMethod.GET)
-    public String threadsSlash(@PathVariable String category) {
-        return "redirect:/"+category;
-    }*/
-    
+
     @RequestMapping(value = {"/post"}, method = RequestMethod.GET)
     public String postGET(@PathVariable String category, ModelMap model, Principal principal) {
         if (principal != null) {
@@ -79,13 +75,9 @@ public class ThreadController {
         model.addAttribute("category", cate);
         return "post";
     }
-    
-    /*@RequestMapping(value = {"/post/"}, method = RequestMethod.GET)
-    public String postGETSlash(@PathVariable String category) {
-        return "redirect:/"+category+"/post";
-    }*/
-    
+
     public static class PostForm {
+
         private String title;
         private String content;
         private List<MultipartFile> attachments;
@@ -114,7 +106,7 @@ public class ThreadController {
             this.attachments = attachments;
         }
     }
-    
+
     @RequestMapping(value = {"/post"}, method = RequestMethod.POST)
     public String postPOST(@PathVariable String category, PostForm form, Principal principal) throws IllegalStateException, IOException {
         CDFThread thread = new CDFThread();
@@ -127,18 +119,14 @@ public class ThreadController {
             attachment.setName(filePart.getOriginalFilename());
             attachment.setMimeContentType(filePart.getContentType());
             attachment.setFile(filePart);
-            //attachment.setPath("/"+category+"/"+id+"/attachment/thread/"+attachmentId);
-            //attachment.setReferenceId(id);
-            //attachment.setContents(filePart.getBytes());
-            //if (attachment.getName() != null && attachment.getName().length() > 0 && attachment.getContents() != null && attachment.getContents().length > 0) {
             if (attachment.getName() != null && attachment.getName().length() > 0) {
                 thread.addAttachment(attachment);
             }
         }
         threadRepo.create(thread);
-        return "redirect:/"+category;
+        return "redirect:/" + category;
     }
-    
+
     @RequestMapping(value = {"/{id:\\d+}"}, method = RequestMethod.GET)
     public String thread(@PathVariable String category, @PathVariable int id, ModelMap model, Principal principal) {
         if (principal != null) {
@@ -154,16 +142,11 @@ public class ThreadController {
         model.addAttribute("category", cate);
         CDFThread thread = threadRepo.findByThreadId(id, true);
         model.addAttribute("thread", thread);
-        model.addAttribute("replies_size", thread.getReplies().size());
         return "thread";
     }
-    
-    /*@RequestMapping(value = {"/{id:\\d+}/"}, method = RequestMethod.GET)
-    public String threadSlash(@PathVariable String category, @PathVariable int id) {
-        return "redirect:/"+category+"/"+id;
-    }*/
-    
+
     public static class ReplyForm {
+
         private String content;
         private List<MultipartFile> attachments;
 
@@ -183,39 +166,35 @@ public class ThreadController {
             this.attachments = attachments;
         }
     }
-    
+
     @RequestMapping(value = {"/{id:\\d+}/reply"}, method = RequestMethod.POST)
     public String reply(@PathVariable String category, @PathVariable int id, ReplyForm form, Principal principal) throws IllegalStateException, IOException {
         CDFReply reply = new CDFReply();
         reply.setUsername(principal.getName());
         reply.setContent(form.getContent());
-        reply.setThreadId(id);      
+        reply.setThreadId(id);
         for (MultipartFile filePart : form.getAttachments()) {
             CDFAttachment attachment = new CDFAttachment();
             attachment.setName(filePart.getOriginalFilename());
             attachment.setMimeContentType(filePart.getContentType());
             attachment.setFile(filePart);
-            //attachment.setPath("/"+category+"/"+id+"/attachment/thread/"+attachmentId);
-            //attachment.setReferenceId(id);
-            //attachment.setContents(filePart.getBytes());
-            //if (attachment.getName() != null && attachment.getName().length() > 0 && attachment.getContents() != null && attachment.getContents().length > 0) {
             if (attachment.getName() != null && attachment.getName().length() > 0) {
                 reply.addAttachment(attachment);
             }
-        }  
+        }
         threadRepo.reply(reply);
-        return "redirect:/"+category+"/"+id;
+        return "redirect:/" + category + "/" + id;
     }
 
-    @RequestMapping(value = "/{id:\\d+}/attachment/{type:thread|reply}/{attachmentId:\\d+}",method = RequestMethod.GET)
+    @RequestMapping(value = "/{id:\\d+}/attachment/{type:thread|reply}/{attachmentId:\\d+}", method = RequestMethod.GET)
     public View download(@PathVariable String category, @PathVariable int id, @PathVariable String type, @PathVariable int attachmentId) throws IOException {
         CDFAttachment attachment = null;
-        
+
         CDFThread thread = threadRepo.findByThreadId(id, true);
         if (thread != null) {
             if (type.equals("thread")) {
                 attachment = thread.getAttachment(attachmentId);
-            }else if (type.equals("reply")) {
+            } else if (type.equals("reply")) {
                 for (CDFReply reply : thread.getReplies()) {
                     if ((attachment = reply.getAttachment(attachmentId)) != null) {
                         break;
@@ -231,18 +210,18 @@ public class ThreadController {
             fis.read(contents);
             return new CDFDownloadingView(attachment.getName(), attachment.getMimeContentType(), contents);
         }
-        return new RedirectView("redirect:/"+category+"/"+id, true);
+        return new RedirectView("redirect:/" + category + "/" + id, true);
     }
-    
+
     @RequestMapping(value = "/{id:\\d+}/delete", method = RequestMethod.GET)
     public String deleteThread(@PathVariable String category, @PathVariable int id) throws IOException {
         threadRepo.deleteByThreadId(id);
-        return "redirect:/"+category;
+        return "redirect:/" + category;
     }
-    
+
     @RequestMapping(value = "/{id:\\d+}/delete/{replyId:\\d+}", method = RequestMethod.GET)
     public String deleteReply(@PathVariable String category, @PathVariable int id, @PathVariable int replyId) throws IOException {
         threadRepo.deleteByReplyId(replyId);
-        return "redirect:/"+category+"/"+id;
+        return "redirect:/" + category + "/" + id;
     }
 }

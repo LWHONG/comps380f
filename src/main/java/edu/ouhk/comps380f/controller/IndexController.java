@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 @Controller
 public class IndexController {
+
     @RequestMapping(value = {"/"}, method = RequestMethod.GET)
     public String index() {
         return "redirect:/index";
@@ -24,9 +25,4 @@ public class IndexController {
     public String login() {
         return "login";
     }
-    
-    /*@RequestMapping(value = {"/login/"}, method = RequestMethod.GET)
-    public String loginSlash() {
-        return "redirect:/login";
-    }*/
 }

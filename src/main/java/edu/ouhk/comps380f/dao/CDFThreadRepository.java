@@ -15,11 +15,18 @@ import java.util.List;
  * @author LAM
  */
 public interface CDFThreadRepository {
+
     public void create(CDFThread thread) throws IOException;
+
     public void reply(CDFReply reply) throws IOException;
+
     public List<CDFThread> findAllByCategory(String category, boolean hasAttachments);
+
     public CDFThread findByThreadId(int threadId, boolean hasAttachments);
+
     public CDFReply findByReplyId(int replyId, boolean hasAttachments);
+
     public void deleteByThreadId(int threadId) throws IOException;
+
     public void deleteByReplyId(int replyId) throws IOException;
 }

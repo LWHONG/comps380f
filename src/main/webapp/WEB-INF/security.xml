@@ -21,7 +21,9 @@
 
     <b:bean id="userRepo" class="edu.ouhk.comps380f.dao.CDFUserRepositoryImpl"/>  
 
-    <b:bean id="threadRepo" class="edu.ouhk.comps380f.dao.CDFThreadRepositoryImpl"/>  
+    <b:bean id="threadRepo" class="edu.ouhk.comps380f.dao.CDFThreadRepositoryImpl"/>
+    
+    <b:bean id="pollRepo" class="edu.ouhk.comps380f.dao.CDFPollRepositoryImpl"/>  
         
     <b:bean id="userService" class="edu.ouhk.comps380f.dao.CDFUserService" />
 
@@ -40,8 +42,8 @@
         <intercept-url pattern="/profile/edit/info" access="hasAnyRole('ADMIN', 'USER')" />
         <intercept-url pattern="/profile/edit/password" access="hasAnyRole('ADMIN', 'USER')" />
         <intercept-url pattern="/profile/**" access="hasRole('ADMIN')" />
-        <intercept-url pattern="/poll/create" access="hasRole('ADMIN')" />
-        <intercept-url pattern="/poll/**" access="hasAnyRole('ADMIN', 'USER')" />        
+        <intercept-url pattern="/poll" access="permitAll" />
+        <intercept-url pattern="/poll/**" access="hasRole('ADMIN')" />
         <intercept-url pattern="/**/**/reply/**" access="hasAnyRole('ADMIN', 'USER')" />
         <intercept-url pattern="/**/**/attachment/**" access="hasAnyRole('ADMIN', 'USER')" />
         <intercept-url pattern="/**/**/delete/**" access="hasRole('ADMIN')" />

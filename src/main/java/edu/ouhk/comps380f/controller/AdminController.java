@@ -8,7 +8,6 @@ package edu.ouhk.comps380f.controller;
 import edu.ouhk.comps380f.dao.CDFUserRepository;
 import edu.ouhk.comps380f.model.CDFUser;
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -26,12 +25,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
+
     @Autowired
     private CDFUserRepository userRepo;
-    
+
     @Autowired
     private PasswordEncoder passwordEncoder;
-    
+
     @RequestMapping(value = {""}, method = RequestMethod.GET)
     public String backend(ModelMap model, Principal principal) {
         if (principal != null) {
@@ -45,19 +45,8 @@ public class AdminController {
         return "backend";
     }
 
-    /*@RequestMapping(value = {"/"}, method = RequestMethod.GET)
-    public String backendSlash(ModelMap model) {
-        List<CDFUser> users = userRepo.findAll();
-        model.addAttribute("users", users);
-        return "redirect:/admin";
-    }*/
-    /*
-    @RequestMapping(value = {"register"}, method = RequestMethod.GET)
-    public String admin() {
-        return "admin";
-    }
-    */
     public static class Form {
+
         private String username;
         private String password;
         private String email;
@@ -95,7 +84,7 @@ public class AdminController {
             this.roles = roles;
         }
     }
-    
+
     @RequestMapping(value = {"register"}, method = RequestMethod.POST)
     public String register(Form form, RedirectAttributes attributes) {
         if (userRepo.findByUsername(form.getUsername()) != null) {
@@ -109,12 +98,29 @@ public class AdminController {
                 user.addRole(role);
             }
             userRepo.create(user);
-            //logger.info("Admin " + form.getUsername() + " created.");
             attributes.addFlashAttribute("register", "success");
         }
         return "redirect:/admin";
     }
-    
+
+    @RequestMapping(value = "/{ban:ban|unban}/{username}", method = RequestMethod.GET)
+    public String ban(@PathVariable String ban, @PathVariable String username) {
+        CDFUser user = userRepo.findByUsername(username);
+        if (user != null) {
+            if (ban.equals("ban")) {
+                if (!user.hasRole("ROLE_BAN")) {
+                    user.addRole("ROLE_BAN");
+                }
+            } else {
+                if (user.hasRole("ROLE_BAN")) {
+                    user.removeRole("ROLE_BAN");
+                }
+            }
+            userRepo.update(user);
+        }
+        return "redirect:/admin";
+    }
+
     @RequestMapping(value = "/delete/{username}", method = RequestMethod.GET)
     public String delete(@PathVariable String username) {
         userRepo.deleteByUsername(username);

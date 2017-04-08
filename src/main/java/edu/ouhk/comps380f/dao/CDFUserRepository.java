@@ -13,9 +13,14 @@ import java.util.List;
  * @author LAM
  */
 public interface CDFUserRepository {
+
     public void create(CDFUser user);
+
     public List<CDFUser> findAll();
+
     public CDFUser findByUsername(String username);
+
     public void update(CDFUser user);
+
     public void deleteByUsername(String username);
 }

@@ -17,7 +17,6 @@
     </head>
 
     <body>
-
         <div class="view mainView">
             <div class="view sidebarViewContainer">
                 <div class="view sidebar">
@@ -25,39 +24,17 @@
                     <div class="profilePicture">
                         <div class="profilePictureWrapper">
                             <img src="<c:url value="/resources/usersImages/e.jpg" />" height="200" width="150" alt="">
-                            <!-- 						<div class="changeProfilePictureDrop">
-                                                                                    <p class="changeProfilePictureTitle">Change Profile</p>
-                                                                                    <p class="changeProfilePictureMessage">Drop file here</p>
-                                                                            </div> -->
-                            <!-- 						<div class="changeProfilePictureUploading">
-                                                                                    <p class="changeProfilePictureTitle">Processing</p>
-                                                                                    <img src="images/loadingIcon.GIF" width="45" height="60" alt="">
-                                                                                    <p class="changeProfilePictureMessage">Uploading</p>
-                                                                            </div> -->
-                            <!-- 						<div class="changeProfilePictureFailed">
-                                                                                    <p class="changeProfilePictureTitle">Opps!</p>
-                                                                                    <p class="changeProfilePictureMessage">Problems occurs.</p>
-                                                                                    <button class="changeProfilePictureOk">OK</button>
-                                                                            </div> -->
                         </div>
-
-                    </div>
-
-                    <!--
-                    <p class="sidebarSectionTitle">You are</p>
-                    <p class="sidebarUsername">Visitors</p>
-                    -->				
+                    </div>			
                     <p class="sidebarSectionTitle">Login as:</p>
                     <p class="sidebarUsername">${user.username}</p>
                 </div>
             </div>
             <div class="view contentViewContainer">
                 <div class="view contentView">
-
                     <div class="pageHeader">
                         <p>${category.name} Discussion</p>
                     </div>
-
                     <div class="contentBlock contentMainBlock">
                         <div class="contentBlockHeader">
                             <p>${thread.title}</p>
@@ -72,10 +49,22 @@
                                     </div>
                                     <div class="col colContent">
                                         <p class="cellTitle">${thread.username}</p>
+                                <c:choose>
+                                    <c:when test="${thread.author.hasRole('ROLE_BAN')}">
+                                        <p class="cellContent">The user has already banned, so that the content is not available anymore.</p>
+                                    </c:when>
+                                    <c:otherwise>
                                         <p class="cellContent">${thread.content}</p>
+                                    </c:otherwise>
+                                </c:choose>
                                     </div>
                                 </div>
                         <security:authorize access="hasAnyRole('ADMIN', 'USER')">
+                    <c:choose>
+                        <c:when test="${thread.author.hasRole('ROLE_BAN')}">
+                            <p class="cellContent">The user has already banned, so that the attachments are not available anymore.</p>
+                        </c:when>
+                        <c:otherwise>
                             <c:forEach items="${thread.attachments}" var="attachment">
                                 <span style="margin-left: 60%; background: #ddd;">${attachment.name}</span>
                                 <div class="row">
@@ -85,6 +74,8 @@
                                     <br class="clear">
                                 </div>
                             </c:forEach>
+                        </c:otherwise>
+                    </c:choose>
                         </security:authorize>
                             <security:authorize access="hasRole('ADMIN')">  
                                 <div class="row">
@@ -94,27 +85,6 @@
                                     <br class="clear">
                                 </div>
                             </security:authorize>
-                                <!-- 							<div class="noteDeleteConfirm">
-                                                                                                <p class="popupTitle">Delete Note</p>
-                                                                                                <p class="popupMessage">[Filename] will delete permanently.</p>
-                                                                                                <button class="popupBtn popupBtnNoteDeleteDelete">Delete</button>
-                                                                                                <button class="popupBtn popupBtnNoteDeleteCancel">Cancel</button>
-                                                                                        </div> -->
-                                <!-- 							<div class="noteDeleteProcess">
-                                                                                                <p class="popupTitle">Deleting</p>
-                                                                                                <img src="images/loadingIcon.GIF" width="45" height="60" alt="">
-                                                                                        </div> -->
-                                <!-- 							<div class="noteDeleteSuccess">
-                                                                                                <p class="popupTitle">Note Deleted!</p>
-                                                                                                <p class="popupMessage">Note successfully deleted.</p>
-                                                                                                <button class="popupBtn popupBtnNoteDeleteOk">OK</button>
-                                                                                        </div> -->
-
-                                <!-- 							<div class="noteDeleteFailed">
-                                                                                                <p class="popupTitle">Opps!</p>
-                                                                                                <p class="popupMessage">Problems occurs.</p>
-                                                                                                <button class="popupBtn popupBtnNoteDeleteOk">OK</button>
-                                                                                        </div>-->
                             </li>
                         <security:authorize access="hasAnyRole('ADMIN', 'USER')">  
                             <li>
@@ -134,7 +104,7 @@
                                     <input type="hidden" id="csrf" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                                     <div class="row">
                                         <ul class="btnListRight">
-                                            <li><input type="submit" value="Reply" /><!--<a href="">Reply</a>--></li>
+                                            <li><input type="submit" value="Reply" /></li>
                                         </ul>
                                         <br class="clear">
                                     </div>
@@ -142,7 +112,7 @@
                             </li>
                         </security:authorize>        
                             <div class="contentBlockHeader">
-                                <p>Comments (Total : ${replies_size})</p>
+                                <p>Comments (Total : ${thread.numberOfReply})</p>
                             </div>
                         <c:forEach items="${thread.replies}" var="reply">
                             <li>
@@ -154,10 +124,22 @@
                                     </div>
                                     <div class="col colContent">
                                         <p class="cellTitle">${reply.username}</p>
+                                <c:choose>
+                                    <c:when test="${reply.author.hasRole('ROLE_BAN')}">
+                                        <p class="cellContent">The user has already banned, so that the content is not available anymore.</p>
+                                    </c:when>
+                                    <c:otherwise>
                                         <p class="cellContent">${reply.content}</p>
+                                    </c:otherwise>
+                                </c:choose>
                                     </div>
                                 </div>
-                        <security:authorize access="hasAnyRole('ADMIN', 'USER')">        
+                        <security:authorize access="hasAnyRole('ADMIN', 'USER')">
+                    <c:choose>
+                        <c:when test="${reply.author.hasRole('ROLE_BAN')}">
+                            <p class="cellContent">The user has already banned, so that the attachments are not available anymore.</p>
+                        </c:when>
+                        <c:otherwise>
                             <c:forEach items="${reply.attachments}" var="attachment">
                                 <span style="margin-left: 60%; background: #ddd;">${attachment.name}</span>
                                 <div class="row">
@@ -167,6 +149,8 @@
                                     <br class="clear">
                                 </div>
                             </c:forEach>
+                        </c:otherwise>
+                    </c:choose>
                         </security:authorize>
                             <security:authorize access="hasRole('ADMIN')"> 
                                 <div class="row">
@@ -180,7 +164,6 @@
                         </c:forEach> 
                         </ul>
                     </div>
-
                 </div>
             </div>
             <nav>
@@ -189,10 +172,7 @@
                 <security:authorize access="hasAnyRole('ADMIN', 'USER')">
                     <li class="navOptionProfile"><a href="<c:url value="/profile" />"><div class="navItemActiveIdicator"></div><p>PROFILE</p></a></li> 
                 </security:authorize>
-                <security:authorize access="hasRole('ADMIN')">
-                    <li class="navOptionPoll"><a href="#"><div class="navItemActiveIdicator"></div><p>POLL</p></a></li>
-                </security:authorize>                      
-                    <!--<li class="navOptionLoginout"><a href="#"><div class="navItemActiveIdicator"></div><p>LOGIN</p></a></li> -->
+                    <li class="navOptionPoll"><a href="<c:url value="/poll" />"><div class="navItemActiveIdicator"></div><p>POLL</p></a></li>
             <c:choose>
                 <c:when test="${user != null}">
                     <li class="navOptionLoginout"><a href="javascript:logout('<c:url value="/logout" />', {'${_csrf.parameterName}': '${_csrf.token}'});"><div class="navItemActiveIdicator"></div><p>LOGOUT</p></a></li>
@@ -207,7 +187,6 @@
                 </ul>
             </nav>
         </div>
-
         <!------------ End of body ------------>
         <!-- Global JS -->
         <script src="<c:url value="/resources/js/jquery.min.js" />"></script>
