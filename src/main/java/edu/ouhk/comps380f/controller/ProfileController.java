@@ -110,12 +110,17 @@ public class ProfileController {
     }
 
     @RequestMapping(value = {"/{username}"}, method = RequestMethod.GET)
-    public String adminProfile(@PathVariable String username, ModelMap model) {
-        CDFUser user = userRepo.findByUsername(username);
-        if (user != null) {
-            model.addAttribute("user", user);
+    public String adminProfile(@PathVariable String username, ModelMap model, Principal principal) {
+        if (principal != null) {
+            CDFUser user = userRepo.findByUsername(principal.getName());
+            if (user != null) {
+                model.addAttribute("user", user);
+            }
         }
-        model.addAttribute("target_username", username);
+        CDFUser targetUser = userRepo.findByUsername(username);
+        if (targetUser != null) {
+            model.addAttribute("target_user", targetUser);
+        }
         return "profile";
     }
 

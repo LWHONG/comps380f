@@ -49,14 +49,21 @@
                                     </div>
                                     <div class="col colContent">
                                         <p class="cellTitle">Name</p>
+                                <c:choose>
+                                    <c:when test="${target_user != null}">
+                                        <input type="text" value="${target_user.username}" readonly>
+                                    </c:when>
+                                    <c:otherwise>
                                         <input type="text" value="${user.username}" readonly>
+                                    </c:otherwise>
+                                </c:choose>
                                     </div>
                                 </div>
                             </li>
                             <li>
                         <c:choose>
-                            <c:when test="${target_username != null}">
-                                <form class="emailForm" id="emailForm" action="<c:url value="/profile/${target_username}/edit/info" />" method="POST">
+                            <c:when test="${target_user != null}">
+                                <form class="emailForm" id="emailForm" action="<c:url value="/profile/${target_user.username}/edit/info" />" method="POST">
                             </c:when>
                             <c:otherwise>
                                 <form class="emailForm" id="emailForm" action="<c:url value="/profile/edit/info" />" method="POST">
@@ -70,7 +77,14 @@
                                         </div>
                                         <div class="col colContent">
                                             <p class="cellTitle">Email Address</p>
+                                    <c:choose>
+                                        <c:when test="${target_user != null}">
+                                            <input type="text" name="email" value="${target_user.email}" />
+                                        </c:when>
+                                        <c:otherwise>
                                             <input type="text" name="email" value="${user.email}" />
+                                        </c:otherwise>
+                                    </c:choose>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -154,8 +168,8 @@
                             <ul class="listView">
                                 <li>
                             <c:choose>
-                                <c:when test="${target_username != null}">
-                                    <form class="changePassword" id="changePassword" action="<c:url value="/profile/${target_username}/edit/password" />" method="POST" onSubmit="return validate();">
+                                <c:when test="${target_user != null}">
+                                    <form class="changePassword" id="changePassword" action="<c:url value="/profile/${target_user.username}/edit/password" />" method="POST" onSubmit="return validate();">
                                 </c:when>
                                 <c:otherwise>
                                     <form class="changePassword" id="changePassword" action="<c:url value="/profile/edit/password" />" method="POST" onSubmit="return validate();">
@@ -168,7 +182,7 @@
                                                 </div>
                                             </div>
                                             <div class="col colContent">
-                                            <c:if test="${target_username == null}">
+                                            <c:if test="${target_user == null}">
                                                 <p class="cellTitle">Current Password</p>
                                                 <input type="password" id="current_password" name="currentPassword" />
                                             </c:if>

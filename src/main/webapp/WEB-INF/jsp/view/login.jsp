@@ -51,7 +51,7 @@
                         <input type="password" id="password" name="password" />
                         <p class="cellTitle">Password Again</p>
                         <input type="password" id="password_confirm" />
-                        <p class="cellTitle">Ermail</p>
+                        <p class="cellTitle">Email</p>
                         <input type="text" id="email" name="email" />
                         <input type="hidden" id="csrf" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                         <input class="fullWidthButton registerBtn" type="submit" value="Register" onclick="registerUi()" />                        
