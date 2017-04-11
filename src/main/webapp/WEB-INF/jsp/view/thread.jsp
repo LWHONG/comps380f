@@ -23,11 +23,19 @@
                     <div class="sitelogo"><img src="<c:url value="/resources/images/sideLogo.png" />" height="36" width="36" alt="">COURSERV</div>
                     <div class="profilePicture">
                         <div class="profilePictureWrapper">
-                            <img src="<c:url value="/resources/usersImages/e.jpg" />" height="200" width="150" alt="">
+                            <img src="<c:url value="/resources/usersImages/icon.png" />" height="200" width="150" alt="">
                         </div>
                     </div>			
+            <c:choose>
+                <c:when test="${user != null}">
                     <p class="sidebarSectionTitle">Login as:</p>
                     <p class="sidebarUsername">${user.username}</p>
+                </c:when>
+                <c:otherwise>
+                    <p class="sidebarSectionTitle">&nbsp;</p>
+                    <p class="sidebarUsername">Guest</p>
+                </c:otherwise>
+            </c:choose>
                 </div>
             </div>
             <div class="view contentViewContainer">
