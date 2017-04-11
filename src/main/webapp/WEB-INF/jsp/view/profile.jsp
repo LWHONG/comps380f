@@ -169,7 +169,7 @@
                                 <li>
                             <c:choose>
                                 <c:when test="${target_user != null}">
-                                    <form class="changePassword" id="changePassword" action="<c:url value="/profile/${target_user.username}/edit/password" />" method="POST" onSubmit="return validate();">
+                                    <form class="changePassword" id="changePassword" action="<c:url value="/profile/${target_user.username}/edit/password" />" method="POST" onsubmit="return validate();">
                                 </c:when>
                                 <c:otherwise>
                                     <form class="changePassword" id="changePassword" action="<c:url value="/profile/edit/password" />" method="POST" onSubmit="return validate();">

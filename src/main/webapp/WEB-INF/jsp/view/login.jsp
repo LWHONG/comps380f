@@ -44,7 +44,7 @@
                     </form>
                 </div>
                 <div class="registerView">
-                    <form class="registerForm" id="registerForm" action="<c:url value="/register" />" method='POST' onSubmit="return validate();">
+                    <form class="registerForm" id="registerForm" action="<c:url value="/register" />" method='POST' onsubmit="return validate();">
                         <p class="cellTitle">Username</p>
                         <input type="text" id="username" name="username" />
                         <p class="cellTitle">Password</p>

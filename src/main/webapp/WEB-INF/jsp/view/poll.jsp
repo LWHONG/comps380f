@@ -44,7 +44,7 @@
                             <li>
                                 <div class="row">
                                     <div class="col colContent">
-                                        <form class="pollForm" id="pollForm" action="<c:url value="/poll/create" />" method="POST">
+                                        <form class="pollForm" id="pollForm" action="<c:url value="/poll/create" />" method="POST" onsubmit="return validateForPoll();">
                                             <p class="cellTitle">Question</p>
                                             <input type="text" id="question" name="question" />
                                             <p class="cellTitle">Answer1</p>

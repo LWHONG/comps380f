@@ -96,14 +96,20 @@ public class PollController {
 
     @RequestMapping(value = {"/create"}, method = RequestMethod.POST)
     public String createPoll(CreatePollForm form, Principal principal) {
-        CDFPoll poll = new CDFPoll();
-        poll.setQuestion(form.getQuestion());
-        poll.setOptionA(form.getOptionA());
-        poll.setOptionB(form.getOptionB());
-        poll.setOptionC(form.getOptionC());
-        poll.setOptionD(form.getOptionD());
-        poll.setEnable(true);
-        pollRepo.create(poll);
+        if (!form.getQuestion().equals("") && 
+            !form.getOptionA().equals("") && 
+            !form.getOptionB().equals("") && 
+            !form.getOptionC().equals("") && 
+            !form.getOptionD().equals("")) {
+            CDFPoll poll = new CDFPoll();
+            poll.setQuestion(form.getQuestion());
+            poll.setOptionA(form.getOptionA());
+            poll.setOptionB(form.getOptionB());
+            poll.setOptionC(form.getOptionC());
+            poll.setOptionD(form.getOptionD());
+            poll.setEnable(true);
+            pollRepo.create(poll);
+        }
         return "redirect:/poll";
     }
 

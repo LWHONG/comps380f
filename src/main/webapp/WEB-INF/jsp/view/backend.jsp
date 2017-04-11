@@ -47,7 +47,7 @@
                         </div>
                         <ul class="listView">
                             <li>
-                                <form class="registerForm" id="registerForm" action="<c:url value="/admin/register" />" method='POST' onSubmit="return validate();">
+                                <form class="registerForm" id="registerForm" action="<c:url value="/admin/register" />" method='POST' onsubmit="return validate();">
                                     <div class="row">
                                         <p class="cellTitle">Username</p>
                                         <input type="text" id="username" name="username" />
