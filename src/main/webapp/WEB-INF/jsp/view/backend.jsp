@@ -99,8 +99,8 @@
                                 <li>
                                     <div class="row">
                                         <div class="col colProfile">
-                                            <div class="profileWrapper80">
-                                                <img src="<c:url value="/resources/usersImages/cat.jpg" />" height="200" width="150" alt="">
+                                            <div class="iconWrapper80">
+                                                <img src="<c:url value="/resources/images/icon-info-username.png" />" height="512" width="512" alt="">
                                             </div>
                                         </div>
                                         <div class="col colContent">
