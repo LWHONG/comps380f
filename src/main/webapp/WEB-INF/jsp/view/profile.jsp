@@ -125,26 +125,55 @@
                         </div>
                         <ul class="listView">
                             <li>
+                        <c:choose>
+                            <c:when test="${target_user != null}">
                                 <form class="changePassword" id="changePassword" action="<c:url value="/profile/${target_user.username}/edit/authority" />" method="POST">
+                            </c:when>
+                            <c:otherwise>
+                                <form class="changePassword" id="changePassword" action="<c:url value="/profile/${user.username}/edit/authority" />" method="POST">
+                            </c:otherwise>
+                        </c:choose>
                                     <div class="row">
                                         <p class="cellTitle">Role</p>
                                         <center>
-                                            <c:choose>
-                                                <c:when test="${target_user.hasRole('ROLE_ADMIN')}">
-                                                    <span style="margin: 100px;">Admin<input type="checkbox" name="roles" value="ROLE_ADMIN" checked /></span>
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                    <span style="margin: 100px;">Admin<input type="checkbox" name="roles" value="ROLE_ADMIN" /></span>
-                                                    </c:otherwise>
-                                                </c:choose>
-                                                <c:choose>
-                                                    <c:when test="${target_user.hasRole('ROLE_USER')}">
-                                                    <span style="margin: 100px;">User<input type="checkbox" name="roles" value="ROLE_USER" checked /></span> 
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                    <span style="margin: 100px;">User<input type="checkbox" name="roles" value="ROLE_USER" /></span> 
-                                                    </c:otherwise>
-                                                </c:choose>
+                            <c:choose>
+                                <c:when test="${target_user != null}">
+                                    <c:choose>
+                                        <c:when test="${target_user.hasRole('ROLE_ADMIN')}">
+                                            <span style="margin: 100px;">Admin<input type="checkbox" name="roles" value="ROLE_ADMIN" checked /></span>
+                                            </c:when>
+                                            <c:otherwise>
+                                            <span style="margin: 100px;">Admin<input type="checkbox" name="roles" value="ROLE_ADMIN" /></span>
+                                            </c:otherwise>
+                                        </c:choose>
+                                        <c:choose>
+                                            <c:when test="${target_user.hasRole('ROLE_USER')}">
+                                            <span style="margin: 100px;">User<input type="checkbox" name="roles" value="ROLE_USER" checked /></span> 
+                                            </c:when>
+                                            <c:otherwise>
+                                            <span style="margin: 100px;">User<input type="checkbox" name="roles" value="ROLE_USER" /></span> 
+                                            </c:otherwise>
+                                        </c:choose>
+                                </c:when>
+                                <c:otherwise>
+                                    <c:choose>
+                                        <c:when test="${user.hasRole('ROLE_ADMIN')}">
+                                            <span style="margin: 100px;">Admin<input type="checkbox" name="roles" value="ROLE_ADMIN" checked /></span>
+                                            </c:when>
+                                            <c:otherwise>
+                                            <span style="margin: 100px;">Admin<input type="checkbox" name="roles" value="ROLE_ADMIN" /></span>
+                                            </c:otherwise>
+                                        </c:choose>
+                                        <c:choose>
+                                            <c:when test="${user.hasRole('ROLE_USER')}">
+                                            <span style="margin: 100px;">User<input type="checkbox" name="roles" value="ROLE_USER" checked /></span> 
+                                            </c:when>
+                                            <c:otherwise>
+                                            <span style="margin: 100px;">User<input type="checkbox" name="roles" value="ROLE_USER" /></span> 
+                                            </c:otherwise>
+                                        </c:choose>
+                                </c:otherwise>
+                            </c:choose>
                                         </center>
                                     </div>
                                     <div class="col col-70">
