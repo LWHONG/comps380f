@@ -125,12 +125,12 @@
                         </div>
                         <ul class="listView">
                             <li>
-                                <form class="changePassword" id="changePassword" action="<c:url value="/profile/${user.username}/edit/authority" />" method="POST">
+                                <form class="changePassword" id="changePassword" action="<c:url value="/profile/${target_user.username}/edit/authority" />" method="POST">
                                     <div class="row">
                                         <p class="cellTitle">Role</p>
                                         <center>
                                             <c:choose>
-                                                <c:when test="${user.hasRole('ROLE_ADMIN')}">
+                                                <c:when test="${target_user.hasRole('ROLE_ADMIN')}">
                                                     <span style="margin: 100px;">Admin<input type="checkbox" name="roles" value="ROLE_ADMIN" checked /></span>
                                                     </c:when>
                                                     <c:otherwise>
@@ -138,7 +138,7 @@
                                                     </c:otherwise>
                                                 </c:choose>
                                                 <c:choose>
-                                                    <c:when test="${user.hasRole('ROLE_USER')}">
+                                                    <c:when test="${target_user.hasRole('ROLE_USER')}">
                                                     <span style="margin: 100px;">User<input type="checkbox" name="roles" value="ROLE_USER" checked /></span> 
                                                     </c:when>
                                                     <c:otherwise>
