@@ -80,7 +80,7 @@
                                         <c:choose>
                                             <c:when test="${pollAnswer != null}">
                                                 <c:choose>
-                                                    <c:when test="${pollAnswer.answer == "option_a"}">
+                                                    <c:when test="${pollAnswer.answer == 'option_a'}">
                                                 <li><input type="radio" name="answer" value="option_a" checked disabled />${poll.optionA}</li>
                                                     </c:when>
                                                     <c:otherwise>
@@ -88,7 +88,7 @@
                                                     </c:otherwise>
                                                 </c:choose>
                                                 <c:choose>
-                                                    <c:when test="${pollAnswer.answer == "option_b"}">
+                                                    <c:when test="${pollAnswer.answer == 'option_b'}">
                                                 <li><input type="radio" name="answer" value="option_b" checked disabled />${poll.optionB}</li>
                                                     </c:when>
                                                     <c:otherwise>
@@ -96,7 +96,7 @@
                                                     </c:otherwise>
                                                 </c:choose>
                                                 <c:choose>
-                                                      <c:when test="${pollAnswer.answer == "option_c"}">
+                                                      <c:when test="${pollAnswer.answer == 'option_c'}">
                                                 <li><input type="radio" name="answer" value="option_c" checked disabled />${poll.optionC}</li>
                                                     </c:when>
                                                     <c:otherwise>
@@ -104,7 +104,7 @@
                                                     </c:otherwise>
                                                 </c:choose>
                                                 <c:choose>
-                                                    <c:when test="${pollAnswer.answer == "option_d"}">
+                                                    <c:when test="${pollAnswer.answer == 'option_d'}">
                                                 <li><input type="radio" name="answer" value="option_d" checked disabled />${poll.optionD}</li>
                                                     </c:when>
                                                     <c:otherwise>
